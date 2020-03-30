@@ -44,10 +44,5 @@ GRANT DBA TO "nour"
 SET SCHEMA SYSTEM_LOBS
 INSERT INTO BLOCKS VALUES(0,2147483647,0)
 SET SCHEMA PUBLIC
-INSERT INTO USER VALUES('Homer',-1861353340,'Homer','Simpson',3,'','')
-INSERT INTO USER VALUES('albarto',-1861353340,'Bart','simpson',2,'bart@gmail.com','05319323713')
-INSERT INTO USER VALUES('asdf',-293544498,'asdf','asdf',2,'asdf','12345678912')
-INSERT INTO USER VALUES('dsfgdfgdf',-64821575,'dsgdsfgdf','dsfgdsfgdfsg',1,'dfgdsfgdfg','12345678978')
 INSERT INTO USER VALUES('jsdflkdsjf',1644606937,'sdfdsf','dfgdf',1,'gdfgdfgdf','12345678912')
 INSERT INTO USER VALUES('nour0700',5465,'Muhammednour','Shihabi',3,'mohammednour0700@gmail.com','05319323713')
-INSERT INTO USER VALUES('sadfsadfsda',-49318630,'asdfsdaf','sdafsadfsdaf',2,'dlsfkj@fksdj.sdfdsf','12345678978')

@@ -10,31 +10,26 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="760.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SettingsController">
+<AnchorPane fx:id="settingsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="685.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SettingsController">
    <children>
-      <TabPane prefHeight="700.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="644.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Report">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
           <Tab text="Employee">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="750.0">
                      <children>
-                        <TableView fx:id="employeeTable" layoutX="31.0" layoutY="154.0" prefHeight="418.0" prefWidth="558.0">
+                        <TableView fx:id="setEmpTableView" layoutX="31.0" layoutY="154.0" prefHeight="418.0" prefWidth="558.0">
                           <columns>
-                            <TableColumn prefWidth="90.0" text="Name" />
-                            <TableColumn prefWidth="103.0" text="Surname" />
-                              <TableColumn prefWidth="85.0" text="Level" />
-                              <TableColumn prefWidth="85.0" text="Telefon" />
-                              <TableColumn prefWidth="194.0" text="Email" />
+                            <TableColumn fx:id="setEmpTabColName" prefWidth="128.0" text="Name" />
+                            <TableColumn fx:id="setEmpTabColSurname" prefWidth="102.0" text="Surname" />
+                              <TableColumn fx:id="setEmpTabColLevel" prefWidth="48.0" text="Level" />
+                              <TableColumn fx:id="setEmpTabColTel" prefWidth="97.0" text="Telefon" />
+                              <TableColumn fx:id="setEmpTabColEmail" prefWidth="182.0" text="Email" />
                           </columns>
                         </TableView>
-                        <Button layoutX="606.0" layoutY="154.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Remove" />
-                        <Button layoutX="606.0" layoutY="203.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Edit" />
-                        <Button layoutX="606.0" layoutY="251.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Add" />
+                        <Button fx:id="setEmpRemButton" layoutX="606.0" layoutY="154.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Remove" />
+                        <Button fx:id="setEmpEditButton" layoutX="606.0" layoutY="203.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Edit" />
+                        <Button fx:id="setAddEmpButton" layoutX="606.0" layoutY="251.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Add" />
                         <Text layoutX="31.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on 'Add' to add new employee">
                            <font>
                               <Font size="17.0" />
@@ -50,17 +45,22 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Separator layoutY="591.0" prefHeight="14.0" prefWidth="750.0" />
                      </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Report">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="750.0" />
             </content>
           </Tab>
             <Tab text="Customer">
                 <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="564.0" prefWidth="750.0" />
                 </content>
             </Tab>
         </tabs>
       </TabPane>
-      <Button defaultButton="true" layoutX="616.0" layoutY="720.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Exit" />
-      <Separator layoutY="706.0" prefHeight="9.0" prefWidth="750.0" />
+      <Button fx:id="setOkButton" defaultButton="true" layoutX="616.0" layoutY="644.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Ok" />
    </children>
 </AnchorPane>

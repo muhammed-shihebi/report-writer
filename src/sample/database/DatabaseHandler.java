@@ -5,7 +5,7 @@ import classes.User;
 import java.sql.*;
 
 public class DatabaseHandler {
-    private Connection getConnection(){
+    public Connection getConnection(){
         Connection con = null;
         try{
             System.out.println("Connecting database...");
@@ -33,8 +33,7 @@ public class DatabaseHandler {
         Statement statement = con.createStatement();
         ResultSet resultSet;
         int hashedPassword = password.hashCode();
-        System.out.println("Trying to get the user: " + username);
-        resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + username + "' AND password = " + hashedPassword + "    ;");
+        resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + username + "' AND password = " + hashedPassword + " ;");
 
         // cursor is initially positioned before the first row
         // next() returns true if the new current row is valid; false if there are no more rows
@@ -84,4 +83,32 @@ public class DatabaseHandler {
         con.close();
     }
 
+    public ResultSet getAllUsers(Connection con) throws SQLException {
+        Statement statement = con.createStatement();
+        ResultSet resultSet;
+        resultSet = statement.executeQuery("SELECT * from user;");
+        return resultSet;
+    }
+
+    // return false if the user to be deleted is the only admin in the system
+    // this admin will not be deleted
+    // return true other wise with deleting the user
+    public boolean deleteUser(User user) throws SQLException {
+        Connection con = getConnection();
+        Statement statement = con.createStatement();
+        ResultSet resultSet;
+
+        if(user.getLevel() > 2){
+            resultSet = statement.executeQuery("SELECT * from user WHERE level > 2; ");
+            int count = 0;
+            while (resultSet.next()){
+                count++;
+            }
+            if(count == 1){
+                return false;
+            }
+        }
+        resultSet = statement.executeQuery("Delete FROM user WHERE username = '" + user.getUsername() + "';");
+        return true;
+    }
 }

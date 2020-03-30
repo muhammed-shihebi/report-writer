@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import classes.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +12,8 @@ import javafx.stage.Modality;
 import sample.database.DatabaseHandler;
 
 public class AddEmployeeController {
-    
+
+    private classes.User user;
 
     @FXML
     private AnchorPane addEmployeePane;
@@ -213,12 +215,8 @@ public class AddEmployeeController {
         return true;
     }
 
-    // not my implementation i don't completely understand it
     private boolean isEmailValid(String email){
-        // compiling the regular expression to be a pattern (but what is a pattern?)
         Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
-
-        // what is here is not quite clear
         Matcher m = p.matcher(email);
         if(m.find() && m.group().equals(email)){
             return true;
@@ -317,6 +315,12 @@ public class AddEmployeeController {
         telField.setStyle(null);
         emailLabel.setText("");
         emailField.setStyle(null);
+    }
+
+    // ========= Setters =======================
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
 
