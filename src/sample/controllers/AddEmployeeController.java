@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import sample.database.DatabaseHandler;
 
 public class AddEmployeeController {
+    
 
     @FXML
     private AnchorPane addEmployeePane;
