@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="addEmployeePane" prefHeight="453.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.AddEmployeeController">
+   <children>
+      <Label layoutX="20.0" layoutY="87.0" text="Username:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameField" layoutX="107.0" layoutY="84.0" prefHeight="31.0" prefWidth="223.0" promptText="Ex: Ahmed" />
+      <PasswordField fx:id="passwordField" layoutX="435.0" layoutY="84.0" prefHeight="31.0" prefWidth="223.0" />
+      <Label layoutX="34.0" layoutY="166.0" text="Name:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="nameField" layoutX="107.0" layoutY="164.0" prefHeight="31.0" prefWidth="223.0" promptText="Ex: Ömer" />
+      <TextField fx:id="surnameField" layoutX="435.0" layoutY="164.0" prefHeight="31.0" prefWidth="223.0" promptText="Faruk" />
+      <Label layoutX="38.0" layoutY="247.0" text="Level:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="levelField" layoutX="107.0" layoutY="244.0" prefHeight="31.0" prefWidth="223.0" promptText="1, 2 or 3" />
+      <Label layoutX="35.0" layoutY="327.0" text="E-mail:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailField" layoutX="107.0" layoutY="324.0" prefHeight="31.0" prefWidth="223.0" promptText="EX: ahmet@gmail.com" />
+      <Label layoutX="353.0" layoutY="88.0" text="Password:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="355.0" layoutY="166.0" text="Surname:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="349.0" layoutY="327.0" text="Telephone:">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="telField" layoutX="435.0" layoutY="325.0" prefHeight="31.0" prefWidth="223.0" promptText="05312345604" />
+      <Label layoutX="330.0" layoutY="74.0" text="*" textFill="RED">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="657.0" layoutY="74.0" text="*" textFill="RED">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="330.0" layoutY="154.0" text="*" textFill="RED">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="657.0" layoutY="154.0" text="*" textFill="RED">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="330.0" layoutY="234.0" text="*" textFill="RED">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Button fx:id="addButton" defaultButton="true" layoutX="551.0" layoutY="399.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" text="Add" />
+      <Button fx:id="cancelButton" cancelButton="true" layoutX="428.0" layoutY="399.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="114.0" text="Cancel" />
+      <Text layoutX="23.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fields with ( ) are mandatory">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="110.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="usernameLabel" layoutX="108.0" layoutY="113.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+      <Label fx:id="passwordLabel" layoutX="435.0" layoutY="113.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+      <Label fx:id="nameLabel" layoutX="108.0" layoutY="195.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+      <Label fx:id="surnameLabel" layoutX="435.0" layoutY="195.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+      <Label fx:id="levelLabel" layoutX="108.0" layoutY="275.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+      <Label fx:id="emailLabel" layoutX="107.0" layoutY="353.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+      <Label fx:id="telLabel" layoutX="435.0" layoutY="353.0" prefHeight="21.0" prefWidth="223.0" textFill="RED" />
+   </children>
+</AnchorPane>
