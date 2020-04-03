@@ -1,6 +1,7 @@
 package sample.database;
 
-import classes.User;
+import sample.config.Config;
+import sample.model.User;
 
 import java.sql.*;
 
@@ -44,8 +45,6 @@ public class DatabaseHandler {
             user.setName(resultSet.getString("name"));
             user.setSurname(resultSet.getString("surname"));
             user.setLevel(resultSet.getInt("level"));
-            user.setEmail(resultSet.getString("email"));
-            user.setTel(resultSet.getString("tel"));
             con.close();
             return user;
         }else{
@@ -64,7 +63,7 @@ public class DatabaseHandler {
             System.out.println("Username is taken");
             con.close();
             return true;
-        }else{
+        }else {
             System.out.println("Username is not taken");
             con.close();
             return false;
@@ -76,10 +75,9 @@ public class DatabaseHandler {
         Statement statement = con.createStatement();
         int result;
         int password = user.getPassword().hashCode();
-        result = statement.executeUpdate("INSERT INTO USER (username, password, name, surname, level, email, tel)" +
+        result = statement.executeUpdate("INSERT INTO USER (username, password, name, surname, level) " +
                 " VALUES ('"+ user.getUsername() +"', " + password + ", '" + user.getName()
-                + "', '" + user.getSurname() + "', "+ user.getLevel() +", '" + user.getEmail()
-                + "', '"+user.getTel()+"');");
+                + "', '" + user.getSurname() + "', "+ user.getLevel() +") ;");
         con.close();
     }
 
@@ -110,5 +108,22 @@ public class DatabaseHandler {
         }
         resultSet = statement.executeQuery("Delete FROM user WHERE username = '" + user.getUsername() + "';");
         return true;
+    }
+
+    public void editUser(User oldUser, User newUser) throws SQLException {
+        Connection con = getConnection();
+        Statement statement = con.createStatement();
+        int result;
+        ResultSet resultSet;
+        int newPassword;
+        if(newUser.getPassword().equals("")){
+            resultSet = statement.executeQuery("SELECT password FROM user WHERE username = '" + oldUser.getUsername() + "' ;");
+            newPassword = resultSet.getInt(0);
+        }else{
+            newPassword = newUser.getPassword().hashCode();
+        }
+        deleteUser(oldUser);
+
+        con.close();
     }
 }

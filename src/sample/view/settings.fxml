@@ -16,15 +16,13 @@
         <tabs>
           <Tab text="Employee">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="750.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="605.0" prefWidth="724.0">
                      <children>
                         <TableView fx:id="setEmpTableView" layoutX="31.0" layoutY="154.0" prefHeight="418.0" prefWidth="558.0">
                           <columns>
-                            <TableColumn fx:id="setEmpTabColName" prefWidth="128.0" text="Name" />
-                            <TableColumn fx:id="setEmpTabColSurname" prefWidth="102.0" text="Surname" />
-                              <TableColumn fx:id="setEmpTabColLevel" prefWidth="48.0" text="Level" />
-                              <TableColumn fx:id="setEmpTabColTel" prefWidth="97.0" text="Telefon" />
-                              <TableColumn fx:id="setEmpTabColEmail" prefWidth="182.0" text="Email" />
+                            <TableColumn fx:id="setEmpTabColName" prefWidth="241.0" text="Name" />
+                            <TableColumn fx:id="setEmpTabColSurname" prefWidth="214.0" text="Surname" />
+                              <TableColumn fx:id="setEmpTabColLevel" prefWidth="102.0" text="Level" />
                           </columns>
                         </TableView>
                         <Button fx:id="setEmpRemButton" layoutX="606.0" layoutY="154.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="120.0" text="Remove" />

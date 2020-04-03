@@ -1,6 +1,8 @@
 package sample.controllers;
 
-import classes.User;
+import javafx.stage.Modality;
+import sample.config.Config;
+import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,8 +43,10 @@ public class LoginController {
     private Label PasswordErrorMassage;
 
     @FXML
+    private Button loginSignUpButton;
+
+    @FXML
     void initialize() {
-        System.out.println("Initializing the login window");
         // =========== LoginButton clicked ====================
         LoginLoginButton.setOnAction(event -> {
 
@@ -72,13 +76,63 @@ public class LoginController {
                 }
             }
         });
+
+        // =========== SignUpButton clicked ===================
+        loginSignUpButton.setOnAction(event -> {
+            try {
+                showAddEmployee();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 
 
+    // =========== helper functions ===========
 
+    public void showMain(User user) throws IOException {
+        // hiding the login window
+        LoginPane.getScene().getWindow().hide();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/main.fxml"));
+        // after loading the fxml file the initialize() method in MainController is called
+        fxmlLoader.load();
+        // fxmlLoader.getController has the very same object (MainController of the fxml file that we loaded)
+        // so from here we could manipulate the objects (Nodes) in that widow
+        MainController mainController = fxmlLoader.getController();
+        // if the user has level lower then 3 the setting Button will be disabled
+        if(user.getLevel() < 3)
+            mainController.hideSetting();
 
-    // =========== help functions ==============
+        // we also passing the user to be used later on the setting and other things
+        mainController.setUser(user);
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setTitle("Main");
+        stage.show();
+    }
+
+    public void showAddEmployee() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/addUser.fxml"));
+        fxmlLoader.load();
+        AddUserController addUserController = fxmlLoader.getController();
+        addUserController.setMode(Config.SIGNUPMODE);
+        addUserController.hideLevel();
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setTitle("Add Employee");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(LoginPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+    }
+
+    // =========== Error handler ==============
 
     public void usernameError(){
         UsernameErrorMessage.setText("Please enter a valid username!");
@@ -97,6 +151,8 @@ public class LoginController {
         System.out.println("username not found");
     }
 
+    // =========== reset =======================
+
     public void resetStyle(){
         UsernameErrorMessage.setText("");
         PasswordErrorMassage.setText("");
@@ -104,33 +160,5 @@ public class LoginController {
         LoginUsername.setStyle(null);
         LoginPassword.setStyle(null);
     }
-
-    public void showMain(User user) throws IOException {
-        System.out.println("closing the login window");
-        // hiding the login window
-        LoginPane.getScene().getWindow().hide();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/main.fxml"));
-        // after loading the fxml file the initialize() method in MainController is called
-        System.out.println("loading the main view");
-        fxmlLoader.load();
-        // fxmlLoader.getController has the very same object (MainController of the fxml file that we loaded)
-        // so from here we could manipulate the objects (Nodes) in that widow
-        MainController mainController = fxmlLoader.getController();
-        // if the user has level lower then 3 the setting Button will be disabled
-        if(user.getLevel() < 3)
-            mainController.hideSetting();
-
-        // we also passing the user to be used later on the setting and other things
-        mainController.setUser(user);
-
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.setTitle("Main");
-        stage.show();
-    }
-
 
 }

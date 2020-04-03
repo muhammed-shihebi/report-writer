@@ -1,19 +1,19 @@
 package sample.controllers;
 
 import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import classes.User;
+import sample.config.Config;
+import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import sample.database.DatabaseHandler;
 
-public class AddEmployeeController {
+public class AddUserController {
 
-    private classes.User user;
+    // 1 Add , 2 sign up, 3 edit
+    private int mode = Config.ADDMODE;
 
     @FXML
     private AnchorPane addEmployeePane;
@@ -32,12 +32,6 @@ public class AddEmployeeController {
 
     @FXML
     private TextField levelField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField telField;
 
     @FXML
     private Button addButton;
@@ -61,14 +55,18 @@ public class AddEmployeeController {
     private Label levelLabel;
 
     @FXML
-    private Label emailLabel;
+    private Tooltip levelTooltip;
 
     @FXML
-    private Label telLabel;
+    private Label levelLabelName;
+
+    @FXML
+    private Label levelTooltipHelper;
 
     @FXML
     void initialize() {
 
+        levelTooltipHelper.setDisable(true);
         // ========== Add button clicked ==========
 
         addButton.setOnAction(event -> {
@@ -76,24 +74,24 @@ public class AddEmployeeController {
             if(!areFieldsEmpty()){
                 try {
                     if (areFieldsValid()){
-                        classes.User user = new classes.User(
+                        User user = new User(
                                 usernameField.getText(),
                                 passwordField.getText(),
                                 nameField.getText(),
                                 surnameField.getText(),
-                                Integer.parseInt(levelField.getText()),
-                                emailField.getText(),
-                                telField.getText()
+                                Integer.parseInt(levelField.getText())
                         );
                         addNewUser(user);
-                        showSuccessAlert();
+                        if(mode == Config.SIGNUPMODE){ // sign up
+                            showSuccessAlert("You have signed up correctly");
+                        }else if(mode == Config.ADDMODE) { // add
+                            showSuccessAlert("You have added a new Employee correctly");
+                        }
                         addEmployeePane.getScene().getWindow().hide();
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }else{
-                // do something
             }
         });
 
@@ -106,32 +104,39 @@ public class AddEmployeeController {
 
     // ============ Helper functions ===============
 
-    private boolean areFieldsEmpty(){
-        boolean emptiness = false;
-        if(usernameField.getText().equals("")) {
-            usernameIsEmpty(); emptiness = true;}
-        if(passwordField.getText().equals("")) {
-            passwordIsEmpty(); emptiness = true;}
-        if(nameField.getText().equals("")) {
-            nameIsEmpty(); emptiness = true;}
-        if(surnameField.getText().equals("")) {
-            surnameIsEmpty(); emptiness = true;}
-        if(levelField.getText().equals("")) {
-            levelIsEmpty(); emptiness = true;}
-        if(emailField.getText().equals("")){
-            emailIsEmpty(); emptiness = true;
-        }
-        if(telField.getText().equals("")){
-            telIsEmpty(); emptiness = true;
-        }
-        return emptiness;
+    private void addNewUser(User user) throws SQLException {
+        DatabaseHandler databaseHandler = new DatabaseHandler();
+        databaseHandler.addNewUser(user);
     }
+
+    public void hideLevel(){
+        levelTooltip.setText("New users can't have level higher than 1");
+        levelTooltipHelper.setDisable(false);
+        levelField.setText("1");
+        levelField.setDisable(true);
+        levelLabel.setDisable(true);
+        levelLabelName.setDisable(true);
+    }
+
+    // ========== Alerts ============================
+
+    private void showSuccessAlert(String text){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("User Addition");
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(addEmployeePane.getScene().getWindow());
+        alert.showAndWait();
+    }
+
+    // =========== Validation checking functions =========
 
     private boolean areFieldsValid() throws SQLException {
         boolean validation = true;
         if(isUsernameTaken(usernameField.getText())){
-            validation = false;
-            usernameNotValid();
+                validation = false;
+                usernameNotValid();
         }
         if(!isPasswordValid(passwordField.getText())){
             validation = false;
@@ -149,33 +154,8 @@ public class AddEmployeeController {
             validation = false;
             levelNotValid();
         }
-        if(!isStringTel(telField.getText())){
-            validation = false;
-            telNotValid();
-        }
-        if(!isEmailValid(emailField.getText())){
-            validation = false;
-            emailNotValid();
-        }
         return validation;
     }
-
-    private void addNewUser(classes.User user) throws SQLException {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        databaseHandler.addNewUser(user);
-    }
-
-    private void showSuccessAlert(){
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("User Addition");
-        alert.setHeaderText(null);
-        alert.setContentText("You have added a new user correctly");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(addEmployeePane.getScene().getWindow());
-        alert.showAndWait();
-    }
-
-    // =========== Validation checking function =========
 
     private boolean isUsernameTaken(String username) throws SQLException {
         DatabaseHandler databaseHandler = new DatabaseHandler();
@@ -204,64 +184,7 @@ public class AddEmployeeController {
         return true;
     }
 
-    private boolean isStringTel(String str) {
-        if(str.length() != 11) return false;
-        char[] charArray = str.toCharArray();
-        for (char ch : charArray) {
-            if (!(ch >= '0' && ch <= '9')) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isEmailValid(String email){
-        Pattern p = Pattern.compile("[a-zA-Z0-9][a-zA-Z0-9._]*@[a-zA-Z0-9]+([.][a-zA-Z]+)+");
-        Matcher m = p.matcher(email);
-        if(m.find() && m.group().equals(email)){
-            return true;
-        }
-        return false;
-    }
-
-    // ============ Printing the empty stuff ===============
-
-    private void usernameIsEmpty(){
-        usernameLabel.setText("Please enter a username");
-        usernameField.setStyle("-fx-border-color: red;");
-    }
-
-    private void passwordIsEmpty(){
-        passwordLabel.setText("Please enter a password");
-        passwordField.setStyle("-fx-border-color: red;");
-    }
-
-    private void nameIsEmpty(){
-        nameLabel.setText("Please enter a name");
-        nameField.setStyle("-fx-border-color: red;");
-    }
-
-    private void surnameIsEmpty(){
-        surnameLabel.setText("Please enter a surname");
-        surnameField.setStyle("-fx-border-color: red;");
-    }
-
-    private void levelIsEmpty(){
-        levelLabel.setText("Please enter a level");
-        levelField.setStyle("-fx-border-color: red;");
-    }
-
-    private void emailIsEmpty(){
-        emailLabel.setText("Please enter an email");
-        emailField.setStyle("-fx-border-color: red;");
-    }
-
-    private void telIsEmpty(){
-        telLabel.setText("Enter a telephone number");
-        telField.setStyle("-fx-border-color: red;");
-    }
-
-    // ============ Printing the non valid stuff ============
+    // ===
 
     private void usernameNotValid(){
         usernameLabel.setText("Username is taken");
@@ -288,16 +211,46 @@ public class AddEmployeeController {
         levelField.setStyle("-fx-border-color: red;");
     }
 
-    private void telNotValid(){
-        telLabel.setText("Enter valid telephone number");
-        telField.setStyle("-fx-border-color: red;");
+    // ============ Emptiness checking functions ===============
+    private boolean areFieldsEmpty(){
+        boolean emptiness = false;
+        if(usernameField.getText().equals("")) {
+            usernameIsEmpty(); emptiness = true;}
+        if(passwordField.getText().equals("")) {
+            passwordIsEmpty(); emptiness = true;}
+        if(nameField.getText().equals("")) {
+            nameIsEmpty(); emptiness = true;}
+        if(surnameField.getText().equals("")) {
+            surnameIsEmpty(); emptiness = true;}
+        if(levelField.getText().equals("")) {
+            levelIsEmpty(); emptiness = true;}
+        return emptiness;
     }
 
-    private void emailNotValid(){
-        emailLabel.setText("Please enter a valid email");
-        emailField.setStyle("-fx-border-color: red;");
+    private void usernameIsEmpty(){
+        usernameLabel.setText("Please enter a username");
+        usernameField.setStyle("-fx-border-color: red;");
     }
 
+    private void passwordIsEmpty(){
+        passwordLabel.setText("Please enter a password");
+        passwordField.setStyle("-fx-border-color: red;");
+    }
+
+    private void nameIsEmpty(){
+        nameLabel.setText("Please enter a name");
+        nameField.setStyle("-fx-border-color: red;");
+    }
+
+    private void surnameIsEmpty(){
+        surnameLabel.setText("Please enter a surname");
+        surnameField.setStyle("-fx-border-color: red;");
+    }
+
+    private void levelIsEmpty(){
+        levelLabel.setText("Please enter a level");
+        levelField.setStyle("-fx-border-color: red;");
+    }
     // ========== reset labels and colors of the fields ==========
 
     private void restStyle(){
@@ -311,16 +264,16 @@ public class AddEmployeeController {
         surnameField.setStyle(null);
         levelLabel.setText("");
         levelField.setStyle(null);
-        telLabel.setText("");
-        telField.setStyle(null);
-        emailLabel.setText("");
-        emailField.setStyle(null);
     }
 
-    // ========= Setters =======================
+    // ========== setter and getter ===========
 
-    public void setUser(User user) {
-        this.user = user;
+    public int  getMode() {
+        return mode;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 }
 

@@ -1,16 +1,13 @@
 package sample.controllers;
 
-import classes.User;
+import sample.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -20,11 +17,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 
 public class SettingsController {
 
-    private classes.User user;
+    private User user;
 
     @FXML
     private AnchorPane settingsPane;
@@ -42,12 +40,6 @@ public class SettingsController {
     private TableColumn<User, Integer> setEmpTabColLevel;
 
     @FXML
-    private TableColumn<User, String> setEmpTabColTel;
-
-    @FXML
-    private TableColumn<User, String> setEmpTabColEmail;
-
-    @FXML
     private Button setEmpRemButton;
 
     @FXML
@@ -62,12 +54,12 @@ public class SettingsController {
     @FXML
     void initialize() throws SQLException {
         // ============== Table ==================
-        refreshTable();
-        // ============== buttons ================
+        refreshUserTable();
+        // ============== User Buttons ================
 
         setAddEmpButton.setOnAction(event -> {
             try {
-                showAdd();
+                showAddUser();
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
@@ -78,8 +70,9 @@ public class SettingsController {
             userSelected = setEmpTableView.getSelectionModel().getSelectedItems();
             if(!userSelected.isEmpty()){
                 try {
-                    removeUser(userSelected.get(0));
-                    refreshTable();
+                    if(removeAlert(userSelected.get(0))){
+                        refreshUserTable();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -93,9 +86,10 @@ public class SettingsController {
             userSelected = setEmpTableView.getSelectionModel().getSelectedItems();
             if(!userSelected.isEmpty()){
                 try {
-                    editUser(userSelected.get(0));
-                    refreshTable();
-                } catch (SQLException e) {
+                    // just one item could be selected -> 0
+                    showEditUser(userSelected.get(0));
+                    refreshUserTable();
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
                 }
             }else{
@@ -103,20 +97,21 @@ public class SettingsController {
             }
         });
 
+        // ============== General Buttons ============
+
         setOkButton.setOnAction(event -> {
             settingsPane.getScene().getWindow().hide();
         });
+
     }
 
 
-    // ============== Helper functions =====
+    // ============== User Functions  =============
 
-    private void showAdd() throws IOException, SQLException {
+    private void showAddUser() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/addEmployee.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/addUser.fxml"));
         fxmlLoader.load();
-        AddEmployeeController addEmployeeController = fxmlLoader.getController();
-        addEmployeeController.setUser(user);
         Parent root = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setTitle("Add Employee");
@@ -125,10 +120,10 @@ public class SettingsController {
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.showAndWait();
-        refreshTable();
+        refreshUserTable();
     }
 
-    private void refreshTable() throws SQLException {
+    private void refreshUserTable() throws SQLException {
         DatabaseHandler databaseHandler = new DatabaseHandler();
         Connection con = databaseHandler.getConnection();
         ResultSet resultSet = databaseHandler.getAllUsers(con);
@@ -136,15 +131,11 @@ public class SettingsController {
         while (resultSet.next()){
             users.add(new User(resultSet.getString(1), resultSet.getString(2),
                     resultSet.getString(3), resultSet.getString(4),
-                    resultSet.getInt(5), resultSet.getString(6),
-                    resultSet.getString(7)));
+                    resultSet.getInt(5)));
         }
         setEmpTabColName.setCellValueFactory(new PropertyValueFactory<>("name"));
         setEmpTabColSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
         setEmpTabColLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
-        setEmpTabColTel.setCellValueFactory(new PropertyValueFactory<>("tel"));
-        setEmpTabColEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
         setEmpTableView.setItems(users);
     }
 
@@ -155,17 +146,51 @@ public class SettingsController {
         }
     }
 
-    private void editUser(User user){
-        // to be implemented
+    private void showEditUser(User user) throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/editUser.fxml"));
+        fxmlLoader.load();
+
+
+        EditUserController editUserController = fxmlLoader.getController();
+        editUserController.setSelectedUser(user);
+
+
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setTitle("Edit Employee");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshUserTable();
     }
 
     // ============= Alerts ======================
 
+    private boolean removeAlert(User user) throws SQLException {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("The only Admin");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to remove: " + user.getName() + " " + user.getSurname());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(settingsPane.getScene().getWindow());
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent()){
+            if(result.get() == ButtonType.OK){
+                removeUser(user);
+                return true;
+            }
+        }
+        return false; // if user exit without clicking anything or if user clicked cancel
+    }
+
     private void selectItemAlert(){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("No User Selected");
         alert.setHeaderText(null);
-        alert.setContentText("Please select a user to delete it");
+        alert.setContentText("Please select a user");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
         alert.showAndWait();
@@ -182,7 +207,7 @@ public class SettingsController {
         alert.showAndWait();
     }
 
-    // ============== Setter ===============
+    // ============== Current user User ===============
     public void setUser(User user) {
         this.user = user;
     }

@@ -1,4 +1,4 @@
-package classes;
+package sample.model;
 
 public class User {
     private String username;
@@ -6,19 +6,15 @@ public class User {
     private String name;
     private String surname;
     private int level;
-    private String email;
-    private String tel;
 
     public User(){}
 
-    public User(String username, String password, String name, String surname, int level, String email, String tel) {
+    public User(String username, String password, String name, String surname, int level) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.surname = surname;
         this.level = level;
-        this.email = email;
-        this.tel = tel;
     }
 
     public String getUsername() {
@@ -59,21 +55,5 @@ public class User {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
     }
 }

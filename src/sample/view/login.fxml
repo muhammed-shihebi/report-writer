@@ -18,23 +18,24 @@
       </Label>
       <TextField fx:id="LoginUsername" layoutX="170.0" layoutY="154.0" prefHeight="31.0" prefWidth="335.0" promptText="Username" />
       <PasswordField fx:id="LoginPassword" layoutX="170.0" layoutY="226.0" prefHeight="31.0" prefWidth="335.0" promptText="Password" />
-      <Button fx:id="LoginLoginButton" defaultButton="true" layoutX="477.0" layoutY="319.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="158.0" text="Login" />
+      <Button fx:id="LoginLoginButton" defaultButton="true" layoutX="288.0" layoutY="319.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="158.0" text="Login" />
       <ImageView fitHeight="31.0" fitWidth="33.0" layoutX="130.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/images/username_icon.png" />
+            <Image url="@../../assets/images/username_icon.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="130.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../assets/images/password_icon.png" />
+            <Image url="@../../assets/images/password_icon.png" />
          </image>
       </ImageView>
       <Label fx:id="UsernameErrorMessage" layoutX="170.0" layoutY="187.0" prefHeight="21.0" prefWidth="296.0" textFill="RED" />
       <Label fx:id="PasswordErrorMassage" layoutX="170.0" layoutY="257.0" prefHeight="21.0" prefWidth="296.0" textFill="RED" />
-      <Label fx:id="LoginNotFoundLabel" layoutX="44.0" layoutY="324.0" prefHeight="21.0" prefWidth="335.0">
+      <Label fx:id="LoginNotFoundLabel" layoutX="170.0" layoutY="104.0" prefHeight="21.0" prefWidth="335.0">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
+      <Button fx:id="loginSignUpButton" layoutX="473.0" layoutY="319.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="158.0" text="Sign up" />
    </children>
 </AnchorPane>
