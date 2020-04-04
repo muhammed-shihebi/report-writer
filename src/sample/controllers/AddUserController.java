@@ -2,6 +2,8 @@ package sample.controllers;
 
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.config.Config;
 import sample.model.User;
 import javafx.fxml.FXML;
@@ -29,9 +31,6 @@ public class AddUserController {
 
     @FXML
     private TextField surnameField;
-
-    @FXML
-    private TextField levelField;
 
     @FXML
     private Button addButton;
@@ -64,9 +63,13 @@ public class AddUserController {
     private Label levelTooltipHelper;
 
     @FXML
+    private ComboBox<Integer> levelComboBox;
+
+    @FXML
     void initialize() {
 
         levelTooltipHelper.setDisable(true);
+        initLevelComboBox();
         // ========== Add button clicked ==========
 
         addButton.setOnAction(event -> {
@@ -75,11 +78,11 @@ public class AddUserController {
                 try {
                     if (areFieldsValid()){
                         User user = new User(
-                                usernameField.getText(),
+                                usernameField.getText().toLowerCase(),
                                 passwordField.getText(),
                                 nameField.getText(),
                                 surnameField.getText(),
-                                Integer.parseInt(levelField.getText())
+                                levelComboBox.getValue()
                         );
                         addNewUser(user);
                         if(mode == Config.SIGNUPMODE){ // sign up
@@ -98,7 +101,7 @@ public class AddUserController {
         // =========== Cancel button clicked ==========
 
         cancelButton.setOnAction(event -> {
-            levelField.getScene().getWindow().hide();
+            addEmployeePane.getScene().getWindow().hide();
         });
     }
 
@@ -112,10 +115,16 @@ public class AddUserController {
     public void hideLevel(){
         levelTooltip.setText("New users can't have level higher than 1");
         levelTooltipHelper.setDisable(false);
-        levelField.setText("1");
-        levelField.setDisable(true);
+        levelComboBox.setValue(Config.Level1);
+        levelComboBox.setDisable(true);
         levelLabel.setDisable(true);
         levelLabelName.setDisable(true);
+        addButton.setText("Sign Up");
+    }
+
+    public void initLevelComboBox(){
+        ObservableList<Integer> listOfLevels = FXCollections.observableArrayList(1, 2, 3);
+        levelComboBox.setItems(listOfLevels);
     }
 
     // ========== Alerts ============================
@@ -134,27 +143,38 @@ public class AddUserController {
 
     private boolean areFieldsValid() throws SQLException {
         boolean validation = true;
-        if(isUsernameTaken(usernameField.getText())){
-                validation = false;
-                usernameNotValid();
+        if(isUsernameTaken(usernameField.getText().toLowerCase())){
+            validation = false;
+            usernameNotValid("taken");
+        }
+        if (!isUsernameValid(usernameField.getText().toLowerCase())){
+            validation = false;
+            usernameNotValid("not valid");
         }
         if(!isPasswordValid(passwordField.getText())){
             validation = false;
             passwordNotValid();
         }
-        if(!isStringText(nameField.getText())){
+        if(!isNameValid(nameField.getText())){
             validation = false;
             nameNotValid();
         }
-        if(!isStringText(surnameField.getText())){
+        if(!isNameValid(surnameField.getText())){
             validation = false;
             surnameNotValid();
         }
-        if(!isLevelValid(Integer.parseInt(levelField.getText()))){
+        if(!isLevelValid(levelComboBox.getValue())){
             validation = false;
             levelNotValid();
         }
         return validation;
+    }
+
+    private boolean isUsernameValid(String username){
+        if(username.length() >= Config.MAXLENGTH || !username.matches("[a-z0-9]+")){
+            return false;
+        }
+        return true;
     }
 
     private boolean isUsernameTaken(String username) throws SQLException {
@@ -163,31 +183,24 @@ public class AddUserController {
     }
 
     private boolean isPasswordValid(String password){
-        if (password.length() < 8 || password.length() > 50) return false;
+        if (password.length() < Config.MINLENGTH || password.length() > Config.MAXLENGTH) return false;
         return true;
     }
     // this used for the name and surname
-    private boolean isStringText(String str) {
-        if (str.length() > 50) return false;
-        str = str.toLowerCase();
-        char[] charArray = str.toCharArray();
-        for (char ch : charArray) {
-            if (!(ch >= 'a' && ch <= 'z')) {
-                return false;
-            }
-        }
-        return true;
+    private boolean isNameValid(String str) {
+        if (str.length() > Config.MAXLENGTH) return false;
+        return str.matches("\\p{L}+");
     }
 
     private boolean isLevelValid(int level){
-        if (level > 3 || level < 1) return false;
+        if (level >  Config.Level3 || level < Config.Level1) return false;
         return true;
     }
 
     // ===
 
-    private void usernameNotValid(){
-        usernameLabel.setText("Username is taken");
+    private void usernameNotValid(String str){
+        usernameLabel.setText("Username is "+ str);
         usernameField.setStyle("-fx-border-color: red;");;
     }
 
@@ -208,7 +221,7 @@ public class AddUserController {
 
     private void levelNotValid(){
         levelLabel.setText("Enter number between 1 and 3");
-        levelField.setStyle("-fx-border-color: red;");
+        levelComboBox.setStyle("-fx-border-color: red;");
     }
 
     // ============ Emptiness checking functions ===============
@@ -222,7 +235,7 @@ public class AddUserController {
             nameIsEmpty(); emptiness = true;}
         if(surnameField.getText().equals("")) {
             surnameIsEmpty(); emptiness = true;}
-        if(levelField.getText().equals("")) {
+        if(levelComboBox.getValue() == null) {
             levelIsEmpty(); emptiness = true;}
         return emptiness;
     }
@@ -249,7 +262,7 @@ public class AddUserController {
 
     private void levelIsEmpty(){
         levelLabel.setText("Please enter a level");
-        levelField.setStyle("-fx-border-color: red;");
+        levelComboBox.setStyle("-fx-border-color: red;");
     }
     // ========== reset labels and colors of the fields ==========
 
@@ -263,7 +276,7 @@ public class AddUserController {
         surnameLabel.setText("");
         surnameField.setStyle(null);
         levelLabel.setText("");
-        levelField.setStyle(null);
+        levelComboBox.setStyle(null);
     }
 
     // ========== setter and getter ===========

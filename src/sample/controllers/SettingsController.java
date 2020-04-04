@@ -88,7 +88,6 @@ public class SettingsController {
                 try {
                     // just one item could be selected -> 0
                     showEditUser(userSelected.get(0));
-                    refreshUserTable();
                 } catch (SQLException | IOException e) {
                     e.printStackTrace();
                 }
@@ -154,6 +153,7 @@ public class SettingsController {
 
         EditUserController editUserController = fxmlLoader.getController();
         editUserController.setSelectedUser(user);
+        editUserController.fillFields();
 
 
         Parent root = fxmlLoader.getRoot();

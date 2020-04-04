@@ -1,9 +1,12 @@
 package sample.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
+import sample.config.Config;
 import sample.database.DatabaseHandler;
 import sample.model.User;
 
@@ -24,12 +27,6 @@ public class EditUserController {
 
     @FXML
     private TextField surnameField;
-
-    @FXML
-    private Label levelLabelName;
-
-    @FXML
-    private TextField levelField;
 
     @FXML
     private Button editButton;
@@ -65,14 +62,14 @@ public class EditUserController {
     private Label passwordStern;
 
     @FXML
+    private ComboBox<Integer> levelComboBox;
+
+    @FXML
     void initialize() {
 
-        // ======= fill out fields =====
+        // ============= Give info to the level compo box=============
 
-        usernameField.setText(selectedUser.getUsername());
-        nameField.setText(selectedUser.getName());
-        surnameField.setText(selectedUser.getSurname());
-        levelField.setText(("" + selectedUser.getLevel()));
+        initLevelComboBox();
 
         // ====== Buttons ===========
         editButton.setOnAction(event ->     {
@@ -82,27 +79,23 @@ public class EditUserController {
                     if (areFieldsValid()){
                         if(editPassCheckBox.isSelected()){
                             User newUser = new User(
-                                    usernameField.getText(),
+                                    usernameField.getText().toLowerCase(),
                                     passwordField.getText(),
                                     nameField.getText(),
                                     surnameField.getText(),
-                                    Integer.parseInt(levelField.getText())
+                                    levelComboBox.getValue()
                             );
                             editUser(selectedUser, newUser);
-                            showSuccessAlert();
-                            EditUserPane.getScene().getWindow().hide();
                         }else{
                             User newUser = new User(
-                                    usernameField.getText(),
+                                    usernameField.getText().toLowerCase(),
                                     // the old password will be copied in the database handler
                                     "",
                                     nameField.getText(),
                                     surnameField.getText(),
-                                    Integer.parseInt(levelField.getText())
+                                    levelComboBox.getValue()
                             );
                             editUser(selectedUser, newUser);
-                            showSuccessAlert();
-                            EditUserPane.getScene().getWindow().hide();
                         }
                     }
                 } catch (SQLException e) {
@@ -137,7 +130,25 @@ public class EditUserController {
 
     private void editUser(User oldUser, User newUser) throws SQLException {
         DatabaseHandler databaseHandler = new DatabaseHandler();
-        databaseHandler.editUser(oldUser, newUser);
+        boolean isUserUpdated = databaseHandler.editUser(oldUser, newUser);
+        if(!isUserUpdated){
+            showFailingAlert();
+        }else {
+            showSuccessAlert();
+            EditUserPane.getScene().getWindow().hide();
+        }
+    }
+
+    public void fillFields(){
+        usernameField.setText(selectedUser.getUsername());
+        nameField.setText(selectedUser.getName());
+        surnameField.setText(selectedUser.getSurname());
+        levelComboBox.setValue(selectedUser.getLevel());
+    }
+
+    public void initLevelComboBox(){
+        ObservableList<Integer> listOfLevels = FXCollections.observableArrayList(Config.Level1, Config.Level2, Config.Level3);
+        levelComboBox.setItems(listOfLevels);
     }
 
     // ========== Alerts ===================
@@ -150,6 +161,17 @@ public class EditUserController {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(EditUserPane.getScene().getWindow());
         alert.showAndWait();
+    }
+
+    private void showFailingAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Edit employee information");
+        alert.setHeaderText(null);
+        alert.setContentText("You can't reduce the level of the only Admin in the system.");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(EditUserPane.getScene().getWindow());
+        alert.showAndWait();
+        levelComboBox.setValue(selectedUser.getLevel());
     }
 
     // ========== Emptiness Checking ========
@@ -169,7 +191,7 @@ public class EditUserController {
             nameIsEmpty(); emptiness = true;}
         if(surnameField.getText().equals("")) {
             surnameIsEmpty(); emptiness = true;}
-        if(levelField.getText().equals("")) {
+        if(levelComboBox.getValue() == null) {
             levelIsEmpty(); emptiness = true;}
         return emptiness;
     }
@@ -196,7 +218,7 @@ public class EditUserController {
 
     private void levelIsEmpty(){
         levelMesg.setText("Please enter a level");
-        levelField.setStyle("-fx-border-color: red;");
+        levelComboBox.setStyle("-fx-border-color: red;");
     }
 
     // ========== Validation Checking =======
@@ -204,25 +226,45 @@ public class EditUserController {
     private boolean areFieldsValid() throws SQLException {
         boolean validation = true;
 
+        if(isUsernameTaken(usernameField.getText().toLowerCase())){
+            validation = false;
+            usernameNotValidMesg("taken");
+        }
+        if (!isUsernameValid(usernameField.getText().toLowerCase())){
+            validation = false;
+            usernameNotValidMesg("too long");
+        }
         if(editPassCheckBox.isSelected()){
             if(!isPasswordValid(passwordField.getText())){
                 validation = false;
-                passwordNotValid();
+                passwordNotValidMesg();
             }
         }
-        if(!isStringText(nameField.getText())){
+        if(!isNameValid(nameField.getText())){
             validation = false;
-            nameNotValid();
+            nameNotValidMesg();
         }
-        if(!isStringText(surnameField.getText())){
+        if(!isNameValid(surnameField.getText())){
             validation = false;
-            surnameNotValid();
+            surnameNotValidMesg();
         }
-        if(!isLevelValid(Integer.parseInt(levelField.getText()))){
+        if(!isLevelValid((levelComboBox.getValue()))){
             validation = false;
-            levelNotValid();
+            levelNotValidMesg();
         }
         return validation;
+    }
+
+    private boolean isUsernameTaken(String newUsername) throws SQLException {
+        DatabaseHandler databaseHandler = new DatabaseHandler();
+        return databaseHandler.isUsernameTaken(newUsername, selectedUser.getUsername());
+    }
+
+    private boolean isUsernameValid(String username){
+        if(username.length() >= Config.MAXLENGTH || !username.matches("[a-z0-9]+")){
+            return false;
+        }
+        return true;
     }
 
     private boolean isPasswordValid(String password){
@@ -230,43 +272,41 @@ public class EditUserController {
         return true;
     }
     // this used for the name and surname
-    private boolean isStringText(String str) {
-        if (str.length() > 50) return false;
-        str = str.toLowerCase();
-        char[] charArray = str.toCharArray();
-        for (char ch : charArray) {
-            if (!(ch >= 'a' && ch <= 'z')) {
-                return false;
-            }
-        }
-        return true;
+    private boolean isNameValid(String str) {
+        if (str.length() > Config.MAXLENGTH) return false;
+        return str.matches("\\p{L}+");
     }
 
     private boolean isLevelValid(int level){
-        if (level > 3 || level < 1) return false;
+        if (level > Config.Level3 || level < Config.Level1) return false;
         return true;
     }
 
-    // ===
+    // ========== Validation Messeges ==========
 
-    private void passwordNotValid(){
+    private void usernameNotValidMesg(String str){
+        usernameMesg.setText("Username is " + str);
+        usernameField.setStyle("-fx-border-color: red;");
+    }
+
+    private void passwordNotValidMesg(){
         passwordMesg.setText("Please enter a too short");
         passwordField.setStyle("-fx-border-color: red;");
     }
 
-    private void nameNotValid(){
+    private void nameNotValidMesg(){
         nameMesg.setText("Please enter a valid name");
         nameField.setStyle("-fx-border-color: red;");
     }
 
-    private void surnameNotValid(){
+    private void surnameNotValidMesg(){
         surnameMesg.setText("Please enter a valid surname");
         surnameField.setStyle("-fx-border-color: red;");
     }
 
-    private void levelNotValid(){
+    private void levelNotValidMesg(){
         levelMesg.setText("Enter number between 1 and 3");
-        levelField.setStyle("-fx-border-color: red;");
+        levelComboBox.setStyle("-fx-border-color: red;");
     }
 
     // ========== reset things ==============
@@ -281,7 +321,7 @@ public class EditUserController {
         surnameMesg.setText("");
         surnameField.setStyle(null);
         levelMesg.setText("");
-        levelField.setStyle(null);
+        levelComboBox.setStyle(null);
     }
 
     // ========== Setter and getter =========

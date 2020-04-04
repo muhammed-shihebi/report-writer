@@ -52,7 +52,7 @@ public class LoginController {
 
             // reset the style to correspond to the new changes
             resetStyle();
-            String username = LoginUsername.getText();
+            String username = LoginUsername.getText().toLowerCase();
             String password = LoginPassword.getText();
             if(username.equals("") && password.equals("")){
                 passwordError();
