@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.Report2Controller">
+   <children>
+      <AnchorPane fx:id="generalPane" layoutX="300.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="inspectionPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="383.0" text="Muayene Sonuçları">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TableView layoutX="31.0" layoutY="221.0" prefHeight="546.0" prefWidth="940.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="Sıra No" />
+                      <TableColumn prefWidth="155.0" text="Kaynak/ Parça No" />
+                        <TableColumn prefWidth="125.0" text="Kontrol Uzun." />
+                        <TableColumn prefWidth="100.0" text="Kaynak Yön." />
+                        <TableColumn prefWidth="120.0" text="Kalınlık (mm)" />
+                        <TableColumn prefWidth="100.0" text="Çap (mm)" />
+                        <TableColumn prefWidth="100.0" text="Hata Tipi" />
+                        <TableColumn prefWidth="100.0" text="Hatanın Yeri" />
+                        <TableColumn prefWidth="65.0" text="Sonuç" />
+                    </columns>
+                  </TableView>
+                  <TextField layoutX="108.0" layoutY="173.0" prefHeight="31.0" prefWidth="150.0" />
+                  <TextField layoutX="264.0" layoutY="173.0" prefHeight="31.0" prefWidth="120.0" />
+                  <TextField layoutX="389.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
+                  <TextField layoutX="489.0" layoutY="173.0" prefHeight="31.0" prefWidth="115.0" />
+                  <TextField layoutX="609.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" text="-" />
+                  <TextField layoutX="709.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
+                  <TextField layoutX="808.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
+                  <Button layoutX="554.0" layoutY="112.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="200.0" text="Ekle" />
+                  <Button layoutX="769.0" layoutY="112.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="200.0" text="Kaldır" />
+                  <ComboBox layoutX="905.0" layoutY="173.0" prefHeight="31.0" prefWidth="68.0" promptText="OK or RED" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="personnelPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="45.0" layoutY="85.0" prefHeight="21.0" prefWidth="252.0" text="Operatör">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="135.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="195.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="255.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="305.0" prefHeight="21.0" prefWidth="252.0" text="Değerlendiren">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="355.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="415.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="475.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="535.0" prefHeight="21.0" prefWidth="252.0" text="Onay">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="585.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="645.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="705.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField disable="true" layoutX="190.0" layoutY="133.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="193.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="253.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="353.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="413.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="473.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="583.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="643.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="703.0" prefHeight="31.0" prefWidth="404.0" />
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="404.0" text="Personel Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="equipmentPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="448.0" text="Ekipman Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="85.0" prefHeight="27.0" prefWidth="166.0" text="Kutup Mesafesi,mm">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="145.0" prefHeight="27.0" prefWidth="57.0" text="Cihaz">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="205.0" prefHeight="27.0" prefWidth="154.0" text="MP Taşıyıcı Ortam">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="210.0" layoutY="203.0" prefHeight="31.0" prefWidth="275.0" />
+                  <Label layoutX="30.0" layoutY="265.0" prefHeight="27.0" prefWidth="191.0" text="Mıknatıslama Tekniği">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="325.0" prefHeight="27.0" prefWidth="150.0" text="UV Işık Şiddeti">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="385.0" prefHeight="27.0" prefWidth="125.0" text="Işık mesafesi">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="445.0" prefHeight="27.0" prefWidth="159.0" text="Muayene Bölgesi">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="505.0" prefHeight="27.0" prefWidth="101.0" text="Akım Tipi">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="565.0" prefHeight="27.0" prefWidth="182.0" text="Luxmetre/Işık Şiddeti">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="85.0" prefHeight="27.0" prefWidth="166.0" text="Muayene Ortamı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="145.0" prefHeight="27.0" prefWidth="159.0" text="Mıknatıs Giderimi">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="205.0" prefHeight="27.0" prefWidth="154.0" text="Isıl İşlem">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="265.0" prefHeight="27.0" prefWidth="191.0" text="Yüzey Sıcaklığı (ºC)">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="324.0" prefHeight="31.0" prefWidth="345.0" text="Muayene Bölgesindeki Alan Şiddeti, kA/m" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="385.0" prefHeight="27.0" prefWidth="125.0" text="Yüzey">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="445.0" prefHeight="27.0" prefWidth="159.0" text="Işık Cihazı Tanımı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="210.0" layoutY="83.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="210.0" layoutY="145.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="210.0" layoutY="324.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="210.0" layoutY="263.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="210.0" layoutY="383.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="210.0" layoutY="443.0" prefHeight="31.0" prefWidth="275.0" text="KAYNAK+HAZ" />
+                  <ComboBox layoutX="210.0" layoutY="503.0" prefHeight="31.0" prefWidth="275.0" promptText="DC or AC" />
+                  <TextField layoutX="210.0" layoutY="563.0" prefHeight="31.0" prefWidth="275.0" text="1200 Lux" />
+                  <TextField layoutX="708.0" layoutY="145.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="708.0" layoutY="85.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="708.0" layoutY="203.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="708.0" layoutY="263.0" prefHeight="31.0" prefWidth="50.0" />
+                  <Label layoutX="758.0" layoutY="265.0" text=" ºc">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="845.0" layoutY="323.0" prefHeight="31.0" prefWidth="77.0" text="3.2" />
+                  <Label layoutX="927.0" layoutY="325.0" text="kA/m">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="708.0" layoutY="385.0" prefHeight="31.0" prefWidth="275.0" text="TAŞLANMIŞ / GRINDING" />
+                  <TextField layoutX="708.0" layoutY="503.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="708.0" layoutY="443.0" prefHeight="31.0" prefWidth="275.0" text="***" />
+                  <Label layoutX="500.0" layoutY="505.0" prefHeight="31.0" prefWidth="214.0" text="Kaldırma Testi Tarih / No" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="708.0" layoutY="623.0" prefHeight="31.0" prefWidth="275.0" text="Standarttan sapma yoktur." />
+                  <ImageView fitHeight="117.0" fitWidth="182.0" layoutX="30.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/images/report2/1.jpg" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="109.0" fitWidth="182.0" layoutX="237.0" layoutY="645.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/images/report2/2.jpg" />
+                     </image>
+                  </ImageView>
+                  <CheckBox layoutX="182.0" layoutY="718.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="15.0" />
+                  <CheckBox layoutX="365.0" layoutY="718.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="15.0" />
+                  <Label layoutX="500.0" layoutY="625.0" prefHeight="27.0" prefWidth="191.0" text="Standarttan Sapmalar">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="685.0" prefHeight="27.0" prefWidth="159.0" text="Muayene Tarihleri">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="500.0" layoutY="745.0" prefHeight="27.0" prefWidth="159.0" text="Açıklamalar ve Ekler">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField disable="true" layoutX="708.0" layoutY="684.0" prefHeight="31.0" prefWidth="275.0" />
+                  <TextField layoutX="708.0" layoutY="743.0" prefHeight="31.0" prefWidth="275.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="customerAndReportPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <ComboBox layoutX="210.0" layoutY="83.0" prefHeight="31.0" prefWidth="300.0" />
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Müşteri Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="85.0" prefHeight="21.0" prefWidth="76.0" text="Müşteri">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="145.0" text="Proje Adı ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox layoutX="210.0" layoutY="143.0" prefHeight="31.0" prefWidth="300.0" />
+                  <Label layoutX="30.0" layoutY="205.0" text="Test Yeri">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="210.0" layoutY="203.0" prefHeight="30.0" prefWidth="300.0" />
+                  <Label layoutX="30.0" layoutY="300.0" prefHeight="21.0" prefWidth="252.0" text="Rapor Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="839.0" layoutX="130.0" layoutY="336.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="355.0" text="Muayene Standardı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="415.0" text="Değerlen. Standardı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="475.0" text="Muayene Prosedürü">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="535.0" text="Muayene Kapsamı ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="595.0" text="Resim No">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="655.0" text="Yüzey Durumu">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="715.0" text="Muayene Aşaması">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="555.0" layoutY="355.0" text="Sayfa No">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="555.0" layoutY="416.0" text="Rapor No">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="555.0" layoutY="475.0" text="Rapor Tarihi ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="545.0" layoutY="85.0" text="İş Emri No ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="545.0" layoutY="145.0" text="Teklif No ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="210.0" layoutY="353.0" prefHeight="30.0" prefWidth="300.0" text="TS EN ISO 17638" />
+                  <TextField layoutX="210.0" layoutY="414.0" prefHeight="30.0" prefWidth="300.0" text="TS EN ISO 23278 Class B" />
+                  <TextField layoutX="210.0" layoutY="473.0" prefHeight="30.0" prefWidth="300.0" text="P-101-004" />
+                  <TextField layoutX="210.0" layoutY="593.0" prefHeight="30.0" prefWidth="300.0" text="-" />
+                  <TextField disable="true" layoutX="668.0" layoutY="414.0" prefHeight="30.0" prefWidth="300.0" />
+                  <TextField disable="true" layoutX="668.0" layoutY="473.0" prefHeight="30.0" prefWidth="300.0" />
+                  <Label layoutX="296.0" layoutY="535.0" text="\%">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox layoutX="210.0" layoutY="533.0" prefHeight="31.0" prefWidth="86.0" promptText="100" />
+                  <ComboBox layoutX="210.0" layoutY="653.0" prefHeight="31.0" prefWidth="300.0" />
+                  <ComboBox layoutX="210.0" layoutY="713.0" prefHeight="31.0" prefWidth="300.0" />
+                  <ComboBox layoutX="668.0" layoutY="353.0" prefHeight="31.0" prefWidth="86.0" promptText="1" />
+                  <ComboBox layoutX="658.0" layoutY="83.0" prefHeight="30.0" prefWidth="300.0" />
+                  <ComboBox layoutX="658.0" layoutY="145.0" prefHeight="30.0" prefWidth="300.0" />
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
+      <AnchorPane cacheShape="false" prefHeight="800.0" prefWidth="300.0" style="-fx-background-color: #dddddd;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button layoutY="60.0" mnemonicParsing="false" onAction="#customerAndReportOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Müşteri ve Rapor Bilgileri" textAlignment="CENTER" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutY="120.0" mnemonicParsing="false" onAction="#equipmentOnAuction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Ekipman Bilgileri" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutY="180.0" mnemonicParsing="false" onAction="#inspectionOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Muayene Sonuçları" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutY="240.0" mnemonicParsing="false" onAction="#personnelOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Personel Bilgileri" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="60.0" prefWidth="300.0" text="Bölümler" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="360.0" prefHeight="60.0" prefWidth="300.0" text="Kaydetme seçenekleri" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button layoutY="420.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="PDF olarak kaydet" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutY="480.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Excel olarak kaydet" AnchorPane.leftAnchor="0.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="t" layoutY="660.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Iptal et">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="600.0" prefHeight="60.0" prefWidth="300.0" text="Diğer seçenekler">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </AnchorPane>
+   </children>
+</AnchorPane>

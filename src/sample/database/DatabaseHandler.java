@@ -1,8 +1,6 @@
 package sample.database;
 
-import sample.config.Config;
 import sample.model.User;
-
 import java.sql.*;
 
 public class DatabaseHandler {

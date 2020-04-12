@@ -1,14 +1,14 @@
 package sample.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.*;
 import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class MainController {
+
+    private User user;
 
     @FXML
     private AnchorPane mainPane;
@@ -30,11 +32,21 @@ public class MainController {
 
     @FXML
     private Button mainLogoutButton;
-
-    private User user;
+    @FXML
+    private ComboBox<String> mainReportTypeCbox;
+    @FXML
+    private Button mainNextButton;
 
     @FXML
     void initialize() {
+
+        // =================fill out roport=======================
+
+        ObservableList<String> reports = FXCollections.observableArrayList(
+                "MAGNETIC PARTICLE INSPECTION REPORT"
+        );
+        mainReportTypeCbox.setItems(reports);
+
         // ============= Setting button clicked ==============
 
         mainSettingsButton.setOnAction(event -> {
@@ -56,7 +68,32 @@ public class MainController {
 
     }
 
+    // ==============Action functions =================
+
+    @FXML
+    void nextOnAction(ActionEvent event) throws IOException {
+        if(true){ // ToDo show reports according to the user selection
+            showReport2();
+        }
+    }
+
+
     // ============== helping functions ===============
+
+    private void showReport2() throws IOException {
+        mainPane.getScene().getWindow().hide();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/sample/view/report2.fxml"));
+        loader.load();
+        Report2Controller report2Controller = (Report2Controller) loader.getController();
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setTitle("Report2"); // ToDo this should be the name of the report chosen by user
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(mainPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
 
     public void hideSetting(){
         mainSettingsButton.setDisable(true);
@@ -67,10 +104,8 @@ public class MainController {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/sample/view/settings.fxml"));
         fxmlLoader.load();
-
         SettingsController settingsController = fxmlLoader.getController();
         settingsController.setUser(user);
-
         Parent root = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setTitle("Settings");
