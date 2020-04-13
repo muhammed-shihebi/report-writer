@@ -1,19 +1,17 @@
 package sample.controllers;
 
-import javafx.stage.Modality;
-import sample.config.Config;
+import javafx.event.ActionEvent;
+import sample.database.DatabaseHandler;
 import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import sample.database.DatabaseHandler;
 
 
 import java.io.IOException;
@@ -22,78 +20,48 @@ import java.sql.SQLException;
 public class LoginController {
 
     @FXML
-    private AnchorPane LoginPane;
+    private AnchorPane loginPane;
 
     @FXML
-    private TextField LoginUsername;
+    private TextField username;
 
     @FXML
-    private PasswordField LoginPassword;
+    private PasswordField password;
 
     @FXML
-    private Label LoginNotFoundLabel;
+    private Label notFoundMesg;
 
     @FXML
-    private Button LoginLoginButton;
+    private Label usernameMesg;
 
     @FXML
-    private Label UsernameErrorMessage;
-
-    @FXML
-    private Label PasswordErrorMassage;
-
-    @FXML
-    private Button loginSignUpButton;
+    private Label passwordMesg;
 
     @FXML
     void initialize() {
-        // =========== LoginButton clicked ====================
-        LoginLoginButton.setOnAction(event -> {
-
-            // reset the style to correspond to the new changes
-            resetStyle();
-            String username = LoginUsername.getText().toLowerCase();
-            String password = LoginPassword.getText();
-            if(username.equals("") && password.equals("")){
-                passwordError();
-                usernameError();
-            }else if (username.equals("")){
-                usernameError();
-            }else if (password.equals("")){
-                passwordError();
-            }else{
-                DatabaseHandler databaseHandler = new DatabaseHandler();
-                try {
-                    User user = databaseHandler.getUser(username, password);
-                    // there is a user with this user name and password
-                    if(user != null){
-                        showMain(user);
-                    }else{
-                        userNotFound();
-                    }
-                } catch (SQLException | IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        // =========== SignUpButton clicked ===================
-        loginSignUpButton.setOnAction(event -> {
-            try {
-                showAddEmployee();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
 
+    // =========== on Action ==================
+
+    @FXML
+    private void LoginButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        resetStyle();
+        if(!areFieldsEmpty()){
+            User user = DatabaseHandler.getUser(username.getText().toLowerCase(), password.getText());
+            if(user != null){
+                showMain(user);
+            }else{
+                userNotFound();
+            }
+        }
+    }
 
     // =========== helper functions ===========
 
-    public void showMain(User user) throws IOException {
+    private  void showMain(User user) throws IOException {
         // hiding the login window
-        LoginPane.getScene().getWindow().hide();
+        loginPane.getScene().getWindow().hide();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/sample/view/main.fxml"));
         // after loading the fxml file the initialize() method in MainController is called
@@ -102,9 +70,8 @@ public class LoginController {
         // so from here we could manipulate the objects (Nodes) in that widow
         MainController mainController = fxmlLoader.getController();
         // if the user has level lower then 3 the setting Button will be disabled
-        if(user.getLevel() < 3)
-            mainController.hideSetting();
-
+        if(user.getLevel() < User.LEVEL3)
+            mainController.hideSettings();
         // we also passing the user to be used later on the setting and other things
         mainController.setUser(user);
         Parent root = fxmlLoader.getRoot();
@@ -115,50 +82,46 @@ public class LoginController {
         stage.show();
     }
 
-    public void showAddEmployee() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/addUser.fxml"));
-        fxmlLoader.load();
-        AddUserController addUserController = fxmlLoader.getController();
-        addUserController.setMode(Config.SIGNUPMODE);
-        addUserController.hideLevel();
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setTitle("Add Employee");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(LoginPane.getScene().getWindow());
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.showAndWait();
+    private boolean areFieldsEmpty(){
+        boolean emptiness = false;
+        if (username.getText().toLowerCase().equals("")){
+            emptiness = true;
+            usernameError();
+        }
+        if (password.getText().equals("")){
+            emptiness = true;
+            passwordError();
+        }
+        return emptiness;
     }
 
     // =========== Error handler ==============
 
-    public void usernameError(){
-        UsernameErrorMessage.setText("Please enter a valid username!");
-        LoginUsername.setStyle("-fx-border-color: red;");
+    private  void usernameError(){
+        usernameMesg.setText("Lütfen geçerli bir kullanıcı adı girin!");
+        username.setStyle("-fx-border-color: red;");
         System.out.println("No Username entered");
     }
 
-    public void passwordError(){
-        PasswordErrorMassage.setText("Please enter a valid Password!");
-        LoginPassword.setStyle("-fx-border-color: red;");
+    private  void passwordError(){
+        passwordMesg.setText("Lütfen geçerli bir şifre giriniz!");
+        password.setStyle("-fx-border-color: red;");
         System.out.println("No Password entered");
     }
 
-    public void userNotFound(){
-        LoginNotFoundLabel.setText("Username or password is not correct");
+    private  void userNotFound(){
+        notFoundMesg.setText("Kullanıcı adı veya şifre doğru değil");
         System.out.println("username not found");
     }
 
     // =========== reset =======================
 
-    public void resetStyle(){
-        UsernameErrorMessage.setText("");
-        PasswordErrorMassage.setText("");
-        LoginNotFoundLabel.setText("");
-        LoginUsername.setStyle(null);
-        LoginPassword.setStyle(null);
+    private  void resetStyle(){
+        usernameMesg.setText("");
+        passwordMesg.setText("");
+        notFoundMesg.setText("");
+        username.setStyle(null);
+        password.setStyle(null);
     }
 
 }

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" prefHeight="653.0" prefWidth="695.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainController">
+<AnchorPane fx:id="mainPane" prefHeight="649.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainController">
    <children>
       <Pane layoutX="15.0" layoutY="479.0" prefHeight="98.0" prefWidth="665.0" style="-fx-background-color: #ffffff;" />
       <Pane layoutX="15.0" layoutY="270.0" prefHeight="199.0" prefWidth="665.0" style="-fx-background-color: #ffffff;" />
@@ -21,7 +21,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="mainReportTypeCbox" layoutX="180.0" layoutY="65.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="reportTypeCbox" layoutX="180.0" layoutY="65.0" prefHeight="31.0" prefWidth="369.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -51,11 +51,11 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="mainSettingsButton" layoutX="186.0" layoutY="600.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="143.0" text="Ayarlar">
+      <Button fx:id="settingsButton" layoutX="186.0" layoutY="600.0" mnemonicParsing="false" onAction="#SettingsButtonOnAction" prefHeight="39.0" prefWidth="143.0" text="Ayarlar">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Button fx:id="mainNextButton" defaultButton="true" layoutX="526.0" layoutY="600.0" mnemonicParsing="false" onAction="#nextOnAction" prefHeight="31.0" prefWidth="143.0" text="Tamam">
+      <Button defaultButton="true" layoutX="526.0" layoutY="600.0" mnemonicParsing="false" onAction="#nextOnAction" prefHeight="31.0" prefWidth="143.0" text="Tamam">
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -64,7 +64,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="mainLogoutButton" layoutX="25.0" layoutY="600.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="143.0" text="Çıkış Yap">
+      <Button layoutX="25.0" layoutY="600.0" mnemonicParsing="false" onAction="#LogoutButtonOnAction" prefHeight="39.0" prefWidth="143.0" text="Çıkış Yap">
          <font>
             <Font size="18.0" />
          </font></Button>

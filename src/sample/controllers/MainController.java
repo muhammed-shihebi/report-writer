@@ -20,65 +20,47 @@ import java.util.Optional;
 public class MainController {
 
     private User user;
-
     @FXML
     private AnchorPane mainPane;
-
     @FXML
-    private Button mainSettingsButton;
-
+    private Button settingsButton;
     @FXML
-    private Label mainSettingLabel;
-
-    @FXML
-    private Button mainLogoutButton;
-    @FXML
-    private ComboBox<String> mainReportTypeCbox;
-    @FXML
-    private Button mainNextButton;
-
+    private ComboBox<String> reportTypeCbox;
     @FXML
     void initialize() {
-
         // =================fill out roport=======================
-
+        // TODO the name should be in a xml file
         ObservableList<String> reports = FXCollections.observableArrayList(
                 "MAGNETIC PARTICLE INSPECTION REPORT"
         );
-        mainReportTypeCbox.setItems(reports);
-
-        // ============= Setting button clicked ==============
-
-        mainSettingsButton.setOnAction(event -> {
-            System.out.println("Showing the Setting window and blocking the main window");
-            try {
-                showSetting();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        mainLogoutButton.setOnAction(event -> {
-            try {
-                showLogoutAlert();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
+        reportTypeCbox.setItems(reports);
     }
 
-    // ==============Action functions =================
+    // ============== On Action =================
 
     @FXML
-    void nextOnAction(ActionEvent event) throws IOException {
+    private void nextOnAction(ActionEvent event) throws IOException {
         if(true){ // ToDo show reports according to the user selection
             showReport2();
         }
     }
 
+    @FXML
+    private void LogoutButtonOnAction(ActionEvent event) throws Exception {
+        showLogoutAlert();
+    }
+
+    @FXML
+    private void SettingsButtonOnAction(ActionEvent event) throws IOException {
+        showSetting();
+    }
+
 
     // ============== helping functions ===============
+
+    public void hideSettings(){
+        settingsButton.setVisible(false);
+    }
 
     private void showReport2() throws IOException {
         mainPane.getScene().getWindow().hide();
@@ -86,6 +68,7 @@ public class MainController {
         loader.setLocation(getClass().getResource("/sample/view/report2.fxml"));
         loader.load();
         Report2Controller report2Controller = (Report2Controller) loader.getController();
+        report2Controller.setUser(user);
         Parent root = loader.getRoot();
         Stage stage = new Stage();
         stage.setTitle("Report2"); // ToDo this should be the name of the report chosen by user
@@ -95,12 +78,7 @@ public class MainController {
         stage.showAndWait();
     }
 
-    public void hideSetting(){
-        mainSettingsButton.setDisable(true);
-        mainSettingLabel.setDisable(true);
-    }
-
-    public void showSetting() throws IOException {
+    private void showSetting() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/sample/view/settings.fxml"));
         fxmlLoader.load();
@@ -116,7 +94,7 @@ public class MainController {
         stage.showAndWait();
     }
 
-    public void logout() throws Exception {
+    private void logout() throws Exception {
         setUser(null);
         Main main  = new Main();
         mainPane.getScene().getWindow().hide();
@@ -126,7 +104,7 @@ public class MainController {
 
     // ============= Alerts ===========================
 
-    public void showLogoutAlert() throws Exception {
+    private void showLogoutAlert() throws Exception {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText(null);
@@ -141,7 +119,7 @@ public class MainController {
         }
     }
 
-    // ============= Setter ===========================
+    // ============= Setters and Getters ===========================
     public void setUser(User user) {
         this.user = user;
     }

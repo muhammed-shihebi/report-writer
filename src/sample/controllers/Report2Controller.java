@@ -10,10 +10,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sample.model.User;
+
 import java.io.IOException;
 import java.util.Optional;
 
 public class Report2Controller {
+
+    private User user;
 
     @FXML
     private AnchorPane generalPane;
@@ -30,30 +34,34 @@ public class Report2Controller {
     @FXML
     private Pane customerAndReportPane;
 
-    //  ================ sidebar actions ====================
+    //  ================ On Action ====================
     @FXML
-    void customerAndReportOnAction(ActionEvent event) {
+    private void customerAndReportOnAction(ActionEvent event) {
         customerAndReportPane.toFront();
     }
     @FXML
-    void equipmentOnAuction(ActionEvent event) {
+    private void equipmentOnAuction(ActionEvent event) {
         equipmentPane.toFront();
     }
     @FXML
-    void inspectionOnAction(ActionEvent event) {
+    private void inspectionOnAction(ActionEvent event) {
         inspectionPane.toFront();
     }
     @FXML
-    void personnelOnAction(ActionEvent event) {
+    private void personnelOnAction(ActionEvent event) {
         personnelPane.toFront();
     }
     @FXML
-    void cancelOnAction(ActionEvent event) throws IOException {
+    private void cancelOnAction(ActionEvent event) throws IOException {
         if(cancelAlert()){
             generalPane.getScene().getWindow().hide();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
             Parent root = loader.load();
             MainController mainController = (MainController) loader.getController();
+            mainController.setUser(user);
+            if(user.getLevel() < User.LEVEL3){
+                mainController.hideSettings();
+            }
             Stage stage = new Stage();
             stage.setTitle("Main"); // ToDo this should be the name of the report chosen by user
             stage.setScene(new Scene(root));
@@ -82,4 +90,13 @@ public class Report2Controller {
         return false; // if user exit without clicking anything or if user clicked cancel
     }
 
+    // =============== Setters and Getters ===================
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

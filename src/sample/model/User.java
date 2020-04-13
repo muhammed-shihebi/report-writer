@@ -1,11 +1,24 @@
 package sample.model;
 
+import javafx.collections.ObservableList;
+import sample.database.DatabaseHandler;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class User {
-    private String username;
-    private String password;
-    private String name;
-    private String surname;
-    private int level;
+
+    public final static int LEVEL1 = 1;
+    public final static int LEVEL2 = 2;
+    public final static int LEVEL3 = 3;
+    public final static int MAXPASSWORDLENGTH = 50;
+    public final static int MINPASSWORDLENGTH = 8;
+
+    private String username = "";
+    private String password= "";
+    private String name= "";
+    private String surname= "";
+    private int level = 0;
 
     public User(){}
 
@@ -27,10 +40,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -56,4 +65,24 @@ public class User {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    // ===================== Data Validation ==============
+
+    public static boolean isUsernameValid(String username){
+        return username.matches("[a-z0-9]+");
+    }
+
+    public static boolean isUsernameTaken(String username) throws SQLException {
+        DatabaseHandler databaseHandler = new DatabaseHandler();
+        return databaseHandler.isUsernameTaken(username);
+    }
+
+    public static boolean isPasswordValid(String password){
+        return password.length() <= MAXPASSWORDLENGTH && password.length() >= MINPASSWORDLENGTH;
+    }
+
+    public static boolean isNameValid(String str) {
+        return str.matches("\\p{L}+");
+    }
+
 }

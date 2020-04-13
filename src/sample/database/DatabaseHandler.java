@@ -1,10 +1,13 @@
 package sample.database;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import sample.model.User;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseHandler {
-    public Connection getConnection(){
+    public static Connection getConnection(){
         Connection con = null;
         try{
             System.out.println("Connecting database...");
@@ -26,8 +29,9 @@ public class DatabaseHandler {
 
 
     // ============= user related ===================
-    // return user with username and level if exist and null if not
-    public User getUser(String username, String password) throws SQLException {
+
+    public static User getUser(String username, String password) throws SQLException {
+        // return user with username and level if exist and null if not
         Connection con = getConnection();
         Statement statement = con.createStatement();
         ResultSet resultSet;
@@ -53,7 +57,7 @@ public class DatabaseHandler {
         }
     }
 
-    public boolean isUsernameTaken(String username) throws SQLException {
+    public static boolean isUsernameTaken(String username) throws SQLException {
         Connection con = getConnection();
         Statement statement = con.createStatement();
         ResultSet resultSet;
@@ -71,29 +75,7 @@ public class DatabaseHandler {
         }
     }
 
-    public boolean isUsernameTaken(String newUsername, String oldUsername) throws SQLException {
-        Connection con = getConnection();
-        Statement statement = con.createStatement();
-        ResultSet resultSet;
-        resultSet = statement.executeQuery(
-                "SELECT * FROM user WHERE username = '"+ newUsername +"' ;");
-
-        if(resultSet.next()){ // there is user with this username
-            if(oldUsername.equals(resultSet.getString("username"))){ // username is not changed
-                con.close();
-                return false;
-            }else {
-                con.close();
-                return true;
-            }
-        }else{ // there is no user with this username
-            con.close();
-            return false;
-        }
-
-    }
-
-    public void addNewUser(User user) throws SQLException {
+    public static void addNewUser(User user) throws SQLException {
         Connection con = getConnection();
         Statement statement = con.createStatement();
         int result;
@@ -105,17 +87,26 @@ public class DatabaseHandler {
         System.out.println("the connection is closed");
     }
 
-    public ResultSet getAllUsers(Connection con) throws SQLException {
+    public static ObservableList<User> getAllUsers() throws SQLException {
+        Connection con = getConnection();
         Statement statement = con.createStatement();
         ResultSet resultSet;
         resultSet = statement.executeQuery("SELECT * from user;");
-        return resultSet;
+
+        ObservableList<User> users = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            users.add(new User(resultSet.getString(1), resultSet.getString(2),
+                    resultSet.getString(3), resultSet.getString(4),
+                    resultSet.getInt(5)));
+        }
+        con.close();
+        return users;
     }
 
-    // return false if the user to be deleted is the only admin in the system
-    // this admin will not be deleted
-    // return true otherwise with deleting the user
-    public boolean deleteUser(User user) throws SQLException {
+    public static boolean deleteUser(User user) throws SQLException {
+        // return false if the user to be deleted is the only admin in the system
+        // this admin will not be deleted
+        // return true otherwise with deleting the user
         Connection con = getConnection();
         Statement statement = con.createStatement();
         ResultSet resultSet;
@@ -138,7 +129,7 @@ public class DatabaseHandler {
         return true;
     }
 
-    public boolean editUser(User oldUser, User newUser) throws SQLException {
+    public static boolean editUser(User oldUser, User newUser) throws SQLException {
 
         // ======= getting connection =======
         Connection con = getConnection();

@@ -1,7 +1,8 @@
 package sample.controllers;
 
+import javafx.event.ActionEvent;
+import sample.database.DatabaseHandler;
 import sample.model.User;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.database.DatabaseHandler;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -28,92 +26,75 @@ public class SettingsController {
     private AnchorPane settingsPane;
 
     @FXML
-    private TableView<User> setEmpTableView;
+    private TableView<User> userTableView;
 
     @FXML
-    private TableColumn<User, String> setEmpTabColName;
+    private TableColumn<User, String> userTabColName;
 
     @FXML
-    private TableColumn<User, String> setEmpTabColSurname;
+    private TableColumn<User, String> userTabColSurname;
 
     @FXML
-    private TableColumn<User, Integer> setEmpTabColLevel;
-
-    @FXML
-    private Button setEmpRemButton;
-
-    @FXML
-    private Button setEmpEditButton;
-
-    @FXML
-    private Button setAddEmpButton;
-
-    @FXML
-    private Button setOkButton;
+    private TableColumn<User, Integer> userTabColLevel;
 
     @FXML
     void initialize() throws SQLException {
-        // ============== Table ==================
         refreshUserTable();
-        // ============== User Buttons ================
-
-        setAddEmpButton.setOnAction(event -> {
-            try {
-                showAddUser();
-            } catch (IOException | SQLException e) {
-                e.printStackTrace();
-            }
-        });
-
-        setEmpRemButton.setOnAction(event -> {
-            ObservableList<User> userSelected;
-            userSelected = setEmpTableView.getSelectionModel().getSelectedItems();
-            if(!userSelected.isEmpty()){
-                try {
-                    if(removeAlert(userSelected.get(0))){
-                        refreshUserTable();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                selectItemAlert();
-            }
-        });
-
-        setEmpEditButton.setOnAction(event -> {
-            ObservableList<User> userSelected;
-            userSelected = setEmpTableView.getSelectionModel().getSelectedItems();
-            if(!userSelected.isEmpty()){
-                try {
-                    // just one item could be selected -> 0
-                    showEditUser(userSelected.get(0));
-                } catch (SQLException | IOException e) {
-                    e.printStackTrace();
-                }
-            }else{
-                selectItemAlert();
-            }
-        });
-
-        // ============== General Buttons ============
-
-        setOkButton.setOnAction(event -> {
-            settingsPane.getScene().getWindow().hide();
-        });
-
     }
 
 
+    // ============== Sidebar ======================
+
+    @FXML
+    private void OkButtonOnAction(ActionEvent event) {
+        settingsPane.getScene().getWindow().hide();
+    }
+
     // ============== User Functions  =============
+    // ============== On Action ===================
+
+    @FXML
+    private void empAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        showAddUser();
+        refreshUserTable();
+    }
+
+    @FXML
+    private void empEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        ObservableList<User> userSelected;
+        userSelected = userTableView.getSelectionModel().getSelectedItems();
+        if(!userSelected.isEmpty()){
+            // just one item could be selected -> 0
+            showEditUser(userSelected.get(0));
+        }else{
+            selectItemAlert();
+        }
+    }
+
+    @FXML
+    private void empRemButtonOnAction(ActionEvent event) throws SQLException {
+        ObservableList<User> userSelected;
+        userSelected = userTableView.getSelectionModel().getSelectedItems();
+        if(!userSelected.isEmpty()){
+            if(removeAlert(userSelected.get(0))){
+                refreshUserTable();
+            }
+        }else{
+            selectItemAlert();
+        }
+    }
+
+    // ============== Helper Functions ============
 
     private void showAddUser() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/addUser.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/userHandler.fxml"));
         fxmlLoader.load();
+        UserHandlerController userHandlerController = (UserHandlerController) fxmlLoader.getController();
+        userHandlerController.setMode(UserHandlerController.ADDMODE);
         Parent root = fxmlLoader.getRoot();
         Stage stage = new Stage();
-        stage.setTitle("Add Employee");
+        stage.setTitle("Personel Ekle");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(settingsPane.getScene().getWindow());
         stage.setScene(new Scene(root));
@@ -123,42 +104,33 @@ public class SettingsController {
     }
 
     private void refreshUserTable() throws SQLException {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        Connection con = databaseHandler.getConnection();
-        ResultSet resultSet = databaseHandler.getAllUsers(con);
-        ObservableList<User> users = FXCollections.observableArrayList();
-        while (resultSet.next()){
-            users.add(new User(resultSet.getString(1), resultSet.getString(2),
-                    resultSet.getString(3), resultSet.getString(4),
-                    resultSet.getInt(5)));
-        }
-        setEmpTabColName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        setEmpTabColSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
-        setEmpTabColLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
-        setEmpTableView.setItems(users);
+        ObservableList<User> users = DatabaseHandler.getAllUsers();
+        userTabColName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        userTabColSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        userTabColLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
+        userTableView.setItems(users);
     }
 
     private void removeUser(User user) throws SQLException {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        if (!databaseHandler.deleteUser(user)){
+        if (!DatabaseHandler.deleteUser(user)){
             onlyAdminAlert();
         }
     }
 
     private void showEditUser(User user) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/editUser.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/userHandler.fxml"));
         fxmlLoader.load();
 
-
-        EditUserController editUserController = fxmlLoader.getController();
-        editUserController.setSelectedUser(user);
-        editUserController.fillFields();
-
+        UserHandlerController userHandlerController = (UserHandlerController) fxmlLoader.getController();
+        userHandlerController.setSelectedUser(user);
+        userHandlerController.fillFields();
+        userHandlerController.setMode(UserHandlerController.EDITMODE);
+        userHandlerController.setEditMode();
 
         Parent root = fxmlLoader.getRoot();
         Stage stage = new Stage();
-        stage.setTitle("Edit Employee");
+        stage.setTitle("Personel Düzenle");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(settingsPane.getScene().getWindow());
         stage.setScene(new Scene(root));
@@ -171,7 +143,7 @@ public class SettingsController {
 
     private boolean removeAlert(User user) throws SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("The only Admin");
+        alert.setTitle("Uyarı");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to remove: " + user.getName() + " " + user.getSurname());
         alert.initModality(Modality.APPLICATION_MODAL);
@@ -188,9 +160,9 @@ public class SettingsController {
 
     private void selectItemAlert(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("No User Selected");
+        alert.setTitle("Personel Seçilmedi");
         alert.setHeaderText(null);
-        alert.setContentText("Please select a user");
+        alert.setContentText("Lütfen bir personel seçin");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
         alert.showAndWait();
@@ -198,10 +170,10 @@ public class SettingsController {
 
     private void onlyAdminAlert(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("The only Admin");
+        alert.setTitle("Tek Admin");
         alert.setHeaderText(null);
-        alert.setContentText("You can not remove the only admin in the system. Instead you" +
-                " could add another admin and then delete this");
+        alert.setContentText("Üç seviye taşıyan tek personel kaldıramazsınız. " +
+                "Bunun yerine başka bir 3 seviyeli bir personel ekledikten sonra bunu silebilirsiniz. ");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
         alert.showAndWait();
