@@ -65,6 +65,7 @@ public class Report2Controller {
             Stage stage = new Stage();
             stage.setTitle("Main"); // ToDo this should be the name of the report chosen by user
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
             stage.show();
         }
     }

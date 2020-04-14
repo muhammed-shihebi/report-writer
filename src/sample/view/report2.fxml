@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -307,7 +309,10 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="210.0" layoutY="203.0" prefHeight="30.0" prefWidth="300.0" />
+                  <TextField layoutX="210.0" layoutY="203.0" prefHeight="30.0" prefWidth="300.0">
+                     <rotationAxis>
+                        <Point3D />
+                     </rotationAxis></TextField>
                   <Label layoutX="30.0" layoutY="300.0" prefHeight="21.0" prefWidth="252.0" text="Rapor Bilgileri">
                      <font>
                         <Font name="System Bold" size="20.0" />
@@ -410,6 +415,9 @@
                <font>
                   <Font size="20.0" />
                </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
             </Button>
             <Button layoutY="240.0" mnemonicParsing="false" onAction="#personnelOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Personel Bilgileri" AnchorPane.leftAnchor="0.0">
                <font>

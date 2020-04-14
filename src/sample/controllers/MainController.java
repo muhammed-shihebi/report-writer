@@ -75,6 +75,7 @@ public class MainController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initOwner(mainPane.getScene().getWindow());
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.showAndWait();
     }
 

@@ -26,6 +26,18 @@ public class SettingsController {
     private AnchorPane settingsPane;
 
     @FXML
+    private AnchorPane reportPane;
+
+    @FXML
+    private AnchorPane userPane;
+
+    @FXML
+    private AnchorPane customerPane;
+
+    @FXML
+    private AnchorPane equipmentPane;
+
+    @FXML
     private TableView<User> userTableView;
 
     @FXML
@@ -50,17 +62,37 @@ public class SettingsController {
         settingsPane.getScene().getWindow().hide();
     }
 
-    // ============== User Functions  =============
-    // ============== On Action ===================
-
     @FXML
-    private void empAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
-        showAddUser();
-        refreshUserTable();
+    void reportButtonOnAction(ActionEvent event) {
+        reportPane.toFront();
     }
 
     @FXML
-    private void empEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
+    void customerButtonOnAction(ActionEvent event) {
+        customerPane.toFront();
+    }
+
+    @FXML
+    void userButtonOnAction(ActionEvent event) {
+        userPane.toFront();
+    }
+
+    @FXML
+    private void equipmentButtonOnAction(){
+        equipmentPane.toFront();
+    }
+
+
+    // ============== User Functions  =============
+        // ============== On Action =========
+
+    @FXML
+    private void userAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        showAddUser();
+    }
+
+    @FXML
+    private void userEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
         ObservableList<User> userSelected;
         userSelected = userTableView.getSelectionModel().getSelectedItems();
         if(!userSelected.isEmpty()){
@@ -72,7 +104,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void empRemButtonOnAction(ActionEvent event) throws SQLException {
+    private void userRemButtonOnAction(ActionEvent event) throws SQLException {
         ObservableList<User> userSelected;
         userSelected = userTableView.getSelectionModel().getSelectedItems();
         if(!userSelected.isEmpty()){
@@ -84,7 +116,7 @@ public class SettingsController {
         }
     }
 
-    // ============== Helper Functions ============
+        // ============== Helper Functions ======
 
     private void showAddUser() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -139,7 +171,7 @@ public class SettingsController {
         refreshUserTable();
     }
 
-    // ============= Alerts ======================
+        // ============= Alerts =================
 
     private boolean removeAlert(User user) throws SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -179,8 +211,95 @@ public class SettingsController {
         alert.showAndWait();
     }
 
-    // ============== Current user User ===============
+        // ============== Current user User ======
+
     public void setUser(User user) {
         this.user = user;
+    }
+
+    // ============== Customer Functions ================
+        // ========== On Action =============
+
+    @FXML
+    private void customerAddButtonOnAction(ActionEvent event) throws IOException {
+        showAddCustomer();
+    }
+
+    @FXML
+    private void customerEditButtonOnAction(ActionEvent event) {
+        // todo
+    }
+
+    @FXML
+    private void customerRemButtonOnAction(ActionEvent event) {
+        // todo
+    }
+
+        // ======== Helper Functions ========
+
+    private void showAddCustomer() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/CustomerHandlerController.fxml"));
+        fxmlLoader.load();
+
+        CustomerHandlerController customerHandlerController = (CustomerHandlerController) fxmlLoader.getController();
+        customerHandlerController.setMode(customerHandlerController.ADDMODE);
+
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setTitle("Müşteri Eklemek");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshCustomerTable();
+    }
+
+    private void refreshCustomerTable(){
+        // todo
+    }
+
+    // =============== Equipment Functions ====================
+        //  ========== On Action =============
+
+    @FXML
+    private void equipmentAddButtonOnAction(ActionEvent event) throws IOException {
+        showAddEquipment();
+    }
+
+    @FXML
+    private void equipmentEditButtonOnAction(ActionEvent event) {
+        // todo
+    }
+
+    @FXML
+    private void equipmentRemButtonOnAction(ActionEvent event) {
+        // todo
+    }
+
+    // ======== Helper Functions ========
+
+    private void showAddEquipment() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/r2EquipmentHandler.fxml"));
+        fxmlLoader.load();
+
+        R2EquipmentController controller = (R2EquipmentController) fxmlLoader.getController();
+        controller.setMode(controller.ADDMODE);
+
+        Parent root = fxmlLoader.getRoot();
+        Stage stage = new Stage();
+        stage.setTitle("Ekipman Eklemek");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshEquipmentTable();
+    }
+
+    private void refreshEquipmentTable(){
+        // todo
     }
 }
