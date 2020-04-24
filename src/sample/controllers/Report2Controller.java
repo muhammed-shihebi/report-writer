@@ -2,14 +2,10 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import sample.model.User;
 
 import java.io.IOException;
@@ -55,18 +51,6 @@ public class Report2Controller {
     private void cancelOnAction(ActionEvent event) throws IOException {
         if(cancelAlert()){
             generalPane.getScene().getWindow().hide();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
-            Parent root = loader.load();
-            MainController mainController = (MainController) loader.getController();
-            mainController.setUser(user);
-            if(user.getLevel() < User.LEVEL3){
-                mainController.hideSettings();
-            }
-            Stage stage = new Stage();
-            stage.setTitle("Main"); // ToDo this should be the name of the report chosen by user
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
         }
     }
 
@@ -76,7 +60,7 @@ public class Report2Controller {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uyarı");
         alert.setHeaderText(null);
-        alert.setContentText("Girdiğiniz tüm bilgiler kaydedilmeyecek. İptal etmek istediğinden emin misin?");
+        alert.setContentText("Girdiğiniz tüm bilgiler kaydedilmeyecek. İptal etmek istediğinden emin misiniz?");
         ButtonType buttonYes = new ButtonType("Evet");
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);

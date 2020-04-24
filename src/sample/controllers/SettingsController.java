@@ -239,7 +239,7 @@ public class SettingsController {
 
     private void showAddCustomer() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/CustomerHandlerController.fxml"));
+        fxmlLoader.setLocation(getClass().getResource("/sample/view/customerHandler.fxml"));
         fxmlLoader.load();
 
         CustomerHandlerController customerHandlerController = (CustomerHandlerController) fxmlLoader.getController();

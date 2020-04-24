@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.stage.Modality;
+import sample.Main;
 import sample.database.DatabaseHandler;
 import sample.model.User;
 import javafx.fxml.FXML;
@@ -75,6 +76,8 @@ public class UserHandlerController {
     @FXML
     private void addButtonOnAction(ActionEvent event) throws SQLException {
         restStyle();
+        // User user = new User();
+        // areFieldsValid(user);
         if(!areFieldsEmpty() && areFieldsValid()){
             User newUser = new User(
                     usernameField.getText().toLowerCase(),
@@ -148,12 +151,13 @@ public class UserHandlerController {
     // =========== Validation checking functions =========
 
     private boolean areFieldsValid() throws SQLException {
+        // user
         boolean validation = true;
 
         if(mode == EDITMODE && (usernameField.getText().toLowerCase()
                 .equals(selectedUser.getUsername().toLowerCase()))){ // do nothing the username is valid
-        }else { // edit mode and usernames are different or not edit mode
-            if (User.isUsernameTaken(usernameField.getText().toLowerCase())) {
+        }else{ // edit mode and usernames are different or not edit mode
+            if (DatabaseHandler.isUsernameTaken(usernameField.getText().toLowerCase())) {
                 validation = false;
                 setUsernameNotValid("mevcut");
             }
@@ -164,12 +168,9 @@ public class UserHandlerController {
         }
 
         if(mode == EDITMODE && passwordField.getText().equals("")){
-            System.out.println("ich bin hier1");
             // do nothing the old password will stay
         }else{ // edit mode and password is new or not edit mode
-            System.out.println("ich bin hire 2");
             if(!User.isPasswordValid(passwordField.getText())){
-                System.out.println("ich bin hire 3");
                 validation = false;
                 setPasswordNotValid();
             }

@@ -1,10 +1,7 @@
 package sample.model;
 
-import javafx.collections.ObservableList;
 import sample.database.DatabaseHandler;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class User {
 
@@ -35,11 +32,15 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+            this.username = username;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
     }
 
     public String getName() {
@@ -70,11 +71,6 @@ public class User {
 
     public static boolean isUsernameValid(String username){
         return username.matches("[a-z0-9]+");
-    }
-
-    public static boolean isUsernameTaken(String username) throws SQLException {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        return databaseHandler.isUsernameTaken(username);
     }
 
     public static boolean isPasswordValid(String password){

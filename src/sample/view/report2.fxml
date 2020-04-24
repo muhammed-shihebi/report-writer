@@ -53,85 +53,6 @@
                   <ComboBox layoutX="905.0" layoutY="173.0" prefHeight="31.0" prefWidth="68.0" promptText="OK or RED" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="personnelPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;">
-               <children>
-                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
-                  <Label layoutX="45.0" layoutY="85.0" prefHeight="21.0" prefWidth="252.0" text="Operatör">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="135.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="195.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="255.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="45.0" layoutY="305.0" prefHeight="21.0" prefWidth="252.0" text="Değerlendiren">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="355.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="415.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="475.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="45.0" layoutY="535.0" prefHeight="21.0" prefWidth="252.0" text="Onay">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="585.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="645.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="60.0" layoutY="705.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField disable="true" layoutX="190.0" layoutY="133.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="193.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="253.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="353.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="413.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="473.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="583.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="643.0" prefHeight="31.0" prefWidth="404.0" />
-                  <TextField disable="true" layoutX="190.0" layoutY="703.0" prefHeight="31.0" prefWidth="404.0" />
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="404.0" text="Personel Bilgileri">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="equipmentPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="448.0" text="Ekipman Bilgileri">
@@ -282,6 +203,85 @@
                   </Label>
                   <TextField disable="true" layoutX="708.0" layoutY="684.0" prefHeight="31.0" prefWidth="275.0" />
                   <TextField layoutX="708.0" layoutY="743.0" prefHeight="31.0" prefWidth="275.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="personnelPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="45.0" layoutY="85.0" prefHeight="21.0" prefWidth="252.0" text="Operatör">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="135.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="195.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="255.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="305.0" prefHeight="21.0" prefWidth="252.0" text="Değerlendiren">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="355.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="415.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="475.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="45.0" layoutY="535.0" prefHeight="21.0" prefWidth="252.0" text="Onay">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="585.0" prefHeight="21.0" prefWidth="86.0" text="Adı Soyadı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="645.0" prefHeight="21.0" prefWidth="86.0" text="Seviye">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="705.0" prefHeight="21.0" prefWidth="86.0" text="Tarih">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField disable="true" layoutX="190.0" layoutY="133.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="193.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="253.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="353.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="413.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="473.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="583.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="643.0" prefHeight="31.0" prefWidth="404.0" />
+                  <TextField disable="true" layoutX="190.0" layoutY="703.0" prefHeight="31.0" prefWidth="404.0" />
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="404.0" text="Personel Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="customerAndReportPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;">

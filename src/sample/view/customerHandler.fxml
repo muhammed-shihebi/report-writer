@@ -68,5 +68,20 @@
       </Text>
       <Text fill="RED" layoutX="147.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="258.99999395012856" />
       <Text fill="RED" layoutX="146.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="258.99999395012856" />
+      <Text fill="RED" layoutX="323.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="636.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="944.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
