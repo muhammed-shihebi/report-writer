@@ -67,10 +67,10 @@ public class DatabaseHandler {
         resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + username + "' ;");
         if (resultSet.next()){
             System.out.println("Username is taken!");
-            return false;
+            return true;
         }else {
             System.out.println("Username is available");
-            return true;
+            return false;
         }
     }
 
@@ -148,7 +148,7 @@ public class DatabaseHandler {
         while (resultSet.next()){
             count++;
         }
-        return count == 1;
+        return count <= 1;
     }
 
     private static int getOldPassword(User oldUser) throws SQLException {

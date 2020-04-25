@@ -155,7 +155,7 @@ public class UserHandlerController {
         if(DatabaseHandler.isUsernameTaken(usernameField.getText())){
             // if EDITMODE is set and the user did not change the username than this username
             // should be valid
-            if (mode != EDITMODE) {
+            if (mode != EDITMODE || !selectedUser.getUsername().equals(usernameField.getText())) {
                 validation = false;
                 setUsernameNotValid("mevcut");
             }

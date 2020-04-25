@@ -67,7 +67,7 @@ public class User {
     // ====== Data Validation ========================
 
     public static boolean isUsernameValid(String username){
-        return username.matches("[a-z0-9]+");
+        return username.matches("[A-Za-z0-9]+");
     }
 
     public static boolean isPasswordValid(String password){

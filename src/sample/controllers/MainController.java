@@ -97,7 +97,7 @@ public class MainController {
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.setTitle("Report2"); // ToDo this should be the name of the report chosen by user
+        stage.setTitle("MAGNETIC PARTICLE INSPECTION REPORT"); // ToDo this should be the name of the report chosen by user
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.sizeToScene();
