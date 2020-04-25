@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 public class UserHandlerController {
 
     private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
-
     public static final int ADDMODE = 1;
     public static final int EDITMODE = 2;
     private int mode;
@@ -153,7 +152,6 @@ public class UserHandlerController {
 
     private boolean areFieldsValid() throws SQLException {
         boolean validation = true;
-
         if(DatabaseHandler.isUsernameTaken(usernameField.getText())){
             // if EDITMODE is set and the user did not change the username than this username
             // should be valid
@@ -166,7 +164,6 @@ public class UserHandlerController {
             validation = false;
             setUsernameNotValid("geçerli değil");
         }
-
         if(!User.isPasswordValid(passwordField.getText())){
             // if EDITMODE is set and the password is empty then the old password will be used
             // and the condition is valid
@@ -212,6 +209,7 @@ public class UserHandlerController {
 
     private boolean areFieldsEmpty(){
         boolean emptiness = false;
+
         if(usernameField.getText().equals("")) {
             setUsernameEmpty(); emptiness = true;}
 

@@ -52,7 +52,6 @@ public class SettingsController {
         refreshUserTable();
     }
 
-
     // ====== Sidebar ================================
 
     @FXML

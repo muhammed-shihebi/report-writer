@@ -32,18 +32,22 @@ public class Report2Controller {
     private void customerAndReportOnAction(ActionEvent event) {
         customerAndReportPane.toFront();
     }
+
     @FXML
     private void equipmentOnAuction(ActionEvent event) {
         equipmentPane.toFront();
     }
+
     @FXML
     private void inspectionOnAction(ActionEvent event) {
         inspectionPane.toFront();
     }
+
     @FXML
     private void personnelOnAction(ActionEvent event) {
         personnelPane.toFront();
     }
+
     @FXML
     private void cancelOnAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

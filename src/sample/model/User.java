@@ -1,8 +1,5 @@
 package sample.model;
 
-import sample.database.DatabaseHandler;
-import java.sql.SQLException;
-
 public class User {
 
     public final static int LEVEL1 = 1;
@@ -67,7 +64,7 @@ public class User {
         this.level = level;
     }
 
-    // ===================== Data Validation ==============
+    // ====== Data Validation ========================
 
     public static boolean isUsernameValid(String username){
         return username.matches("[a-z0-9]+");

@@ -23,12 +23,16 @@ public class MainController {
 
     @FXML
     private Label helloLabel;
+
     @FXML
     private AnchorPane mainPane;
+
     @FXML
     private Button settingsButton;
+
     @FXML
     private ComboBox<String> reportTypeCbox;
+
     @FXML
     void initialize() {
         ObservableList<String> reports = FXCollections.observableArrayList(
@@ -81,7 +85,6 @@ public class MainController {
         stage.show();
     }
 
-
     // ====== Helper Functions ======================
 
     public void showSettingsButton(){
@@ -90,7 +93,6 @@ public class MainController {
     }
 
     private void showReport2() throws IOException {
-        // showing the report2 to be filled
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/report2.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
@@ -111,12 +113,12 @@ public class MainController {
         main.start(new Stage());
     }
 
-
-
     // ====== Setters and Getters ====================
+
     public void setUser(User user) {
         this.user = user;
     }
+
     public User getUser() {
         return user;
     }

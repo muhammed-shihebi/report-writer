@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -40,7 +39,6 @@ public class LoginController {
     @FXML
     void initialize() {
     }
-
 
     // ====== on Action ==============================
 
