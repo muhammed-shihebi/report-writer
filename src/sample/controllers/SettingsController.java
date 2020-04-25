@@ -20,8 +20,6 @@ import java.util.Optional;
 
 public class SettingsController {
 
-    private User user;
-
     @FXML
     private AnchorPane settingsPane;
 
@@ -55,7 +53,7 @@ public class SettingsController {
     }
 
 
-    // ============== Sidebar ======================
+    // ====== Sidebar ================================
 
     @FXML
     private void OkButtonOnAction(ActionEvent event) {
@@ -83,12 +81,24 @@ public class SettingsController {
     }
 
 
-    // ============== User Functions  =============
-        // ============== On Action =========
+    // ====== User Functions  ========================
+        // ====== On Action ==========================
 
     @FXML
     private void userAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
-        showAddUser();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/userHandler.fxml"));
+        Parent root = fxmlLoader.load();
+        UserHandlerController userHandlerController = fxmlLoader.getController();
+        userHandlerController.setMode(UserHandlerController.ADDMODE);
+        Stage stage = new Stage();
+        stage.setTitle("Personel Ekle");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        // refreshing user table after the action is done
+        refreshUserTable();
     }
 
     @FXML
@@ -108,6 +118,8 @@ public class SettingsController {
         ObservableList<User> userSelected;
         userSelected = userTableView.getSelectionModel().getSelectedItems();
         if(!userSelected.isEmpty()){
+            // only if user confirm the removing action in the removeAlert function the user will be removed
+            // form the database if it not the only admin in the system
             if(removeAlert(userSelected.get(0))){
                 refreshUserTable();
             }
@@ -116,26 +128,10 @@ public class SettingsController {
         }
     }
 
-        // ============== Helper Functions ======
-
-    private void showAddUser() throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/userHandler.fxml"));
-        fxmlLoader.load();
-        UserHandlerController userHandlerController = (UserHandlerController) fxmlLoader.getController();
-        userHandlerController.setMode(UserHandlerController.ADDMODE);
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setTitle("Personel Ekle");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(settingsPane.getScene().getWindow());
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.showAndWait();
-        refreshUserTable();
-    }
+        // ====== Helper Functions ===================
 
     private void refreshUserTable() throws SQLException {
+        // filling out the user table with data from the database
         ObservableList<User> users = DatabaseHandler.getAllUsers();
         userTabColName.setCellValueFactory(new PropertyValueFactory<>("name"));
         userTabColSurname.setCellValueFactory(new PropertyValueFactory<>("surname"));
@@ -145,22 +141,17 @@ public class SettingsController {
 
     private void removeUser(User user) throws SQLException {
         if (!DatabaseHandler.deleteUser(user)){
+            // this means the user is trying to delete the only admin in the system witch is not allowed
             onlyAdminAlert();
         }
     }
 
     private void showEditUser(User user) throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/userHandler.fxml"));
-        fxmlLoader.load();
-
-        UserHandlerController userHandlerController = (UserHandlerController) fxmlLoader.getController();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/userHandler.fxml"));
+        Parent root = fxmlLoader.load();
+        UserHandlerController userHandlerController = fxmlLoader.getController();
         userHandlerController.setSelectedUser(user);
-        userHandlerController.fillFields();
-        userHandlerController.setMode(UserHandlerController.EDITMODE);
         userHandlerController.setEditMode();
-
-        Parent root = fxmlLoader.getRoot();
         Stage stage = new Stage();
         stage.setTitle("Personel Düzenle");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -171,18 +162,23 @@ public class SettingsController {
         refreshUserTable();
     }
 
-        // ============= Alerts =================
+        // ====== Alerts =============================
 
     private boolean removeAlert(User user) throws SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uyarı");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to remove: " + user.getName() + " " + user.getSurname());
+        alert.setContentText(user.getName() + " " + user.getSurname() +
+                " Sistemden kaldırmak istediğinizden emin misiniz?");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
+        ButtonType buttonYes = new ButtonType("Evet");
+        ButtonType buttonNo = new ButtonType("Hayır");
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent()){
-            if(result.get() == ButtonType.OK){
+            if(result.get() == buttonYes){
+                //
                 removeUser(user);
                 return true;
             }
@@ -197,7 +193,9 @@ public class SettingsController {
         alert.setContentText("Lütfen bir personel seçin");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
-        alert.showAndWait();
+        ButtonType buttonYes = new ButtonType("Tamam");
+        alert.getButtonTypes().setAll(buttonYes);
+        alert.show();
     }
 
     private void onlyAdminAlert(){
@@ -208,21 +206,28 @@ public class SettingsController {
                 "Bunun yerine başka bir 3 seviyeli bir personel ekledikten sonra bunu silebilirsiniz. ");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
-        alert.showAndWait();
+        ButtonType buttonYes = new ButtonType("Tamam");
+        alert.getButtonTypes().setAll(buttonYes);
+        alert.show();
     }
 
-        // ============== Current user User ======
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    // ============== Customer Functions ================
-        // ========== On Action =============
+    // ====== Customer Functions =====================
+        // ====== On Action ==========================
 
     @FXML
     private void customerAddButtonOnAction(ActionEvent event) throws IOException {
-        showAddCustomer();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/customerHandler.fxml"));
+        Parent root = fxmlLoader.load();
+        CustomerHandlerController customerHandlerController = fxmlLoader.getController();
+        customerHandlerController.setMode(CustomerHandlerController.ADDMODE);
+        Stage stage = new Stage();
+        stage.setTitle("Müşteri Eklemek");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshCustomerTable();
     }
 
     @FXML
@@ -235,37 +240,29 @@ public class SettingsController {
         // todo
     }
 
-        // ======== Helper Functions ========
-
-    private void showAddCustomer() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/customerHandler.fxml"));
-        fxmlLoader.load();
-
-        CustomerHandlerController customerHandlerController = (CustomerHandlerController) fxmlLoader.getController();
-        customerHandlerController.setMode(customerHandlerController.ADDMODE);
-
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setTitle("Müşteri Eklemek");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(settingsPane.getScene().getWindow());
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.showAndWait();
-        refreshCustomerTable();
-    }
+        // ====== Helper Functions ===================
 
     private void refreshCustomerTable(){
         // todo
     }
 
-    // =============== Equipment Functions ====================
-        //  ========== On Action =============
+    // ====== Equipment Functions ====================
+        //  ====== On Action =========================
 
     @FXML
     private void equipmentAddButtonOnAction(ActionEvent event) throws IOException {
-        showAddEquipment();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/r2EquipmentHandler.fxml"));
+        Parent root = fxmlLoader.load();
+        R2EquipmentController r2EquipmentController =fxmlLoader.getController();
+        r2EquipmentController.setMode(R2EquipmentController.ADDMODE);
+        Stage stage = new Stage();
+        stage.setTitle("Ekipman Eklemek");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshEquipmentTable();
     }
 
     @FXML
@@ -278,26 +275,7 @@ public class SettingsController {
         // todo
     }
 
-    // ======== Helper Functions ========
-
-    private void showAddEquipment() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/r2EquipmentHandler.fxml"));
-        fxmlLoader.load();
-
-        R2EquipmentController controller = (R2EquipmentController) fxmlLoader.getController();
-        controller.setMode(controller.ADDMODE);
-
-        Parent root = fxmlLoader.getRoot();
-        Stage stage = new Stage();
-        stage.setTitle("Ekipman Eklemek");
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initOwner(settingsPane.getScene().getWindow());
-        stage.setScene(new Scene(root));
-        stage.setResizable(false);
-        stage.showAndWait();
-        refreshEquipmentTable();
-    }
+    // ====== Helper Functions =======================
 
     private void refreshEquipmentTable(){
         // todo

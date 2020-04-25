@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="INF202_PROJECT:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/INF202_PROJECT_jar</output-path>
+    <root id="archive" name="INF202_PROJECT.jar">
+      <element id="module-output" name="INF202_PROJECT" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Compressed/hsqldb-2.5.0/hsqldb/lib/hsqldb.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

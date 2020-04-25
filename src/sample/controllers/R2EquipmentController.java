@@ -10,7 +10,7 @@ public class R2EquipmentController {
         // TODO apply changes according to edit mode
     }
 
-    // ========= Setters and Getters =============
+    // ====== Setters and Getters ====================
 
     public void setMode(int mode) {
         this.mode = mode;

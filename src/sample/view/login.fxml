@@ -9,29 +9,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginController">
+<AnchorPane fx:id="loginPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginController">
    <children>
-      <Label layoutX="224.0" layoutY="59.0" text="Oturum aç">
+      <Label layoutX="131.0" layoutY="14.0" text="Oturum aç">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <TextField fx:id="username" layoutX="170.0" layoutY="154.0" prefHeight="31.0" prefWidth="335.0" promptText="Kullanıcı adı" />
-      <PasswordField fx:id="password" layoutX="170.0" layoutY="226.0" prefHeight="31.0" prefWidth="335.0" promptText="Şifre" />
-      <Button defaultButton="true" layoutX="481.0" layoutY="323.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="31.0" prefWidth="158.0" text="Giriş yap" />
-      <ImageView fitHeight="31.0" fitWidth="33.0" layoutX="130.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+      <TextField fx:id="username" layoutX="85.0" layoutY="115.0" prefHeight="31.0" prefWidth="335.0" promptText="Kullanıcı adı" />
+      <PasswordField fx:id="password" layoutX="85.0" layoutY="180.0" prefHeight="31.0" prefWidth="335.0" promptText="Şifre" />
+      <Button defaultButton="true" layoutX="260.0" layoutY="249.0" mnemonicParsing="false" onAction="#LoginButtonOnAction" prefHeight="31.0" prefWidth="158.0" text="Giriş yap" />
+      <ImageView fitHeight="31.0" fitWidth="33.0" layoutX="52.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../assets/images/username_icon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="130.0" layoutY="226.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="52.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../assets/images/password_icon.png" />
          </image>
       </ImageView>
-      <Label fx:id="usernameMesg" layoutX="170.0" layoutY="187.0" prefHeight="21.0" prefWidth="296.0" textFill="RED" />
-      <Label fx:id="passwordMesg" layoutX="170.0" layoutY="257.0" prefHeight="21.0" prefWidth="296.0" textFill="RED" />
-      <Label fx:id="notFoundMesg" alignment="CENTER" layoutX="170.0" layoutY="117.0" prefHeight="21.0" prefWidth="335.0">
+      <Label fx:id="usernameMesg" layoutX="83.0" layoutY="146.0" prefHeight="21.0" prefWidth="296.0" textFill="RED" />
+      <Label fx:id="passwordMesg" layoutX="83.0" layoutY="210.0" prefHeight="21.0" prefWidth="296.0" textFill="RED" />
+      <Label fx:id="notFoundMesg" alignment="CENTER" layoutX="83.0" layoutY="72.0" prefHeight="21.0" prefWidth="335.0" textFill="RED">
          <font>
             <Font size="17.0" />
          </font>

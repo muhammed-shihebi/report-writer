@@ -42,79 +42,71 @@ public class LoginController {
     }
 
 
-    // =========== on Action ==================
+    // ====== on Action ==============================
 
     @FXML
     private void LoginButtonOnAction(ActionEvent event) throws IOException, SQLException {
         resetStyle();
         if(!areFieldsEmpty()){
-            User user = DatabaseHandler.getUser(username.getText().toLowerCase(), password.getText());
+            User user = DatabaseHandler.getUser(username.getText(), password.getText());
             if(user != null){
                 showMain(user);
             }else{
-                userNotFound();
+                userNotFoundMesg();
             }
         }
     }
 
-    // =========== helper functions ===========
+    // ====== Helper Functions =======================
 
     private  void showMain(User user) throws IOException {
-        // hiding the login window
         loginPane.getScene().getWindow().hide();
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/sample/view/main.fxml"));
-        // after loading the fxml file the initialize() method in MainController is called
-        fxmlLoader.load();
-        // fxmlLoader.getController has the very same object (MainController of the fxml file that we loaded)
-        // so from here we could manipulate the objects (Nodes) in that widow
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
+        Parent root = fxmlLoader.load();
         MainController mainController = fxmlLoader.getController();
-        // if the user has level lower then 3 the setting Button will be disabled
-        if(user.getLevel() < User.LEVEL3)
-            mainController.hideSettings();
-        // we also passing the user to be used later on the setting and other things
+        // showing settings if the user is an admin
+        if(user.getLevel() >= User.LEVEL3)
+            mainController.showSettingsButton();
         mainController.setUser(user);
-        Parent root = fxmlLoader.getRoot();
+        mainController.setHelloLabel();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
-        stage.setTitle("Main");
+        stage.sizeToScene();
+        stage.setTitle("Ana Ekran");
         stage.show();
     }
 
+    // ====== Error Messages handler =================
+
     private boolean areFieldsEmpty(){
         boolean emptiness = false;
-        if (username.getText().toLowerCase().equals("")){
+        if (username.getText().equals("")){
             emptiness = true;
-            usernameError();
+            usernameErrorMesg();
         }
         if (password.getText().equals("")){
             emptiness = true;
-            passwordError();
+            passwordErrorMesg();
         }
         return emptiness;
     }
 
-    // =========== Error handler ==============
-
-    private  void usernameError(){
+    private  void usernameErrorMesg(){
         usernameMesg.setText("Lütfen geçerli bir kullanıcı adı girin!");
         username.setStyle("-fx-border-color: red;");
-        System.out.println("No Username entered");
     }
 
-    private  void passwordError(){
+    private  void passwordErrorMesg(){
         passwordMesg.setText("Lütfen geçerli bir şifre giriniz!");
         password.setStyle("-fx-border-color: red;");
-        System.out.println("No Password entered");
     }
 
-    private  void userNotFound(){
+    private  void userNotFoundMesg(){
         notFoundMesg.setText("Kullanıcı adı veya şifre doğru değil");
-        System.out.println("username not found");
     }
 
-    // =========== reset =======================
+    // ======= Setters and Getters ===================
 
     private  void resetStyle(){
         usernameMesg.setText("");

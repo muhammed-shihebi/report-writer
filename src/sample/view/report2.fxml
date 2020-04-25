@@ -444,12 +444,12 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button fx:id="t" layoutY="660.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Iptal et">
+            <Button layoutY="740.0" mnemonicParsing="false" onAction="#cancelOnAction" prefHeight="60.0" prefWidth="300.0" style="-fx-background-radius: 0em;" text="Iptal et">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="600.0" prefHeight="60.0" prefWidth="300.0" text="Diğer seçenekler">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="680.0" prefHeight="60.0" prefWidth="300.0" text="Diğer seçenekler">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

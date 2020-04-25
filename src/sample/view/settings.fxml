@@ -18,41 +18,6 @@
    <children>
       <AnchorPane layoutX="240.0" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
          <children>
-            <AnchorPane fx:id="userPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
-               <children>
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Personel Bilgileri">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Line endX="585.0" layoutX="132.0" layoutY="60.0" startX="-100.0" />
-                  <TableView fx:id="userTableView" layoutX="31.0" layoutY="210.0" prefHeight="418.0" prefWidth="558.0">
-                     <columns>
-                        <TableColumn fx:id="userTabColName" prefWidth="241.0" text="Adı" />
-                        <TableColumn fx:id="userTabColSurname" prefWidth="214.0" text="Soyadı" />
-                        <TableColumn fx:id="userTabColLevel" prefWidth="102.0" text="Seviye" />
-                     </columns>
-                  </TableView>
-                  <Button layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#userRemButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Kaldır" />
-                  <Button layoutX="605.0" layoutY="260.0" mnemonicParsing="false" onAction="#userEditButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Düzenle" />
-                  <Button layoutX="605.0" layoutY="310.0" mnemonicParsing="false" onAction="#userAddButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Ekle" />
-                  <Text layoutX="30.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yeni personel eklemek için 'Ekle'yi tıklayın">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="30.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir personeli sistemden kaldırmak için personeli seçin ve 'Kaldır'ı tıklayın">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="30.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir personelnin bilgilerini düzenlemek için personeli seçin 'Düzenle'yi tıklayın">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="equipmentPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
                <children>
                   <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Ekipman Bilgileri">
@@ -209,6 +174,41 @@
                   </Text>
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="userPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Personel Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="585.0" layoutX="132.0" layoutY="60.0" startX="-100.0" />
+                  <TableView fx:id="userTableView" layoutX="31.0" layoutY="210.0" prefHeight="418.0" prefWidth="558.0">
+                     <columns>
+                        <TableColumn fx:id="userTabColName" prefWidth="241.0" text="Adı" />
+                        <TableColumn fx:id="userTabColSurname" prefWidth="214.0" text="Soyadı" />
+                        <TableColumn fx:id="userTabColLevel" prefWidth="102.0" text="Seviye" />
+                     </columns>
+                  </TableView>
+                  <Button layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#userRemButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Kaldır" />
+                  <Button layoutX="605.0" layoutY="260.0" mnemonicParsing="false" onAction="#userEditButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Düzenle" />
+                  <Button layoutX="605.0" layoutY="310.0" mnemonicParsing="false" onAction="#userAddButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Ekle" />
+                  <Text layoutX="30.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yeni personel eklemek için 'Ekle'yi tıklayın">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="30.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir personeli sistemden kaldırmak için personeli seçin ve 'Kaldır'ı tıklayın">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="30.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir personelnin bilgilerini düzenlemek için personeli seçin 'Düzenle'yi tıklayın">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane prefHeight="675.0" prefWidth="240.0" style="-fx-background-color: #dddddd;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -236,7 +236,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutY="625.0" mnemonicParsing="false" onAction="#OkButtonOnAction" prefHeight="50.0" prefWidth="240.0" style="-fx-background-radius: 0em;" text="Tamam">
+            <Button defaultButton="true" layoutY="625.0" mnemonicParsing="false" onAction="#OkButtonOnAction" prefHeight="50.0" prefWidth="240.0" style="-fx-background-radius: 0em;" text="Tamam">
                <font>
                   <Font size="18.0" />
                </font>

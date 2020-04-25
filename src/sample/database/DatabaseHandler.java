@@ -27,9 +27,7 @@ public class DatabaseHandler {
         Connection con = null;
         try{
             System.out.println("Connecting database...");
-            //Registering the HSQLDB JDBC driver
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            //Creating the connection with HSQLDB
             String url = "jdbc:hsqldb:file:C:\\Users\\Nour\\Documents\\INF202_PROJECT\\src\\assets\\mydatabase\\;shutdown=true";
             con = DriverManager.getConnection(url, "nour", "268953");
             if (con != null){
@@ -46,34 +44,27 @@ public class DatabaseHandler {
     // ============= User functions ===================
 
     public static User getUser(String username, String password) throws SQLException {
-        // return user with username and level if exist and null if not
+        // return user with user if exist and null if not
+
         int hashedPassword = password.hashCode();
         resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + username + "' AND password = " + hashedPassword + " ;");
-        // cursor is initially positioned before the first row
-        // next() returns true if the new current row is valid; false if there are no more rows
         if(resultSet.next()){
-            System.out.println("The existing of " + username + " is confirmed and the Password has been accepted");
             User user = new User();
             user.setUsername(resultSet.getString("username"));
             user.setName(resultSet.getString("name"));
             user.setSurname(resultSet.getString("surname"));
             user.setLevel(resultSet.getInt("level"));
+            System.out.println("The existing of " + username + " is confirmed and the Password has been accepted");
             return user;
         }else{
-            System.out.println("Username or Password passed by the user is wrong");
+            System.out.println("Username or Password entered is wrong");
             return null;
         }
     }
 
     public static boolean isUsernameTaken(String username) throws SQLException {
         resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + username + "' ;");
-        if(resultSet.next()){
-            System.out.println("Username is taken");
-            return true;
-        }else {
-            System.out.println("Username is not taken");
-            return false;
-        }
+        return resultSet.next();
     }
 
     public static void addNewUser(User user) throws SQLException {
@@ -99,42 +90,33 @@ public class DatabaseHandler {
         // return false if the user to be deleted is the only admin in the system
         // this admin will not be deleted
         // return true otherwise with deleting the user
-        if(user.getLevel() > 2){
+        if(user.getLevel() > User.LEVEL2){
             if(isOnlyAdmin()){
                 return false;
             }
         }
         result = statement.executeUpdate("Delete FROM user WHERE username = '" + user.getUsername() + "';");
         if (result == 0){
-            System.out.println("Something went wrong when deleting the user. the user has not been deleted");
+            System.out.println("An error occurred while deleting the user. The user was not deleted");
         }
         return true;
     }
 
     public static boolean editUser(User oldUser, User newUser) throws SQLException {
-        // ========= dealing with only admin thing ========
         // if level has been changed check if the user is the only admin
-        if(oldUser.getLevel() != newUser.getLevel()){ // if the level has been changed
-            if(oldUser.getLevel() > 2 && newUser.getLevel() <= 2){ // if the level has been reduced
-                if(isOnlyAdmin()){
-                    // old user is the only admin and his level has been reduced
-                    // this is not acceptable and the change will not be done
-                    return false;
-                }
+        if(oldUser.getLevel() > 2 && newUser.getLevel() <= 2){ // if the level has been reduced
+            if(isOnlyAdmin()){
+                return false;
             }
         }
-        // all other possibilities are acceptable
-        // ============= dealing with the password ==============
 
         int newPassword;
-        if(newUser.getPassword().equals("")){
-            resultSet = statement.executeQuery("SELECT password FROM user WHERE username = '" + oldUser.getUsername() + "' ;");
-            resultSet.next();
-            newPassword = resultSet.getInt("password");
+        if(newUser.getPassword().equals("")){ // password is the same as the old one
+            newPassword = getOldPassword(oldUser);
         }else{
             newPassword = newUser.getPassword().hashCode();
         }
-        // ============== update the user information =============
+
         result = statement.executeUpdate(
                 "UPDATE user SET " +
                 "username = '" + newUser.getUsername() + "'," +
@@ -146,6 +128,9 @@ public class DatabaseHandler {
         return true;
     }
 
+
+    // ========== helper Functions ==================
+
     private static boolean isOnlyAdmin() throws SQLException {
         resultSet = statement.executeQuery("SELECT * from user WHERE level > 2; ");
         int count = 0;
@@ -153,6 +138,15 @@ public class DatabaseHandler {
             count++;
         }
         return count == 1;
+    }
+
+    private static int getOldPassword(User oldUser) throws SQLException {
+        int newPassword;
+        resultSet = statement.executeQuery("SELECT password FROM user WHERE username = '" +
+                oldUser.getUsername() + "' ;");
+        resultSet.next();
+        newPassword = resultSet.getInt("password");
+        return newPassword;
     }
 
 }
