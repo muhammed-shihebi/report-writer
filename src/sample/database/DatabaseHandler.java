@@ -43,7 +43,7 @@ public class DatabaseHandler {
         return con;
     }
 
-    // ====== User functions =========================
+    // ====== User Functions =========================
 
     public static User getUser(String username, String password) throws SQLException {
         // return user with user if exist and null if not

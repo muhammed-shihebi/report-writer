@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class UserHandlerController {
 
-    private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
+    private static final String ERORRTEXTFIELDSTYLE = "-fx-border-color: red;";
     public static final int ADDMODE = 1;
     public static final int EDITMODE = 2;
     private int mode;
@@ -71,7 +71,7 @@ public class UserHandlerController {
 
     @FXML
     private void addButtonOnAction(ActionEvent event) throws SQLException {
-        restStyle();
+        resetStyle();
         // all text fields must not be empty if the mode = ADDMODE
         // all text fields must not be empty except password field in the mode = EDITMODE
         if(!areFieldsEmpty() && areFieldsValid()){
@@ -187,22 +187,22 @@ public class UserHandlerController {
 
     private void setUsernameNotValid(String str){
         usernameMesg.setText("Kullanıcı adı "+ str);
-        usernameField.setStyle(ERORRTEXTFILESTYLE);
+        usernameField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setPasswordNotValid(){
         passwordMesg.setText("Girilen şifre çok kısa.");
-        passwordField.setStyle(ERORRTEXTFILESTYLE);
+        passwordField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setNameNotValid(){
         nameMesg.setText("Lütfen geçerli bir isim girin.");
-        nameField.setStyle(ERORRTEXTFILESTYLE);
+        nameField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setSurnameNotValid(){
         surnameMesg.setText("Lütfen geçerli bir soyadı girin");
-        surnameField.setStyle(ERORRTEXTFILESTYLE);
+        surnameField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
         // ====== Emptiness checking functions =======
@@ -238,36 +238,38 @@ public class UserHandlerController {
 
     private void setUsernameEmpty(){
         usernameMesg.setText("Lütfen bir kullanıcı adı giriniz");
-        usernameField.setStyle(ERORRTEXTFILESTYLE);
+        usernameField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setPasswordEmpty(){
         passwordMesg.setText("Lütfen bir şifre girin");
-        passwordField.setStyle(ERORRTEXTFILESTYLE);
+        passwordField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setNameEmpty(){
         nameMesg.setText("Lütfen bir ad girin");
-        nameField.setStyle(ERORRTEXTFILESTYLE);
+        nameField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setSurnameEmpty(){
         surnameMesg.setText("Lütfen bir soyadı girin");
-        surnameField.setStyle(ERORRTEXTFILESTYLE);
+        surnameField.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
     private void setLevelEmpty(){
         levelMesg.setText("Lütfen bir seviye seçin");
-        levelComboBox.setStyle(ERORRTEXTFILESTYLE);
+        levelComboBox.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
         // ====== Setters and Getters ================
 
-    private void restStyle(){
+    private void resetStyle(){
         usernameMesg.setText("");
         usernameField.setStyle(null);
-        passwordMesg.setText("");
-        passwordField.setStyle(null);
+        if (mode != EDITMODE || !passwordField.getText().equals("")){
+            passwordMesg.setText("");
+            passwordField.setStyle(null);
+        }
         nameMesg.setText("");
         nameField.setStyle(null);
         surnameMesg.setText("");
