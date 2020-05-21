@@ -232,8 +232,85 @@ public class DatabaseHandler {
         addNewCustomer(newCustomer);
     }
 
-    // ====== helper Functions =======================
+    // ====== Equipment Functions =======================
 
+    public static void addNewEquipment(Equipment equipment) throws SQLException {
+        result = statement.executeUpdate("INSERT INTO equipment (poleDistance, equipment, " +
+                "MPCarrierMedium, magTech, UVLightIntensity, distanceOfLight) " +
+                "VALUES  ("+ equipment.getPoleDistance() +", '"+ equipment.getEquipment() +"', " +
+                "'"+equipment.getMPCarrierMedium()+"', '"+equipment.getMagTech() +"', " +
+                "'"+ equipment.getUVLightIntensity() +"', '"+ equipment.getDistanceOfLight() +"'); ");
+    }
 
+    public static void deleteEquipment(Equipment equipment) throws SQLException {
+        result = statement.executeUpdate("delete from equipment where id = "+ equipment.getId() +"");
+    }
 
+    public static void editEquipment(Equipment newEquipment, Equipment oldEquipment) throws SQLException {
+        deleteEquipment(oldEquipment);
+        addNewEquipment(newEquipment);
+    }
+
+    public static ObservableList<Equipment> getAllEquipments() throws SQLException {
+        resultSet = statement.executeQuery("SELECT * from equipment;");
+        ObservableList<Equipment> equipments = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            equipments.add(new Equipment(
+                    resultSet.getInt("id"),
+                    resultSet.getDouble("poleDistance"),
+                    resultSet.getString("equipment"),
+                    resultSet.getString("MPCarrierMedium"),
+                    resultSet.getString("magTech"),
+                    resultSet.getString("UVLightIntensity"),
+                    resultSet.getString("distanceOfLight")
+            ));
+        }
+        return equipments;
+    }
+
+    // ====== Other Things Functions =======================
+
+    public static void addStageOfExamination(StageOfExamination stageOfExamination) throws SQLException {
+        result = statement.executeUpdate("INSERT INTO StageOfExamination (stage) " +
+                "VALUES  ('"+ stageOfExamination.getStage() +"');");
+    }
+
+    public static void deleteStageOfExamination(StageOfExamination stageOfExamination) throws SQLException {
+        result = statement.executeUpdate("delete from StageOfExamination " +
+                "where id = "+ stageOfExamination.getId() +"");
+    }
+
+    public static ObservableList<StageOfExamination> getAllStageOfExaminations() throws SQLException {
+        resultSet = statement.executeQuery("SELECT * from stageOfExamination;");
+        ObservableList<StageOfExamination> stageOfExaminations = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            stageOfExaminations.add(new StageOfExamination(
+                    resultSet.getInt("id"),
+                    resultSet.getString("stage")
+            ));
+        }
+        return stageOfExaminations;
+    }
+
+    public static void addSurfaceCondition(SurfaceCondition surfaceCondition) throws SQLException {
+        result = statement.executeUpdate("INSERT INTO SurfaceCondition (condition) " +
+                "VALUES  ('"+surfaceCondition.getCondition()+"');");
+    }
+
+    public static void deleteSurfaceCondition(SurfaceCondition surfaceCondition) throws SQLException {
+        result = statement.executeUpdate("delete from SurfaceCondition " +
+                "where id = " + surfaceCondition.getId()+"");
+    }
+
+    public static ObservableList<SurfaceCondition> getAllSurfaceConditions() throws SQLException {
+        resultSet = statement.executeQuery("select * from SurfaceCondition;");
+        ObservableList<SurfaceCondition> SurfaceConditions = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            SurfaceConditions.add(new SurfaceCondition(
+                    resultSet.getInt("id"),
+                    resultSet.getString("condition")
+            ));
+        }
+        return SurfaceConditions;
+    }
 }

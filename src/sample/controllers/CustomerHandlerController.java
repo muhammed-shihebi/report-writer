@@ -17,7 +17,7 @@ public class CustomerHandlerController {
     private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
     public static final int ADDMODE = 1;
     public static final int EDITMODE = 2;
-    private int mode;
+    private int mode = ADDMODE;
     private Customer selectedCustomer;
 
     @FXML
@@ -117,6 +117,7 @@ public class CustomerHandlerController {
         }else{
             JobOrderNo newItem = new JobOrderNo(jobOrderNoField.getText());
             jobOrderNoTableView.getItems().add(newItem);
+            jobOrderNoField.setText("");
         }
     }
 
@@ -140,6 +141,7 @@ public class CustomerHandlerController {
         }else {
             OfferNo newItem = new OfferNo(offerNoField.getText());
             offerNoTableView.getItems().add(newItem);
+            offerNoField.setText("");
         }
     }
 
@@ -163,6 +165,7 @@ public class CustomerHandlerController {
         }else {
             ProjectName newItem = new ProjectName(projectNameField.getText());
             projectNameTableView.getItems().add(newItem);
+            projectNameField.setText("");
         }
     }
 
@@ -195,10 +198,11 @@ public class CustomerHandlerController {
 
     // ====== Helper Functions =======================
 
-    public void setEditMode(){
+    public void setEditMode(Customer customer){
         setMode(EDITMODE);
+        setSelectedCustomer(customer);
+        addButton.setText("Kaydet");
         fillFields();
-        addButton.setText("kaydet");
     }
 
     public void fillFields(){

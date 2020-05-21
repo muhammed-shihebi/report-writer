@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -43,42 +42,48 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <TableView layoutX="30.0" layoutY="210.0" prefHeight="418.0" prefWidth="558.0">
+                  <TableView fx:id="equipmentTableView" layoutX="30.0" layoutY="210.0" prefHeight="418.0" prefWidth="558.0">
                     <columns>
-                      <TableColumn prefWidth="150.0" text="Cihaz" />
-                      <TableColumn prefWidth="157.0" text="Kutup Mesafesi,mm" />
-                        <TableColumn prefWidth="114.0" text="UV Işık Şiddeti" />
-                        <TableColumn prefWidth="136.0" text="Işık mesafesi" />
+                      <TableColumn fx:id="equipmentColumn" prefWidth="160.0" text="Cihaz" />
+                      <TableColumn fx:id="poleDistanceColumn" prefWidth="166.0" text="Kutup Mesafesi,mm" />
+                        <TableColumn fx:id="UVLightIntensityColumn" prefWidth="119.0" text="UV Işık Şiddeti" />
+                        <TableColumn fx:id="distanceOfLightColumn" prefWidth="112.0" text="Işık mesafesi" />
                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="reportPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
+            <AnchorPane fx:id="customerPane" layoutX="1.0" layoutY="1.0" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
                <children>
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Diğer Bilgiler">
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Müşteri Bilgileri">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Line endX="585.0" layoutX="132.0" layoutY="60.0" startX="-100.0" />
-                  <Label layoutX="30.0" layoutY="80.0" text="Yüzey Durumu">
+                  <TableView fx:id="customerTableView" layoutX="30.0" layoutY="210.0" prefHeight="418.0" prefWidth="558.0">
+                    <columns>
+                      <TableColumn fx:id="customerNameColumn" prefWidth="313.0" text="Müşteri adı" />
+                      <TableColumn fx:id="testPlaceColumn" minWidth="0.0" prefWidth="244.0" text="Test Yeri" />
+                    </columns>
+                  </TableView>
+                  <Button layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#customerRemButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Kaldır" />
+                  <Button layoutX="605.0" layoutY="260.0" mnemonicParsing="false" onAction="#customerEditButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Düzenle" />
+                  <Button layoutX="605.0" layoutY="310.0" mnemonicParsing="false" onAction="#customerAddButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Ekle" />
+                  <Text layoutX="30.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yeni müşteri eklemek için 'Ekle'yi tıklayın">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="17.0" />
                      </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="360.0" text="Muayene Aşaması">
+                  </Text>
+                  <Text layoutX="30.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir müşteriyi sistemden kaldırmak için çalışanı seçin ve 'Kaldır'ı tıklayın">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="17.0" />
                      </font>
-                  </Label>
-                  <ListView layoutX="30.0" layoutY="400.0" prefHeight="185.0" prefWidth="640.0" />
-                  <TextField layoutX="30.0" layoutY="591.0" prefHeight="31.0" prefWidth="410.0" />
-                  <Button layoutX="445.0" layoutY="591.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
-                  <Button layoutX="561.0" layoutY="591.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
-                  <ListView layoutX="30.0" layoutY="120.0" prefHeight="183.0" prefWidth="640.0" />
-                  <TextField layoutX="30.0" layoutY="309.0" prefHeight="31.0" prefWidth="410.0" />
-                  <Button layoutX="445.0" layoutY="309.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
-                  <Button layoutX="561.0" layoutY="309.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
+                  </Text>
+                  <Text layoutX="30.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir müşterinin bilgilerini düzenlemek için çalışanı seçin 'Düzenle'yi tıklayın">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="userPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
@@ -116,38 +121,40 @@
                   </Text>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="customerPane" layoutX="1.0" layoutY="1.0" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
+            <AnchorPane fx:id="reportPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
                <children>
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Müşteri Bilgileri">
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Diğer Bilgiler">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
                   <Line endX="585.0" layoutX="132.0" layoutY="60.0" startX="-100.0" />
-                  <TableView fx:id="customerTableView" layoutX="30.0" layoutY="210.0" prefHeight="418.0" prefWidth="558.0">
+                  <Label layoutX="30.0" layoutY="80.0" text="Yüzey Durumu">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="360.0" text="Muayene Aşaması">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="stageOfExaminationField" layoutX="30.0" layoutY="591.0" prefHeight="31.0" prefWidth="410.0" />
+                  <Button layoutX="445.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
+                  <Button layoutX="561.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
+                  <TextField fx:id="surfaceConditionField" layoutX="30.0" layoutY="309.0" prefHeight="31.0" prefWidth="410.0" />
+                  <Button layoutX="445.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
+                  <Button layoutX="561.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
+                  <TableView fx:id="surfaceConditionTableView" layoutX="30.0" layoutY="110.0" prefHeight="192.0" prefWidth="640.0">
                     <columns>
-                      <TableColumn fx:id="customerNameColumn" prefWidth="313.0" text="Müşteri adı" />
-                      <TableColumn fx:id="testPlaceColumn" minWidth="0.0" prefWidth="244.0" text="Test Yeri" />
+                      <TableColumn fx:id="surfaceConditionColumn" prefWidth="639.0" text="Yüzey Durumu" />
                     </columns>
                   </TableView>
-                  <Button layoutX="605.0" layoutY="210.0" mnemonicParsing="false" onAction="#customerRemButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Kaldır" />
-                  <Button layoutX="605.0" layoutY="260.0" mnemonicParsing="false" onAction="#customerEditButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Düzenle" />
-                  <Button layoutX="605.0" layoutY="310.0" mnemonicParsing="false" onAction="#customerAddButtonOnAction" prefHeight="31.0" prefWidth="120.0" text="Ekle" />
-                  <Text layoutX="30.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Yeni müşteri eklemek için 'Ekle'yi tıklayın">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="30.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir müşteriyi sistemden kaldırmak için çalışanı seçin ve 'Kaldır'ı tıklayın">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="30.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bir müşterinin bilgilerini düzenlemek için çalışanı seçin 'Düzenle'yi tıklayın">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
+                  <TableView fx:id="stageOfExaminationTableView" layoutX="30.0" layoutY="392.0" prefHeight="192.0" prefWidth="640.0">
+                    <columns>
+                      <TableColumn fx:id="stageOfExaminationColumn" prefWidth="639.0" text="Muayene Aşaması" />
+                    </columns>
+                  </TableView>
                </children>
             </AnchorPane>
          </children>

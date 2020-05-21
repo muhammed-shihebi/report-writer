@@ -7,14 +7,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="339.0" prefWidth="901.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EquipmentHandlerController">
+<AnchorPane fx:id="addEquipmentPane" prefHeight="339.0" prefWidth="901.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EquipmentHandlerController">
    <children>
-      <Label layoutX="30.0" layoutY="90.0" prefHeight="27.0" prefWidth="60.0" text="Cihaz">
+      <Label layoutX="30.0" layoutY="150.0" prefHeight="27.0" prefWidth="60.0" text="Cihaz">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="150.0" text="Kutup Mesafesi,mm">
+      <Label layoutX="30.0" layoutY="90.0" text="Kutup Mesafesi,mm">
          <font>
             <Font size="18.0" />
          </font>
@@ -39,9 +39,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="207.0" layoutY="88.0" prefHeight="31.0" prefWidth="224.0" />
-      <TextField layoutX="207.0" layoutY="148.0" prefHeight="31.0" prefWidth="224.0" />
-      <TextField layoutX="207.0" layoutY="208.0" prefHeight="31.0" prefWidth="224.0" />
+      <TextField fx:id="poleDistanceField" layoutX="207.0" layoutY="88.0" prefHeight="31.0" prefWidth="224.0" promptText="Ör: 1,052" />
+      <TextField fx:id="equipmentField" layoutX="207.0" layoutY="148.0" prefHeight="31.0" prefWidth="224.0" />
+      <TextField fx:id="MPCarrierMediumField" layoutX="207.0" layoutY="208.0" prefHeight="31.0" prefWidth="224.0" />
       <Text layoutX="20.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
          <font>
             <Font size="17.0" />
@@ -52,21 +52,46 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Text fill="RED" layoutX="431.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <TextField fx:id="magTechField" layoutX="645.0" layoutY="88.0" prefHeight="31.0" prefWidth="224.0" />
+      <Text fx:id="magTechMesg" fill="RED" layoutX="646.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
+      <Button fx:id="addButton" defaultButton="true" layoutX="575.0" layoutY="283.0" mnemonicParsing="false" onAction="#addButtonOnAction" prefHeight="31.0" prefWidth="140.0" text="Ekle" />
+      <Button layoutX="729.0" layoutY="283.0" mnemonicParsing="false" onAction="#canselButtonOnAction" prefHeight="31.0" prefWidth="140.0" text="İptal et" />
+      <TextField fx:id="UVLightIntensityField" layoutX="645.0" layoutY="148.0" prefHeight="31.0" prefWidth="224.0" />
+      <TextField fx:id="distanceOfLightField" layoutX="646.0" layoutY="208.0" prefHeight="31.0" prefWidth="224.0" />
+      <Text fx:id="UVLightIntensityMseg" fill="RED" layoutX="645.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
+      <Text fx:id="distanceOfLightMesg" fill="RED" layoutX="646.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
+      <Text fx:id="MPCarrierMediumMesg" fill="RED" layoutX="207.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
+      <Text fx:id="equipmentMesg" fill="RED" layoutX="207.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lütfen bir cihaz adı girin" visible="false" wrappingWidth="224.00000761449337" />
+      <Text fx:id="poleDistanceMesg" fill="RED" layoutX="207.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lütfen geçerli bir numara girin" visible="false" wrappingWidth="224.00000761449337" />
+      <Text fill="RED" layoutX="431.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
          <font>
             <Font size="17.0" />
          </font>
       </Text>
-      <TextField layoutX="645.0" layoutY="88.0" prefHeight="31.0" prefWidth="224.0" />
-      <Text fill="RED" layoutX="646.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.00000761449337" />
-      <Button defaultButton="true" layoutX="575.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="Ekle" />
-      <Button layoutX="729.0" layoutY="283.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" text="İptal et" />
-      <TextField layoutX="645.0" layoutY="148.0" prefHeight="31.0" prefWidth="224.0" />
-      <TextField layoutX="646.0" layoutY="208.0" prefHeight="31.0" prefWidth="224.0" />
-      <Text fill="RED" layoutX="645.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.00000761449337" />
-      <Text fill="RED" layoutX="646.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.00000761449337" />
-      <Text fill="RED" layoutX="207.0" layoutY="251.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.00000761449337" />
-      <Text fill="RED" layoutX="207.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.00000761449337" />
-      <Text fill="RED" layoutX="207.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="224.00000761449337" />
+      <Text fill="RED" layoutX="431.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="870.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="870.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="870.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="431.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="14.0">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

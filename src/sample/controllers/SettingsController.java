@@ -2,8 +2,7 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import sample.database.DatabaseHandler;
-import sample.model.Customer;
-import sample.model.User;
+import sample.model.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +19,8 @@ import java.util.Optional;
 
 
 public class SettingsController {
+
+    private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
 
     @FXML
     private AnchorPane settingsPane;
@@ -58,9 +59,45 @@ public class SettingsController {
     private TableView<Customer> customerTableView;
 
     @FXML
+    private TableView<Equipment> equipmentTableView;
+
+    @FXML
+    private TableColumn<Equipment, String> equipmentColumn;
+
+    @FXML
+    private TableColumn<Equipment, Double> poleDistanceColumn;
+
+    @FXML
+    private TableColumn<Equipment, String> UVLightIntensityColumn;
+
+    @FXML
+    private TableColumn<Equipment, String> distanceOfLightColumn;
+
+    @FXML
+    private TextField stageOfExaminationField;
+
+    @FXML
+    private TextField surfaceConditionField;
+
+    @FXML
+    private TableView<SurfaceCondition> surfaceConditionTableView;
+
+    @FXML
+    private TableColumn<SurfaceCondition, String> surfaceConditionColumn;
+
+    @FXML
+    private TableView<StageOfExamination> stageOfExaminationTableView;
+
+    @FXML
+    private TableColumn<StageOfExamination, String> stageOfExaminationColumn;
+
+    @FXML
     void initialize() throws SQLException {
         refreshUserTable();
         refreshCustomerTable();
+        refreshEquipmentTable();
+        refreshSurfaceConditionTable();
+        refreshStageOfExaminationTable();
     }
 
     // ====== Sidebar ================================
@@ -240,8 +277,6 @@ public class SettingsController {
     private void customerAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/customerHandler.fxml"));
         Parent root = fxmlLoader.load();
-        CustomerHandlerController customerHandlerController = fxmlLoader.getController();
-        customerHandlerController.setMode(CustomerHandlerController.ADDMODE);
         Stage stage = new Stage();
         stage.setTitle("Müşteri Eklemek");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -291,8 +326,7 @@ public class SettingsController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/customerHandler.fxml"));
         Parent root = fxmlLoader.load();
         CustomerHandlerController customerHandlerController = fxmlLoader.getController();
-        customerHandlerController.setSelectedCustomer(customer);
-        customerHandlerController.setEditMode();
+        customerHandlerController.setEditMode(customer);
         Stage stage = new Stage();
         stage.setTitle("Müşteri Düzenlemek");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -335,11 +369,9 @@ public class SettingsController {
         //  ====== On Action =========================
 
     @FXML
-    private void equipmentAddButtonOnAction(ActionEvent event) throws IOException {
+    private void equipmentAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/equipmentHandler.fxml"));
         Parent root = fxmlLoader.load();
-        EquipmentHandlerController equipmentHandlerController =fxmlLoader.getController();
-        equipmentHandlerController.setMode(EquipmentHandlerController.ADDMODE);
         Stage stage = new Stage();
         stage.setTitle("Ekipman Eklemek");
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -351,18 +383,148 @@ public class SettingsController {
     }
 
     @FXML
-    private void equipmentEditButtonOnAction(ActionEvent event) {
-        // todo
+    private void equipmentEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        ObservableList<Equipment> selectedEquipment;
+        selectedEquipment = equipmentTableView.getSelectionModel().getSelectedItems();
+        if(!selectedEquipment.isEmpty()){
+            // just one item could be selected -> 0
+            showEditEquipment(selectedEquipment.get(0));
+        }else{
+            selectItemAlert();
+        }
     }
 
     @FXML
-    private void equipmentRemButtonOnAction(ActionEvent event) {
-        // todo
+    private void equipmentRemButtonOnAction(ActionEvent event) throws SQLException {
+        ObservableList<Equipment> selectedEquipment;
+        selectedEquipment = equipmentTableView.getSelectionModel().getSelectedItems();
+        if(!selectedEquipment.isEmpty()){
+            if(removeAlert(selectedEquipment.get(0))){
+                DatabaseHandler.deleteEquipment(selectedEquipment.get(0));
+                refreshEquipmentTable();
+            }
+        }else{
+            selectItemAlert();
+        }
     }
 
     // ====== Helper Functions =======================
 
-    private void refreshEquipmentTable(){
-        // todo
+    private void showEditEquipment(Equipment equipment) throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/equipmentHandler.fxml"));
+        Parent root = fxmlLoader.load();
+        EquipmentHandlerController equipmentHandlerController = fxmlLoader.getController();
+        equipmentHandlerController.setEditMode(equipment);
+        Stage stage = new Stage();
+        stage.setTitle("Ekipman düzenlemek");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshEquipmentTable();
+    }
+
+    private void refreshEquipmentTable() throws SQLException {
+        ObservableList<Equipment> equipments = DatabaseHandler.getAllEquipments();
+        equipmentColumn.setCellValueFactory(new PropertyValueFactory<>("equipment"));
+        poleDistanceColumn.setCellValueFactory(new PropertyValueFactory<>("poleDistance"));
+        UVLightIntensityColumn.setCellValueFactory(new PropertyValueFactory<>("UVLightIntensity"));
+        distanceOfLightColumn.setCellValueFactory(new PropertyValueFactory<>("distanceOfLight"));
+        equipmentTableView.setItems(equipments);
+    }
+    // ====== Alerts =============================
+
+    private boolean removeAlert(Equipment equipment){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Uyarı");
+        alert.setHeaderText(null);
+        alert.setContentText(equipment.getEquipment() + " Sistemden kaldırmak istediğinizden emin misiniz?");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(settingsPane.getScene().getWindow());
+        ButtonType buttonYes = new ButtonType("Evet");
+        ButtonType buttonNo = new ButtonType("Hayır");
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent()){
+            return result.get() == buttonYes;
+        }
+        return false; // if user exit without clicking anything or if user clicked cancel
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // ====== Other Things Functions =====================
+
+    @FXML
+    void stageOfExaminationAddButtonOnAction(ActionEvent event) throws SQLException {
+        stageOfExaminationField.setStyle(null);
+        if(stageOfExaminationField.getText().equals("")){
+            stageOfExaminationField.setStyle(ERORRTEXTFILESTYLE);
+        }else {
+            StageOfExamination stageOfExamination = new StageOfExamination(stageOfExaminationField.getText());
+            DatabaseHandler.addStageOfExamination(stageOfExamination);
+            refreshStageOfExaminationTable();
+            stageOfExaminationField.setText("");
+        }
+    }
+
+    @FXML
+    void stageOfExaminationDeleteButtonOnAction(ActionEvent event) throws SQLException {
+        ObservableList<StageOfExamination> stageOfExaminationSelected;
+        stageOfExaminationSelected = stageOfExaminationTableView.getSelectionModel().getSelectedItems();
+        if(!stageOfExaminationSelected.isEmpty()){
+            // just one item could be selected -> 0
+            DatabaseHandler.deleteStageOfExamination(stageOfExaminationSelected.get(0));
+        }else{
+            selectItemAlert();
+        }
+    }
+
+    @FXML
+    void surfaceConditionAddButtonOnAction(ActionEvent event) throws SQLException {
+        surfaceConditionField.setStyle(null);
+        if(surfaceConditionField.getText().equals("")){
+            surfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
+        }else {
+            SurfaceCondition surfaceCondition = new SurfaceCondition(surfaceConditionField.getText());
+            DatabaseHandler.addSurfaceCondition(surfaceCondition);
+            refreshSurfaceConditionTable();
+            surfaceConditionField.setText("");
+        }
+    }
+
+    @FXML
+    void surfaceConditionDeleteButtonOnAction(ActionEvent event) throws SQLException {
+        ObservableList<SurfaceCondition> surfaceConditionSelected;
+        surfaceConditionSelected = surfaceConditionTableView.getSelectionModel().getSelectedItems();
+        if(!surfaceConditionSelected.isEmpty()){
+            // just one item could be selected -> 0
+            DatabaseHandler.deleteSurfaceCondition(surfaceConditionSelected.get(0));
+        }else{
+            selectItemAlert();
+        }
+    }
+
+    // ======= Helper Functions =====================
+
+    private void refreshStageOfExaminationTable() throws SQLException {
+        ObservableList<StageOfExamination> stageOfExaminations = DatabaseHandler.getAllStageOfExaminations();
+        stageOfExaminationColumn.setCellValueFactory(new PropertyValueFactory<>("stage"));
+        stageOfExaminationTableView.setItems(stageOfExaminations);
+    }
+    private void refreshSurfaceConditionTable() throws SQLException {
+        ObservableList<SurfaceCondition> surfaceConditions = DatabaseHandler.getAllSurfaceConditions();
+        surfaceConditionColumn.setCellValueFactory(new PropertyValueFactory<>("condition"));
+        surfaceConditionTableView.setItems(surfaceConditions);
     }
 }
