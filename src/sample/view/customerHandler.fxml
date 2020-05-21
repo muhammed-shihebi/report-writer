@@ -2,55 +2,53 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="556.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CustomerHandlerController">
+<AnchorPane fx:id="addCustomerPane" prefHeight="556.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CustomerHandlerController">
    <children>
-      <Button defaultButton="true" layoutX="616.0" layoutY="507.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="165.0" text="Ekle" />
-      <Button layoutX="791.0" layoutY="507.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="165.0" text="İptal et" />
-      <ListView layoutX="47.0" layoutY="234.0" prefHeight="200.0" prefWidth="276.0" />
-      <ListView layoutX="360.0" layoutY="234.0" prefHeight="200.0" prefWidth="276.0" />
-      <ListView layoutX="668.0" layoutY="234.0" prefHeight="200.0" prefWidth="276.0" />
-      <Button layoutX="276.0" layoutY="193.0" mnemonicParsing="false" text="Ekle" />
-      <TextField layoutX="126.0" layoutY="193.0" prefHeight="31.0" prefWidth="146.0" />
+      <Button fx:id="addButton" defaultButton="true" layoutX="616.0" layoutY="507.0" mnemonicParsing="false" onAction="#addButtonOnAction" prefHeight="31.0" prefWidth="165.0" text="Ekle" />
+      <Button layoutX="791.0" layoutY="507.0" mnemonicParsing="false" onAction="#canselButtonOnAction" prefHeight="31.0" prefWidth="165.0" text="İptal et" />
+      <Button layoutX="276.0" layoutY="193.0" mnemonicParsing="false" onAction="#projectNameAddButtonOnAction" text="Ekle" />
+      <TextField fx:id="projectNameField" layoutX="126.0" layoutY="193.0" prefHeight="31.0" prefWidth="146.0" />
       <Label layoutX="47.0" layoutY="195.0" text="Proje Adı">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="589.0" layoutY="193.0" mnemonicParsing="false" text="Ekle" />
-      <TextField layoutX="453.0" layoutY="193.0" prefHeight="31.0" prefWidth="132.0" />
+      <Button layoutX="589.0" layoutY="193.0" mnemonicParsing="false" onAction="#jobOrderNoAddButtonOnAction" text="Ekle" />
+      <TextField fx:id="jobOrderNoField" layoutX="453.0" layoutY="193.0" prefHeight="31.0" prefWidth="132.0" />
       <Label layoutX="360.0" layoutY="195.0" text=" İş Emri No">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="897.0" layoutY="193.0" mnemonicParsing="false" text="Ekle" />
-      <TextField layoutX="747.0" layoutY="193.0" prefHeight="31.0" prefWidth="146.0" />
+      <Button layoutX="897.0" layoutY="193.0" mnemonicParsing="false" onAction="#offerNoAddButtonOnAction" text="Ekle" />
+      <TextField fx:id="offerNoField" layoutX="747.0" layoutY="193.0" prefHeight="31.0" prefWidth="146.0" />
       <Label layoutX="668.0" layoutY="195.0" text="Teklif No">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="250.0" layoutY="441.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Kaldır" />
-      <Button layoutX="563.0" layoutY="441.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Kaldır" />
-      <Button layoutX="871.0" layoutY="441.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" text="Kaldır" />
+      <Button layoutX="250.0" layoutY="441.0" mnemonicParsing="false" onAction="#projectNameRemoveButtonOnAction" prefHeight="31.0" prefWidth="73.0" text="Kaldır" />
+      <Button layoutX="563.0" layoutY="441.0" mnemonicParsing="false" onAction="#jobOrderNoRemoveButtonOnAction" prefHeight="31.0" prefWidth="73.0" text="Kaldır" />
+      <Button layoutX="871.0" layoutY="441.0" mnemonicParsing="false" onAction="#offerNoRemoveButtonOnAction" prefHeight="31.0" prefWidth="73.0" text="Kaldır" />
       <Label layoutX="47.0" layoutY="45.0" text="Müşteri Adı">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="146.0" layoutY="43.0" prefHeight="31.0" prefWidth="259.0" />
+      <TextField fx:id="nameField" layoutX="146.0" layoutY="43.0" prefHeight="31.0" prefWidth="259.0" />
       <Label layoutX="47.0" layoutY="108.0" text="Test Yeri">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="146.0" layoutY="106.0" prefHeight="31.0" prefWidth="259.0" />
+      <TextField fx:id="testPlaceField" layoutX="146.0" layoutY="106.0" prefHeight="31.0" prefWidth="259.0" />
       <Text layoutX="584.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
          <font>
             <Font size="17.0" />
@@ -66,8 +64,8 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <Text fill="RED" layoutX="147.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="258.99999395012856" />
-      <Text fill="RED" layoutX="146.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="258.99999395012856" />
+      <Text fx:id="nameMesg" fill="RED" layoutX="147.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lütfen müşteri adını girin" visible="false" wrappingWidth="258.99999395012856" />
+      <Text fx:id="testPlaceMesg" fill="RED" layoutX="146.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lütfen test yerini girin" visible="false" wrappingWidth="258.99999395012856" />
       <Text fill="RED" layoutX="323.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font size="17.0" />
@@ -83,5 +81,28 @@
             <Font size="17.0" />
          </font>
       </Text>
+      <Text fill="RED" layoutX="408.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Label fx:id="projectNameMesg" layoutX="47.0" layoutY="441.0" text="En az bir Proje Adı girmeli" textFill="RED" visible="false" />
+      <Label fx:id="jobOrderNoMesg" layoutX="360.0" layoutY="441.0" text="En az bir İş Emri No girmeli" textFill="RED" visible="false" />
+      <Label fx:id="offerNoMesg" layoutX="668.0" layoutY="441.0" text="En az bir Teklif No girmeli" textFill="RED" visible="false" />
+      <TableView fx:id="projectNameTableView" layoutX="47.0" layoutY="234.0" prefHeight="200.0" prefWidth="276.0">
+        <columns>
+          <TableColumn fx:id="projectNameColumn" prefWidth="275.0" text="Proje Adı" />
+        </columns>
+      </TableView>
+      <TableView fx:id="jobOrderNoTableView" layoutX="360.0" layoutY="234.0" prefHeight="200.0" prefWidth="276.0">
+        <columns>
+          <TableColumn fx:id="jobOrderNoColumn" prefWidth="275.0" text="İş Emri No" />
+        </columns>
+      </TableView>
+      <TableView fx:id="offerNoTableView" layoutX="668.0" layoutY="234.0" prefHeight="200.0" prefWidth="276.0">
+        <columns>
+          <TableColumn fx:id="offerNoColumn" prefWidth="275.0" text="Teklif No" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

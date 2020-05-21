@@ -1,6 +1,6 @@
 package sample.controllers;
 
-public class R2EquipmentController {
+public class EquipmentHandlerController {
     private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
     public static final int ADDMODE = 1;
     public static final int EDITMODE = 2;

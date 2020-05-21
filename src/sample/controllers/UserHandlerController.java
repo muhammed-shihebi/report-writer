@@ -123,7 +123,7 @@ public class UserHandlerController {
 
     public void setEditMode(){
         passwordStern.setVisible(false); // password is not mandatory
-        addButton.setText("Düzenle");
+        addButton.setText("kaydet");
         passwordLabel.setText("Yeni Şifre");
         passwordMesg.setStyle("-fx-color: black");
         passwordMesg.setText("Bu alan zorunlu değil");

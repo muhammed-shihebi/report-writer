@@ -35,6 +35,7 @@ public class MainController {
 
     @FXML
     void initialize() {
+        showSettingsButton(); // Todo remove this s
         ObservableList<String> reports = FXCollections.observableArrayList(
                 "MAGNETIC PARTICLE INSPECTION REPORT"
         );
@@ -93,7 +94,7 @@ public class MainController {
     }
 
     private void showReport2() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/report2.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/report.fxml"));
         Parent root = fxmlLoader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

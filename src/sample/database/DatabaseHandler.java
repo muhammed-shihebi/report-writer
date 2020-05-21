@@ -2,7 +2,8 @@ package sample.database;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sample.model.User;
+import sample.model.*;
+
 import java.sql.*;
 
 public class DatabaseHandler {
@@ -30,7 +31,7 @@ public class DatabaseHandler {
         try{
             System.out.println("Connecting database...");
             Class.forName("org.hsqldb.jdbc.JDBCDriver");
-            String url = "jdbc:hsqldb:file:C:\\Users\\Nour\\Documents\\INF202_PROJECT\\src\\assets\\mydatabase\\;shutdown=true";
+                String url = "jdbc:hsqldb:file:C:\\Users\\Nour\\Documents\\INF202_PROJECT\\src\\assets\\mydatabase\\;shutdown=true";
             con = DriverManager.getConnection(url, "nour", "268953");
             if (con != null){
                 System.out.println("Connection created successfully");
@@ -140,8 +141,6 @@ public class DatabaseHandler {
         return true;
     }
 
-    // ====== helper Functions =======================
-
     private static boolean isOnlyAdmin() throws SQLException {
         resultSet = statement.executeQuery("SELECT * from user WHERE level > 2; ");
         int count = 0;
@@ -159,5 +158,82 @@ public class DatabaseHandler {
         newPassword = resultSet.getInt("password");
         return newPassword;
     }
+
+    // ====== Customer Functions =========================
+
+    public static void addNewCustomer(Customer newCustomer) throws SQLException {
+        result = statement.executeUpdate("INSERT INTO customer (name, testplace) VALUES  ('" +
+                newCustomer.getName()+ "', '"+ newCustomer.getTestPlace() +"')");
+        if(result == 0){
+            System.out.println("An error occurred while adding the customer. The customer was not added.");
+        }
+        for(int i = 0; i < newCustomer.getJobOrderNos().size(); i++){
+            result = statement.executeUpdate("INSERT INTO joborderno (number, customerid) " +
+                    "VALUES  ('"+ newCustomer.getJobOrderNos().get(i).getNumber() +"', IDENTITY())");
+        }
+        for(int i = 0; i < newCustomer.getProjectNames().size(); i++){
+            result = statement.executeUpdate("INSERT INTO projectname (name, customerid) " +
+                    "VALUES  ('"+ newCustomer.getProjectNames().get(i).getName() +"', IDENTITY())");
+        }
+        for(int i = 0; i < newCustomer.getOfferNos().size(); i++){
+            result = statement.executeUpdate("INSERT INTO offerno (number, customerid) " +
+                    "VALUES  ('"+ newCustomer.getOfferNos().get(i).getNumber() +"', IDENTITY())");
+        }
+    }
+
+    public static ObservableList<Customer> getAllCustomers() throws SQLException {
+        resultSet = statement.executeQuery("SELECT * from customer;");
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            customers.add(new Customer(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("testplace")
+            ));
+        }
+        for(int i = 0; i < customers.size(); i++){
+            ObservableList<JobOrderNo> jobOrderNos = FXCollections.observableArrayList();
+            ObservableList<ProjectName> projectNames = FXCollections.observableArrayList();
+            ObservableList<OfferNo> offerNos = FXCollections.observableArrayList();
+
+            resultSet = statement.executeQuery("SELECT * from joborderno " +
+                    "where customerid = "+ customers.get(i).getId() +";");
+            while (resultSet.next()){
+                jobOrderNos.add(new JobOrderNo(resultSet.getString("number")));
+            }
+
+            resultSet = statement.executeQuery("SELECT * from projectname " +
+                    "where customerid = "+ customers.get(i).getId() +";");
+            while (resultSet.next()){
+                projectNames.add(new ProjectName(resultSet.getString("name")));
+            }
+
+            resultSet = statement.executeQuery("SELECT * from offerno " +
+                    "where customerid = "+ customers.get(i).getId() +";");
+            while (resultSet.next()){
+                offerNos.add(new OfferNo(resultSet.getString("number")));
+            }
+            customers.get(i).setJobOrderNos(jobOrderNos);
+            customers.get(i).setProjectNames(projectNames);
+            customers.get(i).setOfferNos(offerNos);
+        }
+        return customers;
+    }
+
+    public static void deleteCustomer(Customer customer) throws SQLException {
+        result = statement.executeUpdate("Delete from joborderno where customerid = " + customer.getId() +
+                " Delete from projectname where customerid = "+customer.getId()+
+                " Delete from offerno where customerid = "+customer.getId()+
+                " Delete From customer where id = " + customer.getId());
+    }
+
+    public static void editCustomer(Customer newCustomer, Customer oldCustomer) throws SQLException {
+        deleteCustomer(oldCustomer);
+        addNewCustomer(newCustomer);
+    }
+
+    // ====== helper Functions =======================
+
+
 
 }

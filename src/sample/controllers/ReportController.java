@@ -10,7 +10,7 @@ import javafx.stage.Modality;
 
 import java.util.Optional;
 
-public class Report2Controller {
+public class ReportController {
 
     @FXML
     private AnchorPane generalPane;

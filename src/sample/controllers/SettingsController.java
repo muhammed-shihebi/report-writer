@@ -2,6 +2,7 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import sample.database.DatabaseHandler;
+import sample.model.Customer;
 import sample.model.User;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,8 +49,18 @@ public class SettingsController {
     private TableColumn<User, Integer> userTabColLevel;
 
     @FXML
+    private TableColumn<Customer, String> customerNameColumn;
+
+    @FXML
+    private TableColumn<Customer, String> testPlaceColumn;
+
+    @FXML
+    private TableView<Customer> customerTableView;
+
+    @FXML
     void initialize() throws SQLException {
         refreshUserTable();
+        refreshCustomerTable();
     }
 
     // ====== Sidebar ================================
@@ -187,9 +198,9 @@ public class SettingsController {
 
     private void selectItemAlert(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Personel Seçilmedi");
+        alert.setTitle("hiçbir şey seçilmedi");
         alert.setHeaderText(null);
-        alert.setContentText("Lütfen bir personel seçin");
+        alert.setContentText("Lütfen bir satır seçin");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(settingsPane.getScene().getWindow());
         ButtonType buttonYes = new ButtonType("Tamam");
@@ -210,11 +221,23 @@ public class SettingsController {
         alert.show();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     // ====== Customer Functions =====================
         // ====== On Action ==========================
 
     @FXML
-    private void customerAddButtonOnAction(ActionEvent event) throws IOException {
+    private void customerAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/customerHandler.fxml"));
         Parent root = fxmlLoader.load();
         CustomerHandlerController customerHandlerController = fxmlLoader.getController();
@@ -230,30 +253,93 @@ public class SettingsController {
     }
 
     @FXML
-    private void customerEditButtonOnAction(ActionEvent event) {
-        // todo
+    private void customerEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
+        ObservableList<Customer> selectedCustomer;
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItems();
+        if(!selectedCustomer.isEmpty()){
+            // just one item could be selected -> 0
+            showEditCustomer(selectedCustomer.get(0));
+        }else{
+            selectItemAlert();
+        }
     }
 
     @FXML
-    private void customerRemButtonOnAction(ActionEvent event) {
-        // todo
+    private void customerRemButtonOnAction(ActionEvent event) throws SQLException {
+        ObservableList<Customer> selectedCostomer;
+        selectedCostomer = customerTableView.getSelectionModel().getSelectedItems();
+        if(!selectedCostomer.isEmpty()){
+            if(removeAlert(selectedCostomer.get(0))){
+                DatabaseHandler.deleteCustomer(selectedCostomer.get(0));
+                refreshCustomerTable();
+            }
+        }else{
+            selectItemAlert();
+        }
     }
 
         // ====== Helper Functions ===================
 
-    private void refreshCustomerTable(){
-        // todo
+    private void refreshCustomerTable() throws SQLException {
+        ObservableList<Customer> customers = DatabaseHandler.getAllCustomers();
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        testPlaceColumn.setCellValueFactory(new PropertyValueFactory<>("testPlace"));
+        customerTableView.setItems(customers);
     }
+
+    private void showEditCustomer(Customer customer) throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/customerHandler.fxml"));
+        Parent root = fxmlLoader.load();
+        CustomerHandlerController customerHandlerController = fxmlLoader.getController();
+        customerHandlerController.setSelectedCustomer(customer);
+        customerHandlerController.setEditMode();
+        Stage stage = new Stage();
+        stage.setTitle("Müşteri Düzenlemek");
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(settingsPane.getScene().getWindow());
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.showAndWait();
+        refreshCustomerTable();
+    }
+
+        // ====== Alerts =============================
+
+    private boolean removeAlert(Customer customer){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Uyarı");
+        alert.setHeaderText(null);
+        alert.setContentText(customer.getName() + " Sistemden kaldırmak istediğinizden emin misiniz?");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.initOwner(settingsPane.getScene().getWindow());
+        ButtonType buttonYes = new ButtonType("Evet");
+        ButtonType buttonNo = new ButtonType("Hayır");
+        alert.getButtonTypes().setAll(buttonYes, buttonNo);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent()){
+            return result.get() == buttonYes;
+        }
+        return false; // if user exit without clicking anything or if user clicked cancel
+    }
+
+
+
+
+
+
+
+    
+
 
     // ====== Equipment Functions ====================
         //  ====== On Action =========================
 
     @FXML
     private void equipmentAddButtonOnAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/r2EquipmentHandler.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/equipmentHandler.fxml"));
         Parent root = fxmlLoader.load();
-        R2EquipmentController r2EquipmentController =fxmlLoader.getController();
-        r2EquipmentController.setMode(R2EquipmentController.ADDMODE);
+        EquipmentHandlerController equipmentHandlerController =fxmlLoader.getController();
+        equipmentHandlerController.setMode(EquipmentHandlerController.ADDMODE);
         Stage stage = new Stage();
         stage.setTitle("Ekipman Eklemek");
         stage.initModality(Modality.APPLICATION_MODAL);
