@@ -16,17 +16,17 @@
       <Pane layoutX="14.0" layoutY="522.0" prefHeight="114.0" prefWidth="672.0" style="-fx-background-color: #ffffff;" />
       <Pane layoutX="15.0" layoutY="313.0" prefHeight="199.0" prefWidth="672.0" style="-fx-background-color: #ffffff;" />
       <Pane layoutX="14.0" layoutY="58.0" prefHeight="245.0" prefWidth="672.0" style="-fx-background-color: #ffffff;" />
-      <Label layoutX="53.0" layoutY="108.0" text="Rapor türü">
+      <Label disable="true" layoutX="53.0" layoutY="108.0" text="Rapor türü">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="reportTypeCbox" layoutX="183.0" layoutY="108.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="reportTypeComboBox" disable="true" layoutX="183.0" layoutY="108.0" prefHeight="31.0" prefWidth="369.0" promptText="MAGNETIC PARTICLE INSPECTION REPORT">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ComboBox>
-      <ComboBox layoutX="183.0" layoutY="158.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="equipmentComboBox" layoutX="183.0" layoutY="158.0" prefHeight="31.0" prefWidth="369.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -36,7 +36,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox layoutX="183.0" layoutY="576.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="costumerComboBox" layoutX="183.0" layoutY="576.0" prefHeight="31.0" prefWidth="369.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -73,17 +73,17 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <ComboBox layoutX="183.0" layoutY="369.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="operatorCombobox" layoutX="183.0" layoutY="369.0" prefHeight="31.0" prefWidth="369.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ComboBox>
-      <ComboBox layoutX="183.0" layoutY="417.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="evaluatorComboBox" layoutX="183.0" layoutY="417.0" prefHeight="31.0" prefWidth="369.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ComboBox>
-      <ComboBox layoutX="183.0" layoutY="467.0" prefHeight="31.0" prefWidth="369.0">
+      <ComboBox fx:id="conformerComboBox" layoutX="183.0" layoutY="467.0" prefHeight="31.0" prefWidth="369.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -98,13 +98,13 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="183.0" layoutY="206.0" prefHeight="31.0" prefWidth="369.0" />
+      <TextField fx:id="reportNoField" layoutX="183.0" layoutY="206.0" prefHeight="31.0" prefWidth="369.0" />
       <Label layoutX="53.0" layoutY="258.0" prefHeight="27.0" prefWidth="114.0" text="Rapor tarihi">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker layoutX="183.0" layoutY="256.0" prefHeight="31.0" prefWidth="159.0">
+      <DatePicker fx:id="reportDateField" editable="false" layoutX="183.0" layoutY="256.0" prefHeight="31.0" prefWidth="159.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
@@ -119,5 +119,7 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Label fx:id="reportNoMesg" layoutX="557.0" layoutY="198.0" prefHeight="47.0" prefWidth="114.0" text="lütfen geçerli bir numara giriniz" textFill="RED" visible="false" wrapText="true" />
+      <Label fx:id="reportDateMesg" layoutX="348.0" layoutY="261.0" text="lütfen geçerli bir tarih giriniz" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

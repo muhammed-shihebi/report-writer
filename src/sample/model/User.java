@@ -78,4 +78,8 @@ public class User {
         return str.matches("\\p{L}+");
     }
 
+    @Override
+    public String toString(){
+        return this.getName() + " " + this.getSurname();
+    }
 }

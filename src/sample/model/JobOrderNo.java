@@ -14,4 +14,9 @@ public class JobOrderNo {
     public JobOrderNo(String number) {
         this.number = number;
     }
+
+    @Override
+    public String toString(){
+        return this.getNumber();
+    }
 }

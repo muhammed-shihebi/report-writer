@@ -27,7 +27,10 @@ public class Customer {
         this.testPlace = testPlace;
     }
 
-
+    public Customer(String name, String testPlace) {
+        this.name = name;
+        this.testPlace = testPlace;
+    }
 
     public int getId() {
         return id;
@@ -75,5 +78,10 @@ public class Customer {
 
     public void setProjectNames(ObservableList<ProjectName> projectNames) {
         this.projectNames = projectNames;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }

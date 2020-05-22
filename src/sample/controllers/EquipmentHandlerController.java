@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import sample.database.DatabaseHandler;
+import sample.handlers.DatabaseHandler;
 import sample.model.Equipment;
 
 import java.sql.SQLException;
@@ -110,7 +110,7 @@ public class EquipmentHandlerController {
         distanceOfLightField.setText(selectedEquipment.getDistanceOfLight());
     }
 
-    private boolean isDouble(String myString){
+    public static boolean isDouble(String myString){
         final String Digits     = "(\\p{Digit}+)";
         final String HexDigits  = "(\\p{XDigit}+)";
         final String Exp        = "[eE][+-]?"+Digits;

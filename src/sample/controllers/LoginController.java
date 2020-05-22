@@ -1,7 +1,7 @@
 package sample.controllers;
 
 import javafx.event.ActionEvent;
-import sample.database.DatabaseHandler;
+import sample.handlers.DatabaseHandler;
 import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

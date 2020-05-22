@@ -28,4 +28,9 @@ package sample.model;
     public void setCondition(String condition) {
         this.condition = condition;
     }
+
+    @Override
+    public String toString(){
+        return this.getCondition();
+    }
 }

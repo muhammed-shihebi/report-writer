@@ -14,4 +14,9 @@ public class ProjectName {
     public ProjectName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
 }

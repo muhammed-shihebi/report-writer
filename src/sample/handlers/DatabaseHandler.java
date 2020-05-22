@@ -1,4 +1,4 @@
-package sample.database;
+package sample.handlers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -85,6 +85,7 @@ public class DatabaseHandler {
         }
     }
 
+    // Also used to get all Operators
     public static ObservableList<User> getAllUsers() throws SQLException {
         resultSet = statement.executeQuery("SELECT * from user;");
         ObservableList<User> users = FXCollections.observableArrayList();
@@ -158,6 +159,35 @@ public class DatabaseHandler {
         newPassword = resultSet.getInt("password");
         return newPassword;
     }
+
+    public static ObservableList<User> getConformers() throws SQLException {
+        resultSet = statement.executeQuery("SELECT * from user WHERE level > 2;");
+        ObservableList<User> users = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            users.add(new User(
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("name"),
+                    resultSet.getString("surname"),
+                    resultSet.getInt("level")));
+        }
+        return users;
+    }
+
+    public static ObservableList<User> getEvaluators() throws SQLException {
+        resultSet = statement.executeQuery("SELECT * from user WHERE level > 1;");
+        ObservableList<User> users = FXCollections.observableArrayList();
+        while (resultSet.next()){
+            users.add(new User(
+                    resultSet.getString("username"),
+                    resultSet.getString("password"),
+                    resultSet.getString("name"),
+                    resultSet.getString("surname"),
+                    resultSet.getInt("level")));
+        }
+        return users;
+    }
+
 
     // ====== Customer Functions =========================
 

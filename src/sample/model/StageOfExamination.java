@@ -29,4 +29,9 @@ public class StageOfExamination {
         this.stage = stage;
     }
 
+    @Override
+    public String toString(){
+        return this.getStage();
+    }
+
 }

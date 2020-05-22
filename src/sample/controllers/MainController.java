@@ -1,9 +1,11 @@
 package sample.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import sample.handlers.DatabaseHandler;
+import sample.model.Customer;
+import sample.model.Equipment;
 import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,41 +17,79 @@ import javafx.stage.Stage;
 import sample.Main;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class MainController {
-    
+
     private User user;
 
-    @FXML
-    private Label helloLabel;
+    private static final String ERORRTEXTFIELDSTYLE = "-fx-border-color: red;";
 
     @FXML
     private AnchorPane mainPane;
 
     @FXML
+    private ComboBox<String> reportTypeComboBox;
+
+    @FXML
+    private ComboBox<Equipment> equipmentComboBox;
+
+    @FXML
+    private ComboBox<Customer> costumerComboBox;
+
+    @FXML
     private Button settingsButton;
 
     @FXML
-    private ComboBox<String> reportTypeCbox;
+    private ComboBox<User> operatorCombobox;
 
     @FXML
-    void initialize() {
-        showSettingsButton(); // Todo remove this s
-        ObservableList<String> reports = FXCollections.observableArrayList(
-                "MAGNETIC PARTICLE INSPECTION REPORT"
-        );
-        reportTypeCbox.setItems(reports);
+    private ComboBox<User> evaluatorComboBox;
+
+    @FXML
+    private ComboBox<User> conformerComboBox;
+
+    @FXML
+    private TextField reportNoField;
+
+    @FXML
+    private DatePicker reportDateField;
+
+    @FXML
+    private Label reportNoMesg;
+
+    @FXML
+    private Label reportDateMesg;
+
+    @FXML
+    private Label helloLabel;
+
+    @FXML
+    void initialize() throws SQLException {
+        showSettingsButton(); // Todo remove this
+        ObservableList<Equipment> equipments = DatabaseHandler.getAllEquipments();
+        equipmentComboBox.setItems(equipments);
+        ObservableList<Customer> customers = DatabaseHandler.getAllCustomers();
+        costumerComboBox.setItems(customers);
+        ObservableList<User> conformers = DatabaseHandler.getConformers();
+        conformerComboBox.setItems(conformers);
+        ObservableList<User> evaluators = DatabaseHandler.getEvaluators();
+        evaluatorComboBox.setItems(evaluators);
+        ObservableList<User> operators = DatabaseHandler.getAllUsers();
+        operatorCombobox.setItems(operators);
+        reportDateField.setValue(LocalDate.now());
     }
 
     // ====== On Action ==============================
 
     @FXML
-    private void reportingOnAction(ActionEvent event) throws IOException {
-        // ToDo show reports according to the user selection
-        // helper function is used because getting Report will not be always the case
-        // when adding new reports
-        showReport2();
+    private void reportingOnAction(ActionEvent event) throws IOException, SQLException {
+        resetStyle();
+        if(!areFieldsEmpty()){
+            showReport();
+        }
     }
 
     @FXML
@@ -86,6 +126,44 @@ public class MainController {
         stage.show();
     }
 
+    // ====== Emptiness checking functions =======
+
+    private boolean areFieldsEmpty(){
+        boolean emptiness = false;
+        if(equipmentComboBox.getValue() == null){
+            equipmentComboBox.setStyle(ERORRTEXTFIELDSTYLE);
+            emptiness = true;
+        }
+        if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)")){
+            reportNoField.setStyle(ERORRTEXTFIELDSTYLE);
+            reportNoMesg.setVisible(true);
+            emptiness = true;
+        }
+        if(reportDateField.getEditor().getText().equals("")){
+            reportDateField.setStyle(ERORRTEXTFIELDSTYLE);
+            reportDateMesg.setVisible(true);
+            emptiness = true;
+        }
+        if(operatorCombobox.getValue() == null){
+            operatorCombobox.setStyle(ERORRTEXTFIELDSTYLE);
+            emptiness = true;
+        }
+        if(evaluatorComboBox.getValue() == null ){
+            evaluatorComboBox.setStyle(ERORRTEXTFIELDSTYLE);
+            emptiness = true;
+        }
+        if(conformerComboBox.getValue() == null){
+            conformerComboBox.setStyle(ERORRTEXTFIELDSTYLE);
+            emptiness = true;
+        }
+        if(costumerComboBox.getValue() == null){
+            costumerComboBox.setStyle(ERORRTEXTFIELDSTYLE);
+            emptiness = true;
+        }
+
+        return emptiness;
+    }
+
     // ====== Helper Functions ======================
 
     public void showSettingsButton(){
@@ -93,15 +171,36 @@ public class MainController {
         settingsButton.setVisible(true);
     }
 
-    private void showReport2() throws IOException {
+    private void showReport() throws IOException, SQLException {
+        Equipment equipment = equipmentComboBox.getValue();
+        String reportNo = reportNoField.getText();
+        LocalDate reportDate = reportDateField.getValue();
+        User operator = operatorCombobox.getValue();
+        User evaluator = evaluatorComboBox.getValue();
+        User conformer = conformerComboBox.getValue();
+        Customer customer = costumerComboBox.getValue();
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/report.fxml"));
         Parent root = fxmlLoader.load();
+        ReportController reportController = fxmlLoader.getController();
+
+        reportController.setEquipment(equipment);
+        reportController.setReportNo(reportNo);
+        reportController.setReportDate(reportDate);
+        reportController.setOperator(operator);
+        reportController.setEvaluator(evaluator);
+        reportController.setConformer(conformer);
+        reportController.setCustomer(customer);
+        reportController.setData();
+
+
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("MAGNETIC PARTICLE INSPECTION REPORT"); // ToDo this should be the name of the report chosen by user
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.sizeToScene();
+
         stage.show();
     }
 
@@ -115,6 +214,18 @@ public class MainController {
     }
 
     // ====== Setters and Getters ====================
+
+    private void resetStyle(){
+        equipmentComboBox.setStyle(null);
+        reportNoField.setStyle(null);
+        reportNoMesg.setVisible(false);
+        reportDateField.setStyle(null);
+        reportDateMesg.setVisible(false);
+        operatorCombobox.setStyle(null);
+        evaluatorComboBox.setStyle(null);
+        conformerComboBox.setStyle(null);
+        costumerComboBox.setStyle(null);
+    }
 
     public void setUser(User user) {
         this.user = user;

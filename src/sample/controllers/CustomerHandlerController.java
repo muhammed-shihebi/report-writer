@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
-import sample.database.DatabaseHandler;
+import sample.handlers.DatabaseHandler;
 import sample.model.*;
 
 import java.sql.SQLException;
@@ -18,6 +18,7 @@ public class CustomerHandlerController {
     public static final int ADDMODE = 1;
     public static final int EDITMODE = 2;
     private int mode = ADDMODE;
+
     private Customer selectedCustomer;
 
     @FXML
