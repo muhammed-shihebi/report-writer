@@ -16,6 +16,42 @@
    <children>
       <AnchorPane layoutX="240.0" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
          <children>
+            <AnchorPane fx:id="reportPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Diğer Bilgiler">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="585.0" layoutX="132.0" layoutY="60.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="80.0" text="Yüzey Durumu">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="360.0" text="Muayene Aşaması">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="stageOfExaminationField" layoutX="30.0" layoutY="591.0" prefHeight="31.0" prefWidth="410.0" />
+                  <Button layoutX="445.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
+                  <Button layoutX="561.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
+                  <TextField fx:id="surfaceConditionField" layoutX="30.0" layoutY="309.0" prefHeight="31.0" prefWidth="410.0" />
+                  <Button layoutX="445.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
+                  <Button layoutX="561.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
+                  <TableView fx:id="surfaceConditionTableView" layoutX="30.0" layoutY="110.0" prefHeight="192.0" prefWidth="640.0">
+                    <columns>
+                      <TableColumn fx:id="surfaceConditionColumn" prefWidth="639.0" text="Yüzey Durumu" />
+                    </columns>
+                  </TableView>
+                  <TableView fx:id="stageOfExaminationTableView" layoutX="30.0" layoutY="392.0" prefHeight="192.0" prefWidth="640.0">
+                    <columns>
+                      <TableColumn fx:id="stageOfExaminationColumn" prefWidth="639.0" text="Muayene Aşaması" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="equipmentPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
                <children>
                   <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Ekipman Bilgileri">
@@ -119,42 +155,6 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="reportPane" prefHeight="675.0" prefWidth="750.0" style="-fx-background-color: #eeeeee;">
-               <children>
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Diğer Bilgiler">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Line endX="585.0" layoutX="132.0" layoutY="60.0" startX="-100.0" />
-                  <Label layoutX="30.0" layoutY="80.0" text="Yüzey Durumu">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="360.0" text="Muayene Aşaması">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="stageOfExaminationField" layoutX="30.0" layoutY="591.0" prefHeight="31.0" prefWidth="410.0" />
-                  <Button layoutX="445.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
-                  <Button layoutX="561.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
-                  <TextField fx:id="surfaceConditionField" layoutX="30.0" layoutY="309.0" prefHeight="31.0" prefWidth="410.0" />
-                  <Button layoutX="445.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
-                  <Button layoutX="561.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
-                  <TableView fx:id="surfaceConditionTableView" layoutX="30.0" layoutY="110.0" prefHeight="192.0" prefWidth="640.0">
-                    <columns>
-                      <TableColumn fx:id="surfaceConditionColumn" prefWidth="639.0" text="Yüzey Durumu" />
-                    </columns>
-                  </TableView>
-                  <TableView fx:id="stageOfExaminationTableView" layoutX="30.0" layoutY="392.0" prefHeight="192.0" prefWidth="640.0">
-                    <columns>
-                      <TableColumn fx:id="stageOfExaminationColumn" prefWidth="639.0" text="Muayene Aşaması" />
-                    </columns>
-                  </TableView>
                </children>
             </AnchorPane>
          </children>

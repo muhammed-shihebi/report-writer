@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import sample.handlers.DatabaseHandler;
 import sample.handlers.ExcelHandler;
@@ -16,6 +16,7 @@ import sample.handlers.PDFHandler;
 import sample.model.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -31,6 +32,8 @@ import javafx.scene.control.TextField;
 public class ReportController {
 
     private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
+    private static final String PDF = "PDF";
+    private static final String EXCEL= "EXCEL";
     private Equipment equipment;
     private String reportNo;
     private LocalDate reportDate;
@@ -340,20 +343,22 @@ public class ReportController {
     }
 
     @FXML
-    void excelButtonOnAction(ActionEvent event) {
+    void excelButtonOnAction(ActionEvent event) throws IOException{
         Report report = getReport();
-        String path = getPath();
         if(report != null){
-            ExcelHandler.getExcel(report, path);
+            String path = getPath(EXCEL);
+            if(path != null)
+                ExcelHandler.getExcel(report, path);
         }
     }
 
     @FXML
-    void pdfButtonOnAction(ActionEvent event) {
+    void pdfButtonOnAction(ActionEvent event) throws IOException {
         Report report = getReport();
-        String path = getPath();
         if(report != null){
-            PDFHandler.getPDF(report, path);
+            String path = getPath(PDF);
+            if(path != null)
+                PDFHandler.getPDF(report, path);
         }
     }
 
@@ -494,12 +499,20 @@ public class ReportController {
         return report;
     }
 
-    public String getPath(){
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        File selectedDirectory = directoryChooser.showDialog(generalPane.getScene().getWindow());
-        System.out.println(selectedDirectory.getAbsolutePath());
-        return selectedDirectory.getAbsolutePath();
+    public String getPath(String str){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter;
+        if(str.equals(EXCEL))
+            extFilter = new FileChooser.ExtensionFilter("Excel (*.xlsx)", "*.xlsx");
+        else
+            extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().addAll(extFilter);
+        fileChooser.setInitialFileName("Report");
+        File file = fileChooser.showSaveDialog(generalPane.getScene().getWindow());
+        if(file == null)
+            return null;
+        System.out.println(file.getPath());
+        return file.getPath();
     }
 
     // ====== emptiness Checking =====================

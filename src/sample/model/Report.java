@@ -95,6 +95,8 @@ public class Report {
     public Report() {
     }
 
+
+
     public static int getMAXSCOPE() {
         return MAXSCOPE;
     }

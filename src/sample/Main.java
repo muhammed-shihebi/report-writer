@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import sample.handlers.DatabaseHandler;
 
+import java.io.File;
 import java.sql.SQLException;
 
 public class Main extends Application {
@@ -26,6 +28,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.sizeToScene();
         primaryStage.show();
+
     }
 
     @Override
