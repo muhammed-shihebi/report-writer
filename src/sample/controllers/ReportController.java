@@ -528,7 +528,7 @@ public class ReportController {
         resultComboBox.setStyle(null);
 
         boolean emptiness = false;
-        if(weldPieceNoField.getText().equals("")){
+        if(weldPieceNoField.getText().equals("")  || !PDFHandler.isStringLeagel(weldPieceNoField.getText())){
             weldPieceNoField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -537,7 +537,7 @@ public class ReportController {
             testLengthField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(weldingProcessField.getText().equals("")){
+        if(weldingProcessField.getText().equals("")|| !PDFHandler.isStringLeagel(weldingProcessField.getText())){
             weldingProcessField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -547,12 +547,12 @@ public class ReportController {
             emptiness = true;
         }
         if(resultComboBox.getValue() != null && resultComboBox.getValue().equals(InspectionResult.RED) &&
-                defectTypeField.getText().equals("")){
+                (defectTypeField.getText().equals("") || !PDFHandler.isStringLeagel(defectTypeField.getText()))){
             defectTypeField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
         if(resultComboBox.getValue() != null && resultComboBox.getValue().equals(InspectionResult.RED) &&
-                defectLocField.getText().equals("")){
+                (defectLocField.getText().equals("")|| !PDFHandler.isStringLeagel(defectLocField.getText()))){
             defectLocField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -587,31 +587,31 @@ public class ReportController {
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentField.getText().equals("")){
+        if(equipmentField.getText().equals("")|| !PDFHandler.isStringLeagel(equipmentField.getText())){
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(MPCarrierMediumField.getText().equals("")){
+        if(MPCarrierMediumField.getText().equals("")|| !PDFHandler.isStringLeagel(MPCarrierMediumField.getText())){
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(magTechField.getText().equals("")){
+        if(magTechField.getText().equals("")|| !PDFHandler.isStringLeagel(magTechField.getText())){
             magTechField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(UVLightIntensityField.getText().equals("")){
+        if(UVLightIntensityField.getText().equals("")|| !PDFHandler.isStringLeagel(UVLightIntensityField.getText())){
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(distanceOfLightField.getText().equals("")){
+        if(distanceOfLightField.getText().equals("")|| !PDFHandler.isStringLeagel(distanceOfLightField.getText())){
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(examinationAreaField.getText().equals("")){
+        if(examinationAreaField.getText().equals("")|| !PDFHandler.isStringLeagel(examinationAreaField.getText())){
             examinationAreaField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(luxmeterField.getText().equals("")){
+        if(luxmeterField.getText().equals("")|| !PDFHandler.isStringLeagel(luxmeterField.getText())){
             luxmeterField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -621,23 +621,23 @@ public class ReportController {
             surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(gaussFieldStrengthField.getText().equals("")){
+        if(gaussFieldStrengthField.getText().equals("")|| !PDFHandler.isStringLeagel(gaussFieldStrengthField.getText())){
             gaussFieldStrengthField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentSurfaceConditionField.getText().equals("")){
+        if(equipmentSurfaceConditionField.getText().equals("")|| !PDFHandler.isStringLeagel(equipmentSurfaceConditionField.getText())){
             equipmentSurfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(identificationOfLightEquipField.getText().equals("")){
+        if(identificationOfLightEquipField.getText().equals("")|| !PDFHandler.isStringLeagel(identificationOfLightEquipField.getText())){
             identificationOfLightEquipField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(liftingTestDateNumberField.getText().equals("")){
+        if(liftingTestDateNumberField.getText().equals("")|| !PDFHandler.isStringLeagel(liftingTestDateNumberField.getText())){
             liftingTestDateNumberField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(standardDeviationsField.getText().equals("")){
+        if(standardDeviationsField.getText().equals("")|| !PDFHandler.isStringLeagel(standardDeviationsField.getText())){
             standardDeviationsField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -675,20 +675,20 @@ public class ReportController {
             offerNoComboBox.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(testPlaceField.getText().equals("")){
+        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLeagel(testPlaceField.getText())){
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
 
-        if(inspectionStandardField.getText().equals("")){
+        if(inspectionStandardField.getText().equals("")|| !PDFHandler.isStringLeagel(inspectionStandardField.getText())){
             inspectionStandardField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
-        if(evaluationStandardField.getText().equals("")){
+        if(evaluationStandardField.getText().equals("")|| !PDFHandler.isStringLeagel(evaluationStandardField.getText())){
             evaluationStandardField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
-        if(inspectionProcedureField.getText().equals("")){
+        if(inspectionProcedureField.getText().equals("")|| !PDFHandler.isStringLeagel(inspectionProcedureField.getText())){
             inspectionProcedureField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }

@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import sample.handlers.DatabaseHandler;
+import sample.handlers.PDFHandler;
 import sample.model.Equipment;
 
 import java.sql.SQLException;
@@ -161,27 +162,27 @@ public class EquipmentHandlerController {
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentField.getText().equals("")){
+        if(equipmentField.getText().equals("") || !PDFHandler.isStringLeagel(equipmentField.getText())){
             equipmentMesg.setVisible(true);
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(MPCarrierMediumField.getText().equals("")){
+        if(MPCarrierMediumField.getText().equals("") || !PDFHandler.isStringLeagel(MPCarrierMediumField.getText())){
             MPCarrierMediumMesg.setVisible(true);
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(magTechField.getText().equals("")){
+        if(magTechField.getText().equals("") || !PDFHandler.isStringLeagel(magTechField.getText())){
             magTechMesg.setVisible(true);
             magTechField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(UVLightIntensityField.getText().equals("")){
+        if(UVLightIntensityField.getText().equals("") || !PDFHandler.isStringLeagel(UVLightIntensityField.getText())){
             UVLightIntensityMseg.setVisible(true);
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(distanceOfLightField.getText().equals("")){
+        if(distanceOfLightField.getText().equals("") || !PDFHandler.isStringLeagel(distanceOfLightField.getText())){
             distanceOfLightMesg.setVisible(true);
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;

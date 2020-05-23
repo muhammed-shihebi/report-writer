@@ -4,6 +4,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.encoding.WinAnsiEncoding;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import sample.model.InspectionResult;
 import sample.model.Report;
@@ -13,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class PDFHandler {
+
+    public static final int MAXSTRINGSIZE = 50;
 
     // ======= MyCell ==========================
 
@@ -152,8 +155,18 @@ public class PDFHandler {
         return myCells;
     }
 
-
     // ======= PDF Functions ====================
+
+    public static boolean isStringLeagel(String str){
+        if(str.length() > MAXSTRINGSIZE)
+            return false;
+        for(int i = 0; i < str.length(); i++){
+            if (!WinAnsiEncoding.INSTANCE.contains(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static void getPDF(Report report, String path) throws IOException {
         File file = new File("src/assets/reports/report.pdf");

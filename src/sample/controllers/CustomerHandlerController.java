@@ -6,6 +6,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import sample.handlers.DatabaseHandler;
+import sample.handlers.PDFHandler;
 import sample.model.*;
 
 import java.sql.SQLException;
@@ -113,7 +114,7 @@ public class CustomerHandlerController {
     @FXML
     void jobOrderNoAddButtonOnAction(ActionEvent event) {
         jobOrderNoField.setStyle(null);
-        if(jobOrderNoField.getText().equals("")){
+        if(jobOrderNoField.getText().equals("") || !PDFHandler.isStringLeagel(jobOrderNoField.getText())){
             jobOrderNoField.setStyle(ERORRTEXTFILESTYLE);
         }else{
             JobOrderNo newItem = new JobOrderNo(jobOrderNoField.getText());
@@ -137,7 +138,7 @@ public class CustomerHandlerController {
     @FXML
     void offerNoAddButtonOnAction(ActionEvent event) {
         offerNoField.setStyle(null);
-        if(offerNoField.getText().equals("")){
+        if(offerNoField.getText().equals("") || !PDFHandler.isStringLeagel(offerNoField.getText())){
             offerNoField.setStyle(ERORRTEXTFILESTYLE);
         }else {
             OfferNo newItem = new OfferNo(offerNoField.getText());
@@ -161,7 +162,7 @@ public class CustomerHandlerController {
     @FXML
     void projectNameAddButtonOnAction(ActionEvent event) {
         projectNameField.setStyle(null);
-        if(projectNameField.getText().equals("")){
+        if(projectNameField.getText().equals("") || !PDFHandler.isStringLeagel(projectNameField.getText())){
             projectNameField.setStyle(ERORRTEXTFILESTYLE);
         }else {
             ProjectName newItem = new ProjectName(projectNameField.getText());
@@ -219,12 +220,12 @@ public class CustomerHandlerController {
     private boolean areFieldsEmpty(){
         boolean emptiness = false;
 
-        if(nameField.getText().equals("")){
+        if(nameField.getText().equals("") || !PDFHandler.isStringLeagel(nameField.getText())){
             nameMesg.setVisible(true);
             nameField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(testPlaceField.getText().equals("")){
+        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLeagel(testPlaceField.getText())){
             testPlaceMesg.setVisible(true);
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;

@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.handlers.PDFHandler;
+
 public class User {
 
     public final static int LEVEL1 = 1;
@@ -67,7 +69,8 @@ public class User {
     // ====== Data Validation ========================
 
     public static boolean isUsernameValid(String username){
-        return username.matches("[A-Za-z0-9]+");
+        return username.matches("[A-Za-z0-9]+") && username.length() < PDFHandler.MAXSTRINGSIZE;
+
     }
 
     public static boolean isPasswordValid(String password){
@@ -75,7 +78,7 @@ public class User {
     }
 
     public static boolean isNameValid(String str) {
-        return str.matches("\\p{L}+");
+        return str.matches("\\p{L}+") && PDFHandler.isStringLeagel(str);
     }
 
     @Override

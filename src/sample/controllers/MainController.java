@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import sample.handlers.DatabaseHandler;
+import sample.handlers.PDFHandler;
 import sample.model.Customer;
 import sample.model.Equipment;
 import sample.model.User;
