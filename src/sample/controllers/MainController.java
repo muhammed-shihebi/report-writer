@@ -69,7 +69,6 @@ public class MainController {
 
     @FXML
     void initialize() throws SQLException {
-        showSettingsButton(); // Todo remove this
         ObservableList<Equipment> equipments = DatabaseHandler.getAllEquipments();
         equipmentComboBox.setItems(equipments);
         ObservableList<Customer> customers = DatabaseHandler.getAllCustomers();
@@ -197,7 +196,7 @@ public class MainController {
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.setTitle("MAGNETIC PARTICLE INSPECTION REPORT"); // ToDo this should be the name of the report chosen by user
+        stage.setTitle("MAGNETIC PARTICLE INSPECTION REPORT");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.sizeToScene();

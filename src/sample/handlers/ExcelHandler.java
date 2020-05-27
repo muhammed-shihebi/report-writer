@@ -13,8 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.apache.poi.ss.usermodel.VerticalAlignment.CENTER;
-
 public class ExcelHandler {
 
     // ======== MyCell ===========================
@@ -48,7 +46,7 @@ public class ExcelHandler {
 
         // Customer data
         myCells.add(new MyCell(report.getCustomer().getName(), 2, 3));
-        myCells.add(new MyCell(report.getCustomer().getTestPlace(), 5,3));
+        myCells.add(new MyCell(report.getCustomer().getTestPlace(), 4,3));
 
         // Equipment data
         myCells.add(new MyCell(((Double) report.getEquipment().getPoleDistance()).toString() + "mm", 8, 4));
@@ -73,15 +71,15 @@ public class ExcelHandler {
         }
         // Users data
         myCells.add(new MyCell(report.getOperator().toString(),39, 5));
-        myCells.add(new MyCell(((Integer)report.getOperator().getLevel()).toString(), 40, 5));
+        myCells.add(new MyCell("Level " +((Integer)report.getOperator().getLevel()).toString(), 40, 5));
         myCells.add(new MyCell(report.getOperatorDate().toString(), 41, 5));
 
         myCells.add(new MyCell(report.getEvaluator().toString(),39, 15));
-        myCells.add(new MyCell(((Integer)report.getEvaluator().getLevel()).toString(), 40, 15));
+        myCells.add(new MyCell("Level " +((Integer)report.getEvaluator().getLevel()).toString(), 40, 15));
         myCells.add(new MyCell(report.getEvaluatorDate().toString(), 41, 15));
 
         myCells.add(new MyCell(report.getConformer().toString(),39, 20));
-        myCells.add(new MyCell(((Integer)report.getConformer().getLevel()).toString(), 40, 20));
+        myCells.add(new MyCell("Level " +((Integer)report.getConformer().getLevel()).toString(), 40, 20));
         myCells.add(new MyCell(report.getConformerDate().toString(), 41, 20));
 
         // Other Customer things
@@ -122,7 +120,6 @@ public class ExcelHandler {
 
     public static void getExcel(Report report, String path) throws IOException{
         XSSFWorkbook xssfWorkbook = getWorkbook();
-        Font font = getFont(xssfWorkbook);
         ArrayList<MyCell> myCells = getMyCells(report);
         for (MyCell myCell : myCells) {
             writeCell(xssfWorkbook, myCell);
@@ -141,8 +138,6 @@ public class ExcelHandler {
             xssfWorkbook.getSheetAt(0).getRow(14).getCell(7).setCellValue("✔");
         }
 
-
-
         xssfWorkbook.write(new FileOutputStream(path));
         System.out.println("File is saved");
         xssfWorkbook.close();
@@ -153,14 +148,6 @@ public class ExcelHandler {
         XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
         System.out.println("File is opened");
         return xssfWorkbook;
-    }
-
-    private static Font getFont(XSSFWorkbook xssfWorkbook){
-        Font font = xssfWorkbook.createFont();
-        font.setFontHeightInPoints((short) 8);
-        font.setBold(true);
-        font.setFontName("Arial");
-        return font;
     }
 
     private static void writeCell(XSSFWorkbook xssfWorkbook, MyCell myCell){

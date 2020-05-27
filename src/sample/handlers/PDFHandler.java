@@ -102,7 +102,7 @@ public class PDFHandler {
 
         myCells.add(new PDFHandler.MyCell(((Double)report.getSurfaceTemperature()).toString() + "ºc", x,y));
         myCells.add(new PDFHandler.MyCell(report.getGaussFieldStrength()+" kA/m", x, y-=27));
-        myCells.add(new PDFHandler.MyCell(report.getEquipmentSurfaceCondition(), x, y-=27));
+        myCells.add(new PDFHandler.MyCell(report.getEquipmentSurfaceCondition(), x-3, y-=27));
         myCells.add(new PDFHandler.MyCell(report.getIdentificationOfLightEquip(), x, y-=18));
         myCells.add(new PDFHandler.MyCell(report.getLiftingTestDateNumber(), x, y-=18));
 
@@ -135,21 +135,21 @@ public class PDFHandler {
         y = 143;
 
         myCells.add(new PDFHandler.MyCell(report.getOperator().toString(),x, y));
-        myCells.add(new PDFHandler.MyCell(((Integer)report.getOperator().getLevel()).toString(), x, y-=17));
+        myCells.add(new PDFHandler.MyCell("Level " +((Integer)report.getOperator().getLevel()).toString(), x, y-=17));
         myCells.add(new PDFHandler.MyCell(report.getOperatorDate().toString(), x, y-=17));
 
         x = 285;
         y = 143;
 
         myCells.add(new PDFHandler.MyCell(report.getEvaluator().toString(),x, y));
-        myCells.add(new PDFHandler.MyCell(((Integer)report.getEvaluator().getLevel()).toString(), x, y-=17));
+        myCells.add(new PDFHandler.MyCell("Level " + ((Integer)report.getEvaluator().getLevel()).toString(), x, y-=17));
         myCells.add(new PDFHandler.MyCell(report.getEvaluatorDate().toString(), x, y-=17));
 
         x = 407;
         y = 143;
 
         myCells.add(new PDFHandler.MyCell(report.getConformer().toString(),x,y));
-        myCells.add(new PDFHandler.MyCell(((Integer)report.getConformer().getLevel()).toString(), x, y-=17));
+        myCells.add(new PDFHandler.MyCell("Level " +((Integer)report.getConformer().getLevel()).toString(), x, y-=17));
         myCells.add(new PDFHandler.MyCell(report.getConformerDate().toString(), x, y-=17));
 
         return myCells;
@@ -157,7 +157,7 @@ public class PDFHandler {
 
     // ======= PDF Functions ====================
 
-    public static boolean isStringLeagel(String str){
+    public static boolean isStringLegal(String str){
         if(str.length() > MAXSTRINGSIZE)
             return false;
         for(int i = 0; i < str.length(); i++){
@@ -180,13 +180,13 @@ public class PDFHandler {
         }
 
         if(report.isFilerWeld()){
-            PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true, true);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true);
             PDImageXObject pdImage = PDImageXObject.createFromFile("src/assets/images/yesIcon.png", document);
             contentStream.drawImage(pdImage, 302, 449);
             contentStream.close();
         }
         if(report.isButtWeld()){
-            PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true, true);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true);
             PDImageXObject pdImage = PDImageXObject.createFromFile("src/assets/images/yesIcon.png", document);
             contentStream.drawImage(pdImage, 173, 449);
             contentStream.close();
@@ -198,7 +198,7 @@ public class PDFHandler {
     }
 
     public static void writeCell(MyCell myCell, PDDocument document, PDPage page) throws IOException {
-        PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true, true);
+        PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true);
         contentStream.beginText();
         contentStream.newLineAtOffset(myCell.getX(), myCell.getY());
         contentStream.setFont(PDType1Font.HELVETICA_BOLD, 6);

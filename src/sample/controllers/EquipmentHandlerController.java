@@ -162,27 +162,27 @@ public class EquipmentHandlerController {
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentField.getText().equals("") || !PDFHandler.isStringLeagel(equipmentField.getText())){
+        if(equipmentField.getText().equals("") || !PDFHandler.isStringLegal(equipmentField.getText())){
             equipmentMesg.setVisible(true);
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(MPCarrierMediumField.getText().equals("") || !PDFHandler.isStringLeagel(MPCarrierMediumField.getText())){
+        if(MPCarrierMediumField.getText().equals("") || !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumMesg.setVisible(true);
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(magTechField.getText().equals("") || !PDFHandler.isStringLeagel(magTechField.getText())){
+        if(magTechField.getText().equals("") || !PDFHandler.isStringLegal(magTechField.getText())){
             magTechMesg.setVisible(true);
             magTechField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(UVLightIntensityField.getText().equals("") || !PDFHandler.isStringLeagel(UVLightIntensityField.getText())){
+        if(UVLightIntensityField.getText().equals("") || !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
             UVLightIntensityMseg.setVisible(true);
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(distanceOfLightField.getText().equals("") || !PDFHandler.isStringLeagel(distanceOfLightField.getText())){
+        if(distanceOfLightField.getText().equals("") || !PDFHandler.isStringLegal(distanceOfLightField.getText())){
             distanceOfLightMesg.setVisible(true);
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;

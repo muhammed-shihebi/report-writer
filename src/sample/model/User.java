@@ -78,7 +78,7 @@ public class User {
     }
 
     public static boolean isNameValid(String str) {
-        return str.matches("\\p{L}+") && PDFHandler.isStringLeagel(str);
+        return str.matches("\\p{L}+") && PDFHandler.isStringLegal(str);
     }
 
     @Override
