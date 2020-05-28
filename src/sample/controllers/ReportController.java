@@ -4,12 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
 import sample.handlers.ExcelHandler;
 import sample.handlers.PDFHandler;
@@ -43,6 +48,7 @@ public class ReportController {
     private User evaluator;
     private User conformer;
     private Customer customer;
+    private User user;
 
     @FXML
     private AnchorPane generalPane;
@@ -338,29 +344,51 @@ public class ReportController {
     }
 
     @FXML
-    private void cancelOnAction(ActionEvent event) {
-        if(canselAlert()){
+    private void cancelOnAction(ActionEvent event) throws IOException {
+        if(cancelAlert()){
             generalPane.getScene().getWindow().hide();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
+            Parent root = fxmlLoader.load();
+            MainController mainController = fxmlLoader.getController();
+            // showing settings if the user is an admin
+            if(user.getLevel() >= User.LEVEL3)
+                mainController.showSettingsButton();
+            mainController.setUser(user);
+            mainController.setHelloLabel();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.sizeToScene();
+            stage.setTitle("Ana Ekran");
+            stage.show();
         }
     }
 
     @FXML
-    void excelButtonOnAction(ActionEvent event) throws IOException{
+    void excelButtonOnAction(ActionEvent event) {
         Report report = getReport();
         if(report != null){
             String path = getPath(EXCEL);
             if(path != null)
-                ExcelHandler.getExcel(report, path);
+                try {
+                    ExcelHandler.getExcel(report, path);
+                }catch (IOException e){
+                    cantSaveFileAlert(e);
+                }
         }
     }
 
     @FXML
-    void pdfButtonOnAction(ActionEvent event) throws IOException {
+    void pdfButtonOnAction(ActionEvent event){
         Report report = getReport();
         if(report != null){
             String path = getPath(PDF);
             if(path != null)
-                PDFHandler.getPDF(report, path);
+                try {
+                    PDFHandler.getPDF(report, path);
+                }catch (IOException e){
+                    cantSaveFileAlert(e);
+                }
         }
     }
 
@@ -391,7 +419,6 @@ public class ReportController {
 
     @FXML
     void InspectionResultDeleteButtonOnAction(ActionEvent event) {
-        System.out.println(inspectionResultTableView.getItems().size());
         InspectionResult item =  inspectionResultTableView.getSelectionModel().getSelectedItem();
         if(item != null){
             inspectionResultTableView.getItems().remove(item);
@@ -406,7 +433,7 @@ public class ReportController {
 
     // ====== Helper Functions =======================
 
-    public void setData() throws SQLException {
+    public void setData() {
         // Users Data
         operatorNameField.setText(operator.toString());
         operatorLevelField.setText(String.valueOf(operator.getLevel()));
@@ -522,7 +549,7 @@ public class ReportController {
     public boolean areInsResFieldsEmpty(){
         // reset style of fields
         weldPieceNoField.setStyle(null);
-        testPlaceField.setStyle(null);
+        testLengthField.setStyle(null);
         weldingProcessField.setStyle(null);
         thicknessField.setStyle(null);
         defectTypeField.setStyle(null);
@@ -727,13 +754,11 @@ public class ReportController {
 
     // ====== Alerts ====================================
 
-    private boolean canselAlert(){
+    public static boolean cancelAlert(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uyarı");
         alert.setHeaderText(null);
         alert.setContentText("Girdiğiniz tüm bilgiler kaydedilmeyecek. İptal etmek istediğinden emin misiniz?");
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.initOwner(generalPane.getScene().getWindow());
         ButtonType buttonYes = new ButtonType("Evet");
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
@@ -763,6 +788,16 @@ public class ReportController {
         alert.setContentText("Lütfen bir satır seçin");
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.initOwner(generalPane.getScene().getWindow());
+        ButtonType buttonYes = new ButtonType("Tamam");
+        alert.getButtonTypes().setAll(buttonYes);
+        alert.show();
+    }
+
+    private void cantSaveFileAlert(IOException e){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Dosya kaydedilemedi");
+        alert.setHeaderText(null);
+        alert.setContentText(e.toString());
         ButtonType buttonYes = new ButtonType("Tamam");
         alert.getButtonTypes().setAll(buttonYes);
         alert.show();
@@ -825,5 +860,14 @@ public class ReportController {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

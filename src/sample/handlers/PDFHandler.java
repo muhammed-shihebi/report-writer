@@ -11,6 +11,7 @@ import sample.model.Report;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class PDFHandler {
@@ -20,9 +21,9 @@ public class PDFHandler {
     // ======= MyCell ==========================
 
     public static class MyCell{
-        private String data;
-        private int x;
-        private int y;
+        private final String data;
+        private final int x;
+        private final int y;
 
         public MyCell(String data, int x, int y) {
             this.data = data;
@@ -71,7 +72,7 @@ public class PDFHandler {
 
         myCells.add(new PDFHandler.MyCell(((Integer) report.getNumberOfPages()).toString(), x, y));
         myCells.add(new PDFHandler.MyCell(report.getReportNo(), x, y-=18));
-        myCells.add(new PDFHandler.MyCell(report.getReportDate().toString(), x, y-=18));
+        myCells.add(new PDFHandler.MyCell(report.getReportDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), x, y-=18));
         myCells.add(new PDFHandler.MyCell(report.getJobOrderNo().toString(), x, y-=18));
         myCells.add(new PDFHandler.MyCell(report.getOfferNo().toString(), x, y-=18));
 
@@ -111,7 +112,7 @@ public class PDFHandler {
         y = 437;
 
         myCells.add(new PDFHandler.MyCell(report.getStandardDeviations(), x, y));
-        myCells.add(new PDFHandler.MyCell(report.getInspectionDates().toString(), x, y-=18));
+        myCells.add(new PDFHandler.MyCell(report.getInspectionDates().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), x, y-=18));
         myCells.add(new PDFHandler.MyCell(report.getDescriptionAndAttachments(), x, y-=18));
 
         // Forth row y = 355 next = y-14
@@ -136,21 +137,21 @@ public class PDFHandler {
 
         myCells.add(new PDFHandler.MyCell(report.getOperator().toString(),x, y));
         myCells.add(new PDFHandler.MyCell("Level " +((Integer)report.getOperator().getLevel()).toString(), x, y-=17));
-        myCells.add(new PDFHandler.MyCell(report.getOperatorDate().toString(), x, y-=17));
+        myCells.add(new PDFHandler.MyCell(report.getOperatorDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), x, y-=17));
 
         x = 285;
         y = 143;
 
         myCells.add(new PDFHandler.MyCell(report.getEvaluator().toString(),x, y));
         myCells.add(new PDFHandler.MyCell("Level " + ((Integer)report.getEvaluator().getLevel()).toString(), x, y-=17));
-        myCells.add(new PDFHandler.MyCell(report.getEvaluatorDate().toString(), x, y-=17));
+        myCells.add(new PDFHandler.MyCell(report.getEvaluatorDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), x, y-=17));
 
         x = 407;
         y = 143;
 
         myCells.add(new PDFHandler.MyCell(report.getConformer().toString(),x,y));
         myCells.add(new PDFHandler.MyCell("Level " +((Integer)report.getConformer().getLevel()).toString(), x, y-=17));
-        myCells.add(new PDFHandler.MyCell(report.getConformerDate().toString(), x, y-=17));
+        myCells.add(new PDFHandler.MyCell(report.getConformerDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), x, y-=17));
 
         return myCells;
     }

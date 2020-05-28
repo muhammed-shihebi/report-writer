@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ExcelHandler {
@@ -18,9 +19,9 @@ public class ExcelHandler {
     // ======== MyCell ===========================
 
     public static class MyCell{
-        private String data;
-        private int row;
-        private int column;
+        private final String data;
+        private final int row;
+        private final int column;
 
         public MyCell(String data, int row, int column) {
             this.data = data;
@@ -72,15 +73,15 @@ public class ExcelHandler {
         // Users data
         myCells.add(new MyCell(report.getOperator().toString(),39, 5));
         myCells.add(new MyCell("Level " +((Integer)report.getOperator().getLevel()).toString(), 40, 5));
-        myCells.add(new MyCell(report.getOperatorDate().toString(), 41, 5));
+        myCells.add(new MyCell(report.getOperatorDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), 41, 5));
 
         myCells.add(new MyCell(report.getEvaluator().toString(),39, 15));
         myCells.add(new MyCell("Level " +((Integer)report.getEvaluator().getLevel()).toString(), 40, 15));
-        myCells.add(new MyCell(report.getEvaluatorDate().toString(), 41, 15));
+        myCells.add(new MyCell(report.getEvaluatorDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), 41, 15));
 
         myCells.add(new MyCell(report.getConformer().toString(),39, 20));
         myCells.add(new MyCell("Level " +((Integer)report.getConformer().getLevel()).toString(), 40, 20));
-        myCells.add(new MyCell(report.getConformerDate().toString(), 41, 20));
+        myCells.add(new MyCell(report.getConformerDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), 41, 20));
 
         // Other Customer things
         myCells.add(new MyCell(report.getJobOrderNo().toString(), 5, 26));
@@ -97,7 +98,7 @@ public class ExcelHandler {
         myCells.add(new MyCell(report.getStageOfExamination().toString(), 6, 19));
         myCells.add(new MyCell(((Integer) report.getNumberOfPages()).toString(), 2, 26));
         myCells.add(new MyCell(report.getReportNo(), 3, 26));
-        myCells.add(new MyCell(report.getReportDate().toString(), 4, 26));
+        myCells.add(new MyCell(report.getReportDate().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), 4, 26));
         myCells.add(new MyCell(report.getExaminationArea(), 8, 16));
         myCells.add(new MyCell(report.getCurrentType(), 9, 16));
         myCells.add(new MyCell(report.getLuxmeter(), 10, 16));
@@ -110,7 +111,7 @@ public class ExcelHandler {
         myCells.add(new MyCell(report.getIdentificationOfLightEquip(), 12, 25));
         myCells.add(new MyCell(report.getLiftingTestDateNumber(), 13, 25));
         myCells.add(new MyCell(report.getStandardDeviations(), 19, 7));
-        myCells.add(new MyCell(report.getInspectionDates().toString(), 20, 7));
+        myCells.add(new MyCell(report.getInspectionDates().format(DateTimeFormatter.ofPattern("MM/dd/yyy")), 20, 7));
         myCells.add(new MyCell(report.getDescriptionAndAttachments(), 21, 7));
 
         return myCells;

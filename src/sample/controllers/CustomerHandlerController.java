@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
 import sample.handlers.PDFHandler;
 import sample.model.*;
@@ -97,12 +98,14 @@ public class CustomerHandlerController {
                     projectNameTableView.getItems(),
                     offerNoTableView.getItems()
             );
-            if(mode == ADDMODE){
-                DatabaseHandler.addNewCustomer(newCustomer);
-            }else {
-                DatabaseHandler.editCustomer(newCustomer, selectedCustomer);
-            }
-            addCustomerPane.getScene().getWindow().hide();
+
+                if (mode == ADDMODE) {
+                    DatabaseHandler.addNewCustomer(newCustomer);
+                } else {
+                    DatabaseHandler.editCustomer(newCustomer, selectedCustomer);
+                }
+                addCustomerPane.getScene().getWindow().hide();
+
         }
     }
 

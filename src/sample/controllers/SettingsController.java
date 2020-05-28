@@ -2,6 +2,7 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import sample.handlers.DatabaseHandler;
+import sample.handlers.PDFHandler;
 import sample.model.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +22,8 @@ import java.util.Optional;
 public class SettingsController {
 
     private static final String ERORRTEXTFILESTYLE = "-fx-border-color: red;";
+
+    User user;
 
     @FXML
     private AnchorPane settingsPane;
@@ -103,8 +106,22 @@ public class SettingsController {
     // ====== Sidebar ================================
 
     @FXML
-    private void OkButtonOnAction(ActionEvent event) {
+    private void OkButtonOnAction(ActionEvent event) throws IOException {
         settingsPane.getScene().getWindow().hide();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
+        Parent root = fxmlLoader.load();
+        MainController mainController = fxmlLoader.getController();
+        // showing settings if the user is an admin
+        if (user.getLevel() >= User.LEVEL3)
+            mainController.showSettingsButton();
+        mainController.setUser(user);
+        mainController.setHelloLabel();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.sizeToScene();
+        stage.setTitle("Ana Ekran");
+        stage.show();
     }
 
     @FXML
@@ -123,13 +140,25 @@ public class SettingsController {
     }
 
     @FXML
-    private void equipmentButtonOnAction(){
+    private void equipmentButtonOnAction() {
         equipmentPane.toFront();
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     // ====== User Functions  ========================
-        // ====== On Action ==========================
+    // ====== On Action ==========================
 
     @FXML
     private void userAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
@@ -152,10 +181,10 @@ public class SettingsController {
     private void userEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
         ObservableList<User> userSelected;
         userSelected = userTableView.getSelectionModel().getSelectedItems();
-        if(!userSelected.isEmpty()){
+        if (!userSelected.isEmpty()) {
             // just one item could be selected -> 0
             showEditUser(userSelected.get(0));
-        }else{
+        } else {
             selectItemAlert();
         }
     }
@@ -164,18 +193,18 @@ public class SettingsController {
     private void userRemButtonOnAction(ActionEvent event) throws SQLException {
         ObservableList<User> userSelected;
         userSelected = userTableView.getSelectionModel().getSelectedItems();
-        if(!userSelected.isEmpty()){
+        if (!userSelected.isEmpty()) {
             // only if user confirm the removing action in the removeAlert function the user will be removed
             // form the database if it not the only admin in the system
-            if(removeAlert(userSelected.get(0))){
+            if (removeAlert(userSelected.get(0))) {
                 refreshUserTable();
             }
-        }else{
+        } else {
             selectItemAlert();
         }
     }
 
-        // ====== Helper Functions ===================
+    // ====== Helper Functions ===================
 
     private void refreshUserTable() throws SQLException {
         // filling out the user table with data from the database
@@ -187,7 +216,7 @@ public class SettingsController {
     }
 
     private void removeUser(User user) throws SQLException {
-        if (!DatabaseHandler.deleteUser(user)){
+        if (!DatabaseHandler.deleteUser(user)) {
             // this means the user is trying to delete the only admin in the system witch is not allowed
             onlyAdminAlert();
         }
@@ -209,7 +238,7 @@ public class SettingsController {
         refreshUserTable();
     }
 
-        // ====== Alerts =============================
+    // ====== Alerts =============================
 
     private boolean removeAlert(User user) throws SQLException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -223,8 +252,8 @@ public class SettingsController {
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent()){
-            if(result.get() == buttonYes){
+        if (result.isPresent()) {
+            if (result.get() == buttonYes) {
                 //
                 removeUser(user);
                 return true;
@@ -233,7 +262,7 @@ public class SettingsController {
         return false; // if user exit without clicking anything or if user clicked cancel
     }
 
-    private void selectItemAlert(){
+    private void selectItemAlert() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("hiçbir şey seçilmedi");
         alert.setHeaderText(null);
@@ -245,7 +274,7 @@ public class SettingsController {
         alert.show();
     }
 
-    private void onlyAdminAlert(){
+    private void onlyAdminAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Tek Admin");
         alert.setHeaderText(null);
@@ -270,8 +299,10 @@ public class SettingsController {
 
 
 
+
+
     // ====== Customer Functions =====================
-        // ====== On Action ==========================
+    // ====== On Action ==========================
 
     @FXML
     private void customerAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
@@ -291,10 +322,10 @@ public class SettingsController {
     private void customerEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
         ObservableList<Customer> selectedCustomer;
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItems();
-        if(!selectedCustomer.isEmpty()){
+        if (!selectedCustomer.isEmpty()) {
             // just one item could be selected -> 0
             showEditCustomer(selectedCustomer.get(0));
-        }else{
+        } else {
             selectItemAlert();
         }
     }
@@ -303,17 +334,17 @@ public class SettingsController {
     private void customerRemButtonOnAction(ActionEvent event) throws SQLException {
         ObservableList<Customer> selectedCostomer;
         selectedCostomer = customerTableView.getSelectionModel().getSelectedItems();
-        if(!selectedCostomer.isEmpty()){
-            if(removeAlert(selectedCostomer.get(0))){
+        if (!selectedCostomer.isEmpty()) {
+            if (removeAlert(selectedCostomer.get(0))) {
                 DatabaseHandler.deleteCustomer(selectedCostomer.get(0));
                 refreshCustomerTable();
             }
-        }else{
+        } else {
             selectItemAlert();
         }
     }
 
-        // ====== Helper Functions ===================
+    // ====== Helper Functions ===================
 
     private void refreshCustomerTable() throws SQLException {
         ObservableList<Customer> customers = DatabaseHandler.getAllCustomers();
@@ -337,9 +368,9 @@ public class SettingsController {
         refreshCustomerTable();
     }
 
-        // ====== Alerts =============================
+    // ====== Alerts =============================
 
-    private boolean removeAlert(Customer customer){
+    private boolean removeAlert(Customer customer) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uyarı");
         alert.setHeaderText(null);
@@ -350,7 +381,7 @@ public class SettingsController {
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent()){
+        if (result.isPresent()) {
             return result.get() == buttonYes;
         }
         return false; // if user exit without clicking anything or if user clicked cancel
@@ -362,11 +393,18 @@ public class SettingsController {
 
 
 
-    
+
+
+
+
+
+
+
+
 
 
     // ====== Equipment Functions ====================
-        //  ====== On Action =========================
+    //  ====== On Action =========================
 
     @FXML
     private void equipmentAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
@@ -386,10 +424,10 @@ public class SettingsController {
     private void equipmentEditButtonOnAction(ActionEvent event) throws IOException, SQLException {
         ObservableList<Equipment> selectedEquipment;
         selectedEquipment = equipmentTableView.getSelectionModel().getSelectedItems();
-        if(!selectedEquipment.isEmpty()){
+        if (!selectedEquipment.isEmpty()) {
             // just one item could be selected -> 0
             showEditEquipment(selectedEquipment.get(0));
-        }else{
+        } else {
             selectItemAlert();
         }
     }
@@ -398,12 +436,12 @@ public class SettingsController {
     private void equipmentRemButtonOnAction(ActionEvent event) throws SQLException {
         ObservableList<Equipment> selectedEquipment;
         selectedEquipment = equipmentTableView.getSelectionModel().getSelectedItems();
-        if(!selectedEquipment.isEmpty()){
-            if(removeAlert(selectedEquipment.get(0))){
+        if (!selectedEquipment.isEmpty()) {
+            if (removeAlert(selectedEquipment.get(0))) {
                 DatabaseHandler.deleteEquipment(selectedEquipment.get(0));
                 refreshEquipmentTable();
             }
-        }else{
+        } else {
             selectItemAlert();
         }
     }
@@ -435,7 +473,7 @@ public class SettingsController {
     }
     // ====== Alerts =============================
 
-    private boolean removeAlert(Equipment equipment){
+    private boolean removeAlert(Equipment equipment) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uyarı");
         alert.setHeaderText(null);
@@ -446,11 +484,16 @@ public class SettingsController {
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent()){
+        if (result.isPresent()) {
             return result.get() == buttonYes;
         }
         return false; // if user exit without clicking anything or if user clicked cancel
     }
+
+
+
+
+
 
 
 
@@ -468,9 +511,10 @@ public class SettingsController {
     @FXML
     void stageOfExaminationAddButtonOnAction(ActionEvent event) throws SQLException {
         stageOfExaminationField.setStyle(null);
-        if(stageOfExaminationField.getText().equals("")){
+        if (stageOfExaminationField.getText().equals("")
+                || !PDFHandler.isStringLegal(stageOfExaminationField.getText())) {
             stageOfExaminationField.setStyle(ERORRTEXTFILESTYLE);
-        }else {
+        } else {
             StageOfExamination stageOfExamination = new StageOfExamination(stageOfExaminationField.getText());
             DatabaseHandler.addStageOfExamination(stageOfExamination);
             refreshStageOfExaminationTable();
@@ -482,10 +526,11 @@ public class SettingsController {
     void stageOfExaminationDeleteButtonOnAction(ActionEvent event) throws SQLException {
         ObservableList<StageOfExamination> stageOfExaminationSelected;
         stageOfExaminationSelected = stageOfExaminationTableView.getSelectionModel().getSelectedItems();
-        if(!stageOfExaminationSelected.isEmpty()){
+        if (!stageOfExaminationSelected.isEmpty()) {
             // just one item could be selected -> 0
             DatabaseHandler.deleteStageOfExamination(stageOfExaminationSelected.get(0));
-        }else{
+            refreshStageOfExaminationTable();
+        } else {
             selectItemAlert();
         }
     }
@@ -493,9 +538,10 @@ public class SettingsController {
     @FXML
     void surfaceConditionAddButtonOnAction(ActionEvent event) throws SQLException {
         surfaceConditionField.setStyle(null);
-        if(surfaceConditionField.getText().equals("")){
+        if (surfaceConditionField.getText().equals("")
+                || !PDFHandler.isStringLegal(surfaceConditionField.getText())) {
             surfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
-        }else {
+        } else {
             SurfaceCondition surfaceCondition = new SurfaceCondition(surfaceConditionField.getText());
             DatabaseHandler.addSurfaceCondition(surfaceCondition);
             refreshSurfaceConditionTable();
@@ -507,10 +553,11 @@ public class SettingsController {
     void surfaceConditionDeleteButtonOnAction(ActionEvent event) throws SQLException {
         ObservableList<SurfaceCondition> surfaceConditionSelected;
         surfaceConditionSelected = surfaceConditionTableView.getSelectionModel().getSelectedItems();
-        if(!surfaceConditionSelected.isEmpty()){
+        if (!surfaceConditionSelected.isEmpty()) {
             // just one item could be selected -> 0
             DatabaseHandler.deleteSurfaceCondition(surfaceConditionSelected.get(0));
-        }else{
+            refreshSurfaceConditionTable();
+        } else {
             selectItemAlert();
         }
     }
@@ -522,9 +569,23 @@ public class SettingsController {
         stageOfExaminationColumn.setCellValueFactory(new PropertyValueFactory<>("stage"));
         stageOfExaminationTableView.setItems(stageOfExaminations);
     }
+
     private void refreshSurfaceConditionTable() throws SQLException {
         ObservableList<SurfaceCondition> surfaceConditions = DatabaseHandler.getAllSurfaceConditions();
         surfaceConditionColumn.setCellValueFactory(new PropertyValueFactory<>("condition"));
         surfaceConditionTableView.setItems(surfaceConditions);
+    }
+
+
+    // ========== Setters and Getters =============
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+
     }
 }

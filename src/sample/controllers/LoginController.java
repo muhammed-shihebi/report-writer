@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import javafx.event.ActionEvent;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
 import sample.model.User;
 import javafx.fxml.FXML;
@@ -46,7 +47,9 @@ public class LoginController {
     private void LoginButtonOnAction(ActionEvent event) throws IOException, SQLException {
         resetStyle();
         if(!areFieldsEmpty()){
+
             User user = DatabaseHandler.getUser(username.getText(), password.getText());
+
             if(user != null){
                 showMain(user);
             }else{
@@ -57,7 +60,7 @@ public class LoginController {
 
     // ====== Helper Functions =======================
 
-    private  void showMain(User user) throws IOException {
+    public void showMain(User user) throws IOException {
         loginPane.getScene().getWindow().hide();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
         Parent root = fxmlLoader.load();

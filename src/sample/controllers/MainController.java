@@ -3,8 +3,8 @@ package sample.controllers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.stage.WindowEvent;
 import sample.handlers.DatabaseHandler;
-import sample.handlers.PDFHandler;
 import sample.model.Customer;
 import sample.model.Equipment;
 import sample.model.User;
@@ -85,7 +85,7 @@ public class MainController {
     // ====== On Action ==============================
 
     @FXML
-    private void reportingOnAction(ActionEvent event) throws IOException, SQLException {
+    private void reportingOnAction(ActionEvent event) throws IOException {
         resetStyle();
         if(!areFieldsEmpty()){
             showReport();
@@ -114,15 +114,40 @@ public class MainController {
 
     @FXML
     private void SettingsButtonOnAction(ActionEvent event) throws IOException {
-        // showing the setting window
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/settings.fxml"));
         Parent root = fxmlLoader.load();
+        SettingsController settingsController = fxmlLoader.getController();
+        settingsController.setUser(getUser());
         Stage stage = new Stage();
         stage.setTitle("Settings");
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root));
         stage.setResizable(false);
         stage.sizeToScene();
+        mainPane.getScene().getWindow().hide();
+        stage.show();
+        stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event1 -> {
+            try {
+                showMain(event1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void showMain(WindowEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
+        Parent root = fxmlLoader.load();
+        MainController mainController = fxmlLoader.getController();
+        // showing settings if the user is an admin
+        if(user.getLevel() >= User.LEVEL3)
+            mainController.showSettingsButton();
+        mainController.setUser(user);
+        mainController.setHelloLabel();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.sizeToScene();
+        stage.setTitle("Ana Ekran");
         stage.show();
     }
 
@@ -171,7 +196,7 @@ public class MainController {
         settingsButton.setVisible(true);
     }
 
-    private void showReport() throws IOException, SQLException {
+    private void showReport() throws IOException{
         Equipment equipment = equipmentComboBox.getValue();
         String reportNo = reportNoField.getText();
         LocalDate reportDate = reportDateField.getValue();
@@ -179,6 +204,7 @@ public class MainController {
         User evaluator = evaluatorComboBox.getValue();
         User conformer = conformerComboBox.getValue();
         Customer customer = costumerComboBox.getValue();
+        User user = this.user;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/report.fxml"));
         Parent root = fxmlLoader.load();
@@ -192,16 +218,28 @@ public class MainController {
         reportController.setConformer(conformer);
         reportController.setCustomer(customer);
         reportController.setData();
+        reportController.setUser(user);
 
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setTitle("MAGNETIC PARTICLE INSPECTION REPORT");
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         stage.sizeToScene();
-
+        mainPane.getScene().getWindow().hide();
         stage.show();
+        stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
+            try {
+                if(ReportController.cancelAlert()){
+                    showMain(event);
+                }else {
+                    // make the event useless
+                    event.consume();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void logout() throws Exception {
@@ -212,6 +250,7 @@ public class MainController {
         System.out.println("User logged out.");
         main.start(new Stage());
     }
+
 
     // ====== Setters and Getters ====================
 
@@ -237,6 +276,7 @@ public class MainController {
 
     public void setHelloLabel(){
         // setting hello text to great the current user
-        helloLabel.setText(user.getName() + " " + user.getSurname());
+        helloLabel.setText(user.toString());
     }
+
 }
