@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Report {
     public static final int MAXSCOPE = 100;
     public static final int MINSCOPE = 1;
+    public static final LocalDate MINDATE = LocalDate.of(2012, 1, 1);
+    public static LocalDate MAXDATE = LocalDate.now();
     public static final String AC = "AC";
     public static final String DC = "DC";
 

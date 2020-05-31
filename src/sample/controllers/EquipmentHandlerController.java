@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import sample.handlers.DatabaseHandler;
@@ -92,6 +93,87 @@ public class EquipmentHandlerController {
     void canselButtonOnAction(ActionEvent event) {
         addEquipmentPane.getScene().getWindow().hide();
     }
+
+
+
+    @FXML
+    void MPCarrierMediumField(KeyEvent event) {
+        MPCarrierMediumField.setStyle(null);
+        MPCarrierMediumMesg.setVisible(false);
+        if(MPCarrierMediumField.getText().equals("") || !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
+            MPCarrierMediumMesg.setVisible(true);
+            MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void UVLightIntensityField(KeyEvent event) {
+        UVLightIntensityField.setStyle(null);
+        UVLightIntensityMseg.setVisible(false);
+        if(UVLightIntensityField.getText().equals("") || !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
+            UVLightIntensityMseg.setVisible(true);
+            UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+
+    @FXML
+    void distanceOfLightField(KeyEvent event) {
+        distanceOfLightField.setStyle(null);
+        distanceOfLightMesg.setVisible(false);
+        if(distanceOfLightField.getText().equals("") || !PDFHandler.isStringLegal(distanceOfLightField.getText())){
+            distanceOfLightMesg.setVisible(true);
+            distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void equipmentField(KeyEvent event) {
+        equipmentField.setStyle(null);
+        equipmentMesg.setVisible(false);
+        if(equipmentField.getText().equals("") || !PDFHandler.isStringLegal(equipmentField.getText())){
+            equipmentMesg.setVisible(true);
+            equipmentField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void magTechField(KeyEvent event) {
+        magTechField.setStyle(null);
+        magTechMesg.setVisible(false);
+        if(magTechField.getText().equals("") || !PDFHandler.isStringLegal(magTechField.getText())){
+            magTechMesg.setVisible(true);
+            magTechField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void poleDistanceField(KeyEvent event) {
+        poleDistanceField.setStyle(null);
+        poleDistanceMesg.setVisible(false);
+        if(poleDistanceField.getText().equals("") || !isDouble(poleDistanceField.getText())){
+            poleDistanceMesg.setVisible(true);
+            poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ====== Helper Functions =======================
 

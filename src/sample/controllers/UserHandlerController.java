@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.input.KeyEvent;
 import sample.handlers.DatabaseHandler;
 import sample.model.User;
 import javafx.fxml.FXML;
@@ -96,6 +97,83 @@ public class UserHandlerController {
         addUserPane.getScene().getWindow().hide();
     }
 
+    @FXML
+    void nameFieldOnKey(KeyEvent event) {
+        nameField.setStyle(null);
+        nameMesg.setVisible(false);
+        String str = nameField.getText();
+        if(str.equals("")) {
+            setNameEmpty();
+        }else if(!User.isNameValid(str)){
+            setNameNotValid();
+        }
+    }
+
+    @FXML
+    void passwordFieldOnKey(KeyEvent event) {
+        passwordField.setStyle(null);
+        passwordMesg.setVisible(false);
+        String str = passwordField.getText();
+
+        if(str.equals("")){
+            if(mode != EDITMODE){
+                setPasswordEmpty();
+            }
+        }else if(!User.isPasswordValid(str)){
+                setPasswordNotValid();
+
+        }
+    }
+
+    @FXML
+    void surnameFieldOnKey(KeyEvent event) {
+        surnameField.setStyle(null);
+        surnameMesg.setVisible(false);
+        String str = surnameField.getText();
+        if(str.equals("")) {
+            setSurnameEmpty();
+        }else if(!User.isNameValid(str)){
+            setSurnameNotValid();
+        }
+    }
+
+    @FXML
+    void usernameFieldOnKey(KeyEvent event) throws SQLException{
+        usernameField.setStyle(null);
+        usernameMesg.setVisible(false);
+        String str = usernameField.getText();
+
+        if(str.equals("")) {
+            setUsernameEmpty();
+        }else {
+            if(DatabaseHandler.isUsernameTaken(str)){
+                // if EDITMODE is set and the user did not change the username than this username
+                // should be valid
+                if (mode != EDITMODE || !selectedUser.getUsername().equals(str)) {
+                    setUsernameNotValid("mevcut");
+                }
+            }
+            if (!User.isUsernameValid(str)){
+                setUsernameNotValid("geçerli değil");
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // ====== Helper functions =======================
 
     private void initLevelComboBox(){
@@ -148,6 +226,16 @@ public class UserHandlerController {
 
     // ====== Error Messages Handler =================
 
+
+
+
+
+
+
+
+
+
+
         // ====== Validation checking functions ======
 
     private boolean areFieldsValid() throws SQLException {
@@ -188,22 +276,39 @@ public class UserHandlerController {
     private void setUsernameNotValid(String str){
         usernameMesg.setText("Kullanıcı adı "+ str);
         usernameField.setStyle(ERORRTEXTFIELDSTYLE);
+        usernameMesg.setVisible(true);
     }
 
     private void setPasswordNotValid(){
         passwordMesg.setText("Girilen şifre çok kısa.");
         passwordField.setStyle(ERORRTEXTFIELDSTYLE);
+        passwordMesg.setVisible(true);
     }
 
     private void setNameNotValid(){
         nameMesg.setText("Lütfen geçerli bir isim girin.");
         nameField.setStyle(ERORRTEXTFIELDSTYLE);
+        nameMesg.setVisible(true);
     }
 
     private void setSurnameNotValid(){
         surnameMesg.setText("Lütfen geçerli bir soyadı girin");
         surnameField.setStyle(ERORRTEXTFIELDSTYLE);
+        surnameMesg.setVisible(true);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // ====== Emptiness checking functions =======
 
@@ -239,27 +344,40 @@ public class UserHandlerController {
     private void setUsernameEmpty(){
         usernameMesg.setText("Lütfen bir kullanıcı adı giriniz");
         usernameField.setStyle(ERORRTEXTFIELDSTYLE);
+        usernameMesg.setVisible(true);
     }
 
     private void setPasswordEmpty(){
         passwordMesg.setText("Lütfen bir şifre girin");
         passwordField.setStyle(ERORRTEXTFIELDSTYLE);
+        passwordMesg.setVisible(true);
     }
 
     private void setNameEmpty(){
         nameMesg.setText("Lütfen bir ad girin");
         nameField.setStyle(ERORRTEXTFIELDSTYLE);
+        nameMesg.setVisible(true);
     }
 
     private void setSurnameEmpty(){
         surnameMesg.setText("Lütfen bir soyadı girin");
         surnameField.setStyle(ERORRTEXTFIELDSTYLE);
+        surnameMesg.setVisible(true);
     }
 
     private void setLevelEmpty(){
         levelMesg.setText("Lütfen bir seviye seçin");
         levelComboBox.setStyle(ERORRTEXTFIELDSTYLE);
     }
+
+
+
+
+
+
+
+
+
 
         // ====== Setters and Getters ================
 

@@ -3,10 +3,12 @@ package sample.controllers;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.WindowEvent;
 import sample.handlers.DatabaseHandler;
 import sample.model.Customer;
 import sample.model.Equipment;
+import sample.model.Report;
 import sample.model.User;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +27,8 @@ import java.util.Optional;
 public class MainController {
 
     private User user;
+
+
 
     private static final String ERORRTEXTFIELDSTYLE = "-fx-border-color: red;";
 
@@ -67,8 +71,17 @@ public class MainController {
     @FXML
     private Label helloLabel;
 
+
     @FXML
     void initialize() throws SQLException {
+        Report.MAXDATE = LocalDate.now();
+        reportDateField.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(Report.MAXDATE) || item.isBefore(Report.MINDATE));
+                    }});
+
         ObservableList<Equipment> equipments = DatabaseHandler.getAllEquipments();
         equipmentComboBox.setItems(equipments);
         ObservableList<Customer> customers = DatabaseHandler.getAllCustomers();
@@ -85,7 +98,7 @@ public class MainController {
     // ====== On Action ==============================
 
     @FXML
-    private void reportingOnAction(ActionEvent event) throws IOException {
+    private void reportingOnAction(ActionEvent event) throws IOException, SQLException {
         resetStyle();
         if(!areFieldsEmpty()){
             showReport();
@@ -151,6 +164,18 @@ public class MainController {
         stage.show();
     }
 
+
+    @FXML
+    void reportNoFieldOnKey(KeyEvent event) {
+        reportNoField.setStyle(null);
+        reportNoMesg.setVisible(false);
+        if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)")|| reportNoField.getText().length() > 50){
+            reportNoField.setStyle(ERORRTEXTFIELDSTYLE);
+            reportNoMesg.setVisible(true);
+        }
+    }
+
+
     // ====== Emptiness checking functions =======
 
     private boolean areFieldsEmpty(){
@@ -159,7 +184,7 @@ public class MainController {
             equipmentComboBox.setStyle(ERORRTEXTFIELDSTYLE);
             emptiness = true;
         }
-        if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)")){
+        if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)") || reportNoField.getText().length() > 50){
             reportNoField.setStyle(ERORRTEXTFIELDSTYLE);
             reportNoMesg.setVisible(true);
             emptiness = true;
@@ -189,6 +214,17 @@ public class MainController {
         return emptiness;
     }
 
+
+
+
+
+
+
+
+
+
+
+
     // ====== Helper Functions ======================
 
     public void showSettingsButton(){
@@ -196,7 +232,7 @@ public class MainController {
         settingsButton.setVisible(true);
     }
 
-    private void showReport() throws IOException{
+    private void showReport() throws IOException, SQLException {
         Equipment equipment = equipmentComboBox.getValue();
         String reportNo = reportNoField.getText();
         LocalDate reportDate = reportDateField.getValue();
@@ -217,9 +253,12 @@ public class MainController {
         reportController.setEvaluator(evaluator);
         reportController.setConformer(conformer);
         reportController.setCustomer(customer);
-        reportController.setData();
         reportController.setUser(user);
-
+        reportController.setCustomers(DatabaseHandler.getAllCustomers());
+        reportController.setOperators(DatabaseHandler.getAllUsers());
+        reportController.setEvaluators(DatabaseHandler.getEvaluators());
+        reportController.setConformers(DatabaseHandler.getConformers());
+        reportController.setData();
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

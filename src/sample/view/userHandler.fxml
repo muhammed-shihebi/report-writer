@@ -16,15 +16,15 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameField" layoutX="117.0" layoutY="84.0" prefHeight="31.0" prefWidth="223.0" promptText="Ör: ahmet" />
-      <PasswordField fx:id="passwordField" layoutX="455.0" layoutY="84.0" prefHeight="31.0" prefWidth="223.0" />
+      <TextField fx:id="usernameField" layoutX="117.0" layoutY="84.0" onAction="#usernameFieldOnKey" onKeyReleased="#usernameFieldOnKey" prefHeight="31.0" prefWidth="223.0" promptText="Ör: ahmet" />
+      <PasswordField fx:id="passwordField" layoutX="455.0" layoutY="84.0" onKeyReleased="#passwordFieldOnKey" prefHeight="31.0" prefWidth="223.0" />
       <Label layoutX="20.0" layoutY="166.0" text="Ad">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="nameField" layoutX="117.0" layoutY="164.0" prefHeight="31.0" prefWidth="223.0" promptText="Ör: Ömer" />
-      <TextField fx:id="surnameField" layoutX="455.0" layoutY="164.0" prefHeight="31.0" prefWidth="223.0" promptText="Ör: Faruk" />
+      <TextField fx:id="nameField" layoutX="117.0" layoutY="164.0" onKeyReleased="#nameFieldOnKey" prefHeight="31.0" prefWidth="223.0" promptText="Ör: Ömer" />
+      <TextField fx:id="surnameField" layoutX="455.0" layoutY="164.0" onKeyReleased="#surnameFieldOnKey" prefHeight="31.0" prefWidth="223.0" promptText="Ör: Faruk" />
       <Label fx:id="levelLabelName" layoutX="20.0" layoutY="245.0" text="Seviye">
          <font>
             <Font size="17.0" />

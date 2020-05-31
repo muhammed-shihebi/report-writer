@@ -34,10 +34,10 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="stageOfExaminationField" layoutX="30.0" layoutY="591.0" prefHeight="31.0" prefWidth="410.0" />
+                  <TextField fx:id="stageOfExaminationField" layoutX="30.0" layoutY="591.0" onKeyReleased="#stageOfExaminationFieldOnKey" prefHeight="31.0" prefWidth="410.0" />
                   <Button layoutX="445.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
                   <Button layoutX="561.0" layoutY="591.0" mnemonicParsing="false" onAction="#stageOfExaminationDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
-                  <TextField fx:id="surfaceConditionField" layoutX="30.0" layoutY="309.0" prefHeight="31.0" prefWidth="410.0" />
+                  <TextField fx:id="surfaceConditionField" layoutX="30.0" layoutY="309.0" onKeyReleased="#surfaceConditionFieldOnKey" prefHeight="31.0" prefWidth="410.0" />
                   <Button layoutX="445.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionAddButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Ekle" />
                   <Button layoutX="561.0" layoutY="309.0" mnemonicParsing="false" onAction="#surfaceConditionDeleteButtonOnAction" prefHeight="31.0" prefWidth="109.0" text="Kaldır" />
                   <TableView fx:id="surfaceConditionTableView" layoutX="30.0" layoutY="110.0" prefHeight="192.0" prefWidth="640.0">

@@ -98,7 +98,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="reportNoField" layoutX="183.0" layoutY="206.0" prefHeight="31.0" prefWidth="369.0" />
+      <TextField fx:id="reportNoField" layoutX="183.0" layoutY="206.0" onKeyReleased="#reportNoFieldOnKey" prefHeight="31.0" prefWidth="369.0" />
       <Label layoutX="53.0" layoutY="258.0" prefHeight="27.0" prefWidth="114.0" text="Rapor tarihi">
          <font>
             <Font size="18.0" />

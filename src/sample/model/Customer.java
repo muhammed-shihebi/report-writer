@@ -27,11 +27,6 @@ public class Customer {
         this.testPlace = testPlace;
     }
 
-    public Customer(String name, String testPlace) {
-        this.name = name;
-        this.testPlace = testPlace;
-    }
-
     public int getId() {
         return id;
     }

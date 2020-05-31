@@ -70,7 +70,6 @@ public class User {
 
     public static boolean isUsernameValid(String username){
         return username.matches("[A-Za-z0-9]+") && username.length() < PDFHandler.MAXSTRINGSIZE;
-
     }
 
     public static boolean isPasswordValid(String password){

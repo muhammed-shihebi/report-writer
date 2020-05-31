@@ -126,10 +126,8 @@ public class DatabaseHandler {
     public static boolean isUsernameTaken(String username) throws SQLException {
         resultSet = statement.executeQuery("SELECT * FROM user WHERE username = '" + username + "' ;");
         if (resultSet.next()){
-            System.out.println("Username is taken!");
             return true;
         }else {
-            System.out.println("Username is available");
             return false;
         }
     }

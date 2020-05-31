@@ -13,7 +13,7 @@ public class InspectionResult {
     private String diameter = "";
     private String defectType = "";
     private String defectLoc = "";
-    private String result = RED;
+    private String result = "";
 
     public InspectionResult(int serialNo, String weldPieceNo,
                             double testLength, String weldingProcess,

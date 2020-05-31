@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.scene.input.KeyEvent;
 import sample.handlers.DatabaseHandler;
 import sample.handlers.PDFHandler;
 import sample.model.*;
@@ -156,7 +157,6 @@ public class SettingsController {
 
 
 
-
     // ====== User Functions  ========================
     // ====== On Action ==========================
 
@@ -240,7 +240,7 @@ public class SettingsController {
 
     // ====== Alerts =============================
 
-    private boolean removeAlert(User user) throws SQLException {
+    private boolean removeAlert(User user)  {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Uyarı");
         alert.setHeaderText(null);
@@ -254,8 +254,12 @@ public class SettingsController {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent()) {
             if (result.get() == buttonYes) {
-                //
-                removeUser(user);
+
+                try {
+                    removeUser(user);
+                } catch (SQLException exception) {
+                    exception.printStackTrace();
+                }
                 return true;
             }
         }
@@ -561,6 +565,25 @@ public class SettingsController {
             selectItemAlert();
         }
     }
+
+    @FXML
+    void surfaceConditionFieldOnKey(KeyEvent event) {
+        surfaceConditionField.setStyle(null);
+        if (surfaceConditionField.getText().equals("")
+                || !PDFHandler.isStringLegal(surfaceConditionField.getText())) {
+            surfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void stageOfExaminationFieldOnKey(KeyEvent event) {
+        stageOfExaminationField.setStyle(null);
+        if (stageOfExaminationField.getText().equals("")
+                || !PDFHandler.isStringLegal(stageOfExaminationField.getText())) {
+            stageOfExaminationField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
 
     // ======= Helper Functions =====================
 

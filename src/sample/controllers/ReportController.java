@@ -9,12 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Main;
 import sample.handlers.DatabaseHandler;
 import sample.handlers.ExcelHandler;
 import sample.handlers.PDFHandler;
@@ -49,6 +49,11 @@ public class ReportController {
     private User conformer;
     private Customer customer;
     private User user;
+    private ObservableList<Customer> customers;
+    private ObservableList<User> operators;
+    private ObservableList<User> evaluators;
+    private ObservableList<User> conformers;
+
 
     @FXML
     private AnchorPane generalPane;
@@ -132,19 +137,19 @@ public class ReportController {
     private DatePicker inspectionDatesDatePicker;
 
     @FXML
-    private TextField operatorNameField;
+    private ComboBox<User> operatorComboBox;
 
     @FXML
     private TextField operatorLevelField;
 
     @FXML
-    private TextField evaluatorNameField;
+    private ComboBox<User> evaluatorComboBox;
 
     @FXML
     private TextField evaluatorLevelField;
 
     @FXML
-    private TextField conformerNameField;
+    private ComboBox<User> conformerComboBox;
 
     @FXML
     private TextField conformerLevelField;
@@ -264,16 +269,17 @@ public class ReportController {
     private ComboBox<StageOfExamination> stageOfExaminationComboBox;
 
     @FXML
-    private Button inspectionResultButton;
+    private ToggleButton inspectionResultButton;
 
     @FXML
-    private Button customerButton;
+    private ToggleButton customerButton;
 
     @FXML
-    private Button equipmentButton;
+    private ToggleButton equipmentButton;
 
     @FXML
-    private Button personnelButton;
+    private ToggleButton personnelButton;
+
 
     @FXML
     void initialize() throws SQLException {
@@ -319,28 +325,79 @@ public class ReportController {
         defectTypeColumn.setCellValueFactory(new PropertyValueFactory<>("defectType"));
         defectLocColumn.setCellValueFactory(new PropertyValueFactory<>("defectLoc"));
         resultColumn.setCellValueFactory(new PropertyValueFactory<>("result"));
+
+        // Init other data
+        Report.MAXDATE = LocalDate.now();
+        inspectionDatesDatePicker.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(Report.MAXDATE) || item.isBefore(Report.MINDATE));
+                    }});
+        operatorDateDatePicker.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(Report.MAXDATE) || item.isBefore(Report.MINDATE));
+                    }});
+        evaluatorDateDatePicker.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(Report.MAXDATE) || item.isBefore(Report.MINDATE));
+                    }});
+        conformerDateDatePicker.setDayCellFactory(d ->
+                new DateCell() {
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(item.isAfter(Report.MAXDATE) || item.isBefore(Report.MINDATE));
+                    }});
     }
 
     // ====== On Action ==============================
 
     @FXML
-    private void customerAndReportOnAction(ActionEvent event) {
+    private void customerAndReportOnAction(ActionEvent event) throws IOException {
+        equipmentButton.setSelected(false);
+        personnelButton.setSelected(false);
+        inspectionResultButton.setSelected(false);
         customerAndReportPane.toFront();
+        if(!customerButton.isSelected()){
+            customerButton.setSelected(true);
+        }
     }
 
     @FXML
     private void equipmentOnAuction(ActionEvent event) {
+        personnelButton.setSelected(false);
+        inspectionResultButton.setSelected(false);
+        customerButton.setSelected(false);
         equipmentPane.toFront();
+        if(!equipmentButton.isSelected()){
+            equipmentButton.setSelected(true);
+        }
     }
 
     @FXML
     private void inspectionOnAction(ActionEvent event) {
+        equipmentButton.setSelected(false);
+        personnelButton.setSelected(false);
+        customerButton.setSelected(false);
         inspectionPane.toFront();
+        if(!inspectionResultButton.isSelected()){
+            inspectionResultButton.setSelected(true);
+        }
     }
 
     @FXML
     private void personnelOnAction(ActionEvent event) {
+        equipmentButton.setSelected(false);
+        inspectionResultButton.setSelected(false);
+        customerButton.setSelected(false);
         personnelPane.toFront();
+        if(!personnelButton.isSelected()){
+            personnelButton.setSelected(true);
+        }
     }
 
     @FXML
@@ -431,117 +488,209 @@ public class ReportController {
         }
     }
 
-    // ====== Helper Functions =======================
-
-    public void setData() {
-        // Users Data
-        operatorNameField.setText(operator.toString());
-        operatorLevelField.setText(String.valueOf(operator.getLevel()));
-        operatorDateDatePicker.setValue(reportDate);
-
-        evaluatorNameField.setText(evaluator.toString());
-        evaluatorLevelField.setText(String.valueOf(evaluator.getLevel()));
-        evaluatorDateDatePicker.setValue(reportDate);
-
-        conformerNameField.setText(conformer.toString());
-        conformerLevelField.setText(String.valueOf(conformer.getLevel()));
-        conformerDateDatePicker.setValue(reportDate);
-
-        // Equipment Data
-        poleDistanceField.setText(String.valueOf(equipment.getPoleDistance()));
-        equipmentField.setText(equipment.getEquipment());
-        MPCarrierMediumField.setText(equipment.getMPCarrierMedium());
-        magTechField.setText(equipment.getMagTech());
-        UVLightIntensityField.setText(equipment.getUVLightIntensity());
-        distanceOfLightField.setText(equipment.getDistanceOfLight());
-
-        // Costumer Data
-        costumerComboBox.setValue(customer);
-        testPlaceField.setText(customer.getTestPlace());
-        jobOrderNoComboBox.setItems(customer.getJobOrderNos());
-        projectNameComboBox.setItems(customer.getProjectNames());
-        offerNoComboBox.setItems(customer.getOfferNos());
-
-        // Other Data
-        reportDateDatePicker.setValue(reportDate);
-        reportNoField.setText(reportNo);
-        inspectionDatesDatePicker.setValue(reportDate);
+    @FXML
+    void costumerComboBoxOnAction(ActionEvent event) {
+        Customer selectedCustomer = costumerComboBox.getValue();
+        testPlaceField.setText(selectedCustomer.getTestPlace());
+        jobOrderNoComboBox.setItems(selectedCustomer.getJobOrderNos());
+        projectNameComboBox.setItems(selectedCustomer.getProjectNames());
+        offerNoComboBox.setItems(selectedCustomer.getOfferNos());
     }
 
-    public Report getReport(){
-        Report report = null;
-        boolean check = !areEquipmentFieldsEmpty();
-        check = !isInsResTableViewEmpty() && check;
-        check = !areCostumerFieldsEmpty() && check;
-        if (check){
-            customer = costumerComboBox.getValue();
-            customer.setTestPlace(testPlaceField.getText());
-            equipment = new Equipment(
-                    Double.parseDouble(poleDistanceField.getText()),
-                    equipmentField.getText(),
-                    MPCarrierMediumField.getText(),
-                    magTechField.getText(),
-                    UVLightIntensityField.getText(),
-                    distanceOfLightField.getText()
-            );
-            report = new Report(
-                    operator,
-                    evaluator,
-                    conformer,
-                    customer,
-                    stageOfExaminationComboBox.getValue(),
-                    surfaceConditionComboBox.getValue(),
-                    equipment,
-                    inspectionResultTableView.getItems(),
-                    inspectionStandardField.getText(),
-                    evaluationStandardField.getText(),
-                    inspectionProcedureField.getText(),
-                    inspectionScopeComboBox.getValue(),
-                    drawingNoField.getText(),
-                    numberOfPagesComboBox.getValue(),
-                    reportNo,
-                    reportDateDatePicker.getValue(),
-                    examinationAreaField.getText(),
-                    currentTypeComboBox.getValue(),
-                    luxmeterField.getText(),
-                    testMediumField.getText(),
-                    demagnetizationField.getText(),
-                    heatTreatmentField.getText(),
-                    Double.parseDouble(surfaceTemperatureField.getText()),
-                    gaussFieldStrengthField.getText(),
-                    equipmentSurfaceConditionField.getText(),
-                    identificationOfLightEquipField.getText(),
-                    liftingTestDateNumberField.getText(),
-                    filerWeldCheckBox.isSelected(),
-                    buttWeldCheckBox.isSelected(),
-                    standardDeviationsField.getText(),
-                    inspectionDatesDatePicker.getValue(),
-                    descriptionAndAttachmentsField.getText(),
-                    jobOrderNoComboBox.getValue(),
-                    offerNoComboBox.getValue(),
-                    projectNameComboBox.getValue(),
-                    operatorDateDatePicker.getValue(),
-                    evaluatorDateDatePicker.getValue(),
-                    conformerDateDatePicker.getValue()
-            );
+    @FXML
+    void operatorComboBoxOnAction(ActionEvent event) {
+        operatorLevelField.setText(((Integer) operatorComboBox.getValue().getLevel()).toString());
+    }
+
+    @FXML
+    void evaluatorComboBoxOnAction(ActionEvent event) {
+        evaluatorLevelField.setText(((Integer) evaluatorComboBox.getValue().getLevel()).toString());
+    }
+
+    @FXML
+    void conformerComboBoxOnAction(ActionEvent event){
+        conformerLevelField.setText(((Integer) conformerComboBox.getValue().getLevel()).toString());
+    }
+
+
+
+    // Customer on Key
+
+    @FXML
+    void evaluationStandardFieldOnKey(KeyEvent event) {
+        evaluationStandardField.setStyle(null);
+        customerButton.setStyle(null);
+        if(evaluationStandardField.getText().equals("")|| !PDFHandler.isStringLegal(evaluationStandardField.getText())){
+            evaluationStandardField.setStyle(ERORRTEXTFILESTYLE);
+            customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
-        return report;
     }
 
-    public String getPath(String str){
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter;
-        if(str.equals(EXCEL))
-            extFilter = new FileChooser.ExtensionFilter("Excel (*.xlsx)", "*.xlsx");
-        else
-            extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
-        fileChooser.getExtensionFilters().addAll(extFilter);
-        fileChooser.setInitialFileName("Report");
-        File file = fileChooser.showSaveDialog(generalPane.getScene().getWindow());
-        if(file == null)
-            return null;
-        System.out.println(file.getPath());
-        return file.getPath();
+    @FXML
+    void inspectionProcedureFieldOnKey(KeyEvent event) {
+        inspectionProcedureField.setStyle(null);
+        customerButton.setStyle(null);
+        if(inspectionProcedureField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionProcedureField.getText())){
+            inspectionProcedureField.setStyle(ERORRTEXTFILESTYLE);
+            customerButton.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void inspectionStandardFieldOnKey(KeyEvent event) {
+        inspectionStandardField.setStyle(null);
+        customerButton.setStyle(null);
+        if(inspectionStandardField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionStandardField.getText())){
+            inspectionStandardField.setStyle(ERORRTEXTFILESTYLE);
+            customerButton.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void testPlaceFieldOnKey(KeyEvent event) {
+        testPlaceField.setStyle(null);
+        customerButton.setStyle(null);
+        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
+            testPlaceField.setStyle(ERORRTEXTFILESTYLE);
+            customerButton.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+
+    // Equipment on Key
+
+    @FXML
+    void MPCarrierMediumField(KeyEvent event) {
+        equipmentButton.setStyle(null);
+        MPCarrierMediumField.setStyle(null);
+        if(MPCarrierMediumField.getText().equals("")|| !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
+            MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
+            equipmentButton.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void UVLightIntensityField(KeyEvent event) {
+        UVLightIntensityField.setStyle(null);
+        if(UVLightIntensityField.getText().equals("")|| !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
+            UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void distanceOfLightField(KeyEvent event) {
+        distanceOfLightField.setStyle(null);
+        if(distanceOfLightField.getText().equals("")|| !PDFHandler.isStringLegal(distanceOfLightField.getText())){
+            distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void equipmentField(KeyEvent event) {
+        equipmentField.setStyle(null);
+        if (equipmentField.getText().equals("") || !PDFHandler.isStringLegal(equipmentField.getText())) {
+            equipmentField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void equipmentSurfaceConditionField(KeyEvent event) {
+        equipmentSurfaceConditionField.setStyle(null);
+        if(equipmentSurfaceConditionField.getText().equals("")|| !PDFHandler.isStringLegal(equipmentSurfaceConditionField.getText())){
+            equipmentSurfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void examinationAreaField(KeyEvent event) {
+        equipmentButton.setStyle(null);
+        if(examinationAreaField.getText().equals("")|| !PDFHandler.isStringLegal(examinationAreaField.getText())){
+            examinationAreaField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void gaussFieldStrengthField(KeyEvent event) {
+        gaussFieldStrengthField.setStyle(null);
+        if(gaussFieldStrengthField.getText().equals("")|| !PDFHandler.isStringLegal(gaussFieldStrengthField.getText())){
+            gaussFieldStrengthField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void identificationOfLightEquipField(KeyEvent event) {
+        identificationOfLightEquipField.setStyle(null);
+        if(identificationOfLightEquipField.getText().equals("")|| !PDFHandler.isStringLegal(identificationOfLightEquipField.getText())){
+            identificationOfLightEquipField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void liftingTestDateNumberField(KeyEvent event) {
+        liftingTestDateNumberField.setStyle(null);
+        if(liftingTestDateNumberField.getText().equals("")|| !PDFHandler.isStringLegal(liftingTestDateNumberField.getText())){
+            liftingTestDateNumberField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void luxmeterField(KeyEvent event) {
+        luxmeterField.setStyle(null);
+        if(luxmeterField.getText().equals("")|| !PDFHandler.isStringLegal(luxmeterField.getText())){
+            luxmeterField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void magTechField(KeyEvent event) {
+        magTechField.setStyle(null);
+        if(magTechField.getText().equals("")|| !PDFHandler.isStringLegal(magTechField.getText())){
+            magTechField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void poleDistanceField(KeyEvent event) {
+        poleDistanceField.setStyle(null);
+        if(poleDistanceField.getText().equals("") ||
+                !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
+            poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void standardDeviationsField(KeyEvent event) {
+        standardDeviationsField.setStyle(null);
+        if(standardDeviationsField.getText().equals("")|| !PDFHandler.isStringLegal(standardDeviationsField.getText())){
+            standardDeviationsField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void surfaceTemperatureField(KeyEvent event) {
+        surfaceTemperatureField.setStyle(null);
+        if(surfaceTemperatureField.getText().equals("") ||
+                !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
+            surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void testLengthField(KeyEvent event) {
+        testLengthField.setStyle(null);
+        if(testLengthField.getText().equals("") ||
+                !EquipmentHandlerController.isDouble(testLengthField.getText())){
+            testLengthField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void thicknessField(KeyEvent event) {
+        thicknessField.setStyle(null);
+        if(thicknessField.getText().equals("") ||
+                !EquipmentHandlerController.isDouble(thicknessField.getText())){
+            thicknessField.setStyle(ERORRTEXTFILESTYLE);
+        }
     }
 
     // ====== emptiness Checking =====================
@@ -644,7 +793,6 @@ public class ReportController {
             luxmeterField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-
         if(surfaceTemperatureField.getText().equals("") ||
                 !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
             surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
@@ -730,7 +878,6 @@ public class ReportController {
             surfaceConditionComboBox.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-
         if(emptiness){
             customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -751,6 +898,124 @@ public class ReportController {
         }
         return emptiness;
     }
+
+    // ====== Helper Functions =======================
+
+    public void setData() {
+        // Users Data
+        operatorComboBox.setItems(operators);
+        operatorComboBox.setValue(operator);
+        operatorLevelField.setText(String.valueOf(operator.getLevel()));
+        operatorDateDatePicker.setValue(reportDate);
+
+        evaluatorComboBox.setItems(evaluators);
+        evaluatorComboBox.setValue(evaluator);
+        evaluatorLevelField.setText(String.valueOf(evaluator.getLevel()));
+        evaluatorDateDatePicker.setValue(reportDate);
+
+        conformerComboBox.setItems(conformers);
+        conformerComboBox.setValue(conformer);
+        conformerLevelField.setText(String.valueOf(conformer.getLevel()));
+        conformerDateDatePicker.setValue(reportDate);
+
+        // Equipment Data
+        poleDistanceField.setText(String.valueOf(equipment.getPoleDistance()));
+        equipmentField.setText(equipment.getEquipment());
+        MPCarrierMediumField.setText(equipment.getMPCarrierMedium());
+        magTechField.setText(equipment.getMagTech());
+        UVLightIntensityField.setText(equipment.getUVLightIntensity());
+        distanceOfLightField.setText(equipment.getDistanceOfLight());
+
+        // Costumer Data
+        costumerComboBox.setItems(customers);
+        costumerComboBox.setValue(customer);
+        testPlaceField.setText(customer.getTestPlace());
+        jobOrderNoComboBox.setItems(customer.getJobOrderNos());
+        projectNameComboBox.setItems(customer.getProjectNames());
+        offerNoComboBox.setItems(customer.getOfferNos());
+
+        // Other Data
+        reportDateDatePicker.setValue(reportDate);
+        reportNoField.setText(reportNo);
+        inspectionDatesDatePicker.setValue(reportDate);
+    }
+
+    public Report getReport(){
+        Report report = null;
+        boolean check = !areEquipmentFieldsEmpty();
+        check = !isInsResTableViewEmpty() && check;
+        check = !areCostumerFieldsEmpty() && check;
+        if (check){
+            customer = costumerComboBox.getValue();
+            customer.setTestPlace(testPlaceField.getText());
+            equipment = new Equipment(
+                    Double.parseDouble(poleDistanceField.getText()),
+                    equipmentField.getText(),
+                    MPCarrierMediumField.getText(),
+                    magTechField.getText(),
+                    UVLightIntensityField.getText(),
+                    distanceOfLightField.getText()
+            );
+            report = new Report(
+                    operator,
+                    evaluator,
+                    conformer,
+                    customer,
+                    stageOfExaminationComboBox.getValue(),
+                    surfaceConditionComboBox.getValue(),
+                    equipment,
+                    inspectionResultTableView.getItems(),
+                    inspectionStandardField.getText(),
+                    evaluationStandardField.getText(),
+                    inspectionProcedureField.getText(),
+                    inspectionScopeComboBox.getValue(),
+                    drawingNoField.getText(),
+                    numberOfPagesComboBox.getValue(),
+                    reportNo,
+                    reportDateDatePicker.getValue(),
+                    examinationAreaField.getText(),
+                    currentTypeComboBox.getValue(),
+                    luxmeterField.getText(),
+                    testMediumField.getText(),
+                    demagnetizationField.getText(),
+                    heatTreatmentField.getText(),
+                    Double.parseDouble(surfaceTemperatureField.getText()),
+                    gaussFieldStrengthField.getText(),
+                    equipmentSurfaceConditionField.getText(),
+                    identificationOfLightEquipField.getText(),
+                    liftingTestDateNumberField.getText(),
+                    filerWeldCheckBox.isSelected(),
+                    buttWeldCheckBox.isSelected(),
+                    standardDeviationsField.getText(),
+                    inspectionDatesDatePicker.getValue(),
+                    descriptionAndAttachmentsField.getText(),
+                    jobOrderNoComboBox.getValue(),
+                    offerNoComboBox.getValue(),
+                    projectNameComboBox.getValue(),
+                    operatorDateDatePicker.getValue(),
+                    evaluatorDateDatePicker.getValue(),
+                    conformerDateDatePicker.getValue()
+            );
+        }
+        return report;
+    }
+
+    public String getPath(String str){
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter;
+        if(str.equals(EXCEL))
+            extFilter = new FileChooser.ExtensionFilter("Excel (*.xlsx)", "*.xlsx");
+        else
+            extFilter = new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().addAll(extFilter);
+        fileChooser.setInitialFileName("Report");
+        File file = fileChooser.showSaveDialog(generalPane.getScene().getWindow());
+        if(file == null)
+            return null;
+        System.out.println(file.getPath());
+        return file.getPath();
+    }
+
 
     // ====== Alerts ====================================
 
@@ -862,7 +1127,6 @@ public class ReportController {
         this.customer = customer;
     }
 
-
     public User getUser() {
         return user;
     }
@@ -870,4 +1134,37 @@ public class ReportController {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public ObservableList<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(ObservableList<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public ObservableList<User> getOperators() {
+        return operators;
+    }
+
+    public void setOperators(ObservableList<User> operators) {
+        this.operators = operators;
+    }
+
+    public ObservableList<User> getEvaluators() {
+        return evaluators;
+    }
+
+    public void setEvaluators(ObservableList<User> evaluators) {
+        this.evaluators = evaluators;
+    }
+
+    public ObservableList<User> getConformers() {
+        return conformers;
+    }
+
+    public void setConformers(ObservableList<User> conformers) {
+        this.conformers = conformers;
+    }
 }
+

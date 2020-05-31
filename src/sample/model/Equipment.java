@@ -88,7 +88,6 @@ public class Equipment {
         this.distanceOfLight = distanceOfLight;
     }
 
-    // this will be used to display Equipments when adding them to e.g. a ComboBox
     @Override
     public String toString(){
         return this.getEquipment();

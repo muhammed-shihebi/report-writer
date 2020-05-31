@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import sample.handlers.DatabaseHandler;
+
 import java.sql.SQLException;
 
 public class Main extends Application {
@@ -21,12 +22,13 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/sample/view/login.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/main.fxml"));
 //        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/report.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/report.fxml"));
         primaryStage.setTitle("Oturum aç");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.sizeToScene();
         primaryStage.show();
-
     }
 
     @Override

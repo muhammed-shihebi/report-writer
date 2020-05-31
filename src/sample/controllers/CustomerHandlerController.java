@@ -3,9 +3,9 @@ package sample.controllers;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
-import sample.Main;
 import sample.handlers.DatabaseHandler;
 import sample.handlers.PDFHandler;
 import sample.model.*;
@@ -105,7 +105,6 @@ public class CustomerHandlerController {
                     DatabaseHandler.editCustomer(newCustomer, selectedCustomer);
                 }
                 addCustomerPane.getScene().getWindow().hide();
-
         }
     }
 
@@ -185,6 +184,34 @@ public class CustomerHandlerController {
             selectItemAlert();
         }
     }
+
+
+    @FXML
+    void nameFieldOnKey(KeyEvent event) {
+        nameField.setStyle(null);
+        nameMesg.setVisible(false);
+        if(nameField.getText().equals("") || !PDFHandler.isStringLegal(nameField.getText())){
+            nameMesg.setVisible(true);
+            nameField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void testPlaceFieldOnKey(KeyEvent event) {
+        testPlaceField.setStyle(null);
+        testPlaceMesg.setVisible(false);
+        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
+            testPlaceMesg.setVisible(true);
+            testPlaceField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+
+
+
+
+
+
 
 
     // ====== Alerts =============================
