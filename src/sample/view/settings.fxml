@@ -184,7 +184,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button defaultButton="true" layoutY="625.0" mnemonicParsing="false" onAction="#OkButtonOnAction" prefHeight="50.0" prefWidth="240.0" style="-fx-background-radius: 0em;" text="Tamam">
+            <Button layoutY="625.0" mnemonicParsing="false" onAction="#OkButtonOnAction" prefHeight="50.0" prefWidth="240.0" style="-fx-background-radius: 0em;" text="Tamam">
                <font>
                   <Font size="18.0" />
                </font>

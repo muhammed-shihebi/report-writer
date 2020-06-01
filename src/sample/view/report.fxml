@@ -298,9 +298,9 @@
                         <TableColumn fx:id="resultColumn" prefWidth="88.0" text="Sonuç" />
                     </columns>
                   </TableView>
-                  <TextField fx:id="weldPieceNoField" layoutX="96.0" layoutY="173.0" prefHeight="31.0" prefWidth="150.0" />
+                  <TextField fx:id="weldPieceNoField" layoutX="96.0" layoutY="173.0" onKeyReleased="#weldPieceNoField" prefHeight="31.0" prefWidth="150.0" />
                   <TextField fx:id="testLengthField" layoutX="252.0" layoutY="173.0" onKeyReleased="#testLengthField" prefHeight="31.0" prefWidth="120.0" />
-                  <TextField fx:id="weldingProcessField" layoutX="377.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
+                  <TextField fx:id="weldingProcessField" layoutX="377.0" layoutY="173.0" onKeyReleased="#weldingProcessField" prefHeight="31.0" prefWidth="95.0" />
                   <TextField fx:id="thicknessField" layoutX="477.0" layoutY="173.0" onKeyReleased="#thicknessField" prefHeight="31.0" prefWidth="115.0" />
                   <TextField fx:id="diameterField" layoutX="597.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" text="-" />
                   <TextField fx:id="defectTypeField" layoutX="697.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />

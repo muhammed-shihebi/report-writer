@@ -519,40 +519,32 @@ public class ReportController {
     @FXML
     void evaluationStandardFieldOnKey(KeyEvent event) {
         evaluationStandardField.setStyle(null);
-        customerButton.setStyle(null);
         if(evaluationStandardField.getText().equals("")|| !PDFHandler.isStringLegal(evaluationStandardField.getText())){
             evaluationStandardField.setStyle(ERORRTEXTFILESTYLE);
-            customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
     @FXML
     void inspectionProcedureFieldOnKey(KeyEvent event) {
         inspectionProcedureField.setStyle(null);
-        customerButton.setStyle(null);
         if(inspectionProcedureField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionProcedureField.getText())){
             inspectionProcedureField.setStyle(ERORRTEXTFILESTYLE);
-            customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
     @FXML
     void inspectionStandardFieldOnKey(KeyEvent event) {
         inspectionStandardField.setStyle(null);
-        customerButton.setStyle(null);
         if(inspectionStandardField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionStandardField.getText())){
             inspectionStandardField.setStyle(ERORRTEXTFILESTYLE);
-            customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
     @FXML
     void testPlaceFieldOnKey(KeyEvent event) {
         testPlaceField.setStyle(null);
-        customerButton.setStyle(null);
         if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
-            customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
@@ -670,7 +662,7 @@ public class ReportController {
     void surfaceTemperatureField(KeyEvent event) {
         surfaceTemperatureField.setStyle(null);
         if(surfaceTemperatureField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
+                !EquipmentHandlerController.isDouble(surfaceTemperatureField.getText())){
             surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -690,6 +682,22 @@ public class ReportController {
         if(thicknessField.getText().equals("") ||
                 !EquipmentHandlerController.isDouble(thicknessField.getText())){
             thicknessField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void weldPieceNoField(KeyEvent event){
+        weldPieceNoField.setStyle(null);
+        if(weldPieceNoField.getText().equals("")|| !PDFHandler.isStringLegal(weldPieceNoField.getText())){
+            weldPieceNoField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+    @FXML
+    void weldingProcessField(KeyEvent event){
+        weldingProcessField.setStyle(null);
+        if(weldingProcessField.getText().equals("")|| !PDFHandler.isStringLegal(weldingProcessField.getText())){
+            weldingProcessField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 

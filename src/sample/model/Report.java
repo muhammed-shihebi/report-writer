@@ -3,7 +3,6 @@ package sample.model;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Report {
     public static final int MAXSCOPE = 100;

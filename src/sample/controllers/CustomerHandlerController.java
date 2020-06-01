@@ -207,7 +207,31 @@ public class CustomerHandlerController {
     }
 
 
+    @FXML
+    void projectNameField(KeyEvent event) {
+        projectNameField.setStyle(null);
+        if(projectNameField.getText().equals("") || !PDFHandler.isStringLegal(projectNameField.getText())){
+            projectNameField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
 
+
+    @FXML
+    void offerNoField(KeyEvent event) {
+        offerNoField.setStyle(null);
+        if(offerNoField.getText().equals("") || !PDFHandler.isStringLegal(offerNoField.getText())){
+            offerNoField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
+
+
+    @FXML
+    void jobOrderNoField(KeyEvent event) {
+        jobOrderNoField.setStyle(null);
+        if(jobOrderNoField.getText().equals("") || !PDFHandler.isStringLegal(jobOrderNoField.getText())){
+            jobOrderNoField.setStyle(ERORRTEXTFILESTYLE);
+        }
+    }
 
 
 

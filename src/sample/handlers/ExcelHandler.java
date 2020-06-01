@@ -138,8 +138,9 @@ public class ExcelHandler {
             cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
             xssfWorkbook.getSheetAt(0).getRow(14).getCell(7).setCellValue("✔");
         }
-
-        xssfWorkbook.write(new FileOutputStream(path));
+        FileOutputStream fileOutputStream = new FileOutputStream(path);
+        xssfWorkbook.write(fileOutputStream);
+        fileOutputStream.close();
         System.out.println("File is saved");
         xssfWorkbook.close();
     }

@@ -14,21 +14,18 @@
       <Button fx:id="addButton" defaultButton="true" layoutX="616.0" layoutY="507.0" mnemonicParsing="false" onAction="#addButtonOnAction" prefHeight="31.0" prefWidth="165.0" text="Ekle" />
       <Button layoutX="791.0" layoutY="507.0" mnemonicParsing="false" onAction="#canselButtonOnAction" prefHeight="31.0" prefWidth="165.0" text="İptal et" />
       <Button layoutX="276.0" layoutY="193.0" mnemonicParsing="false" onAction="#projectNameAddButtonOnAction" text="Ekle" />
-      <TextField fx:id="projectNameField" layoutX="126.0" layoutY="193.0" prefHeight="31.0" prefWidth="146.0" />
       <Label layoutX="47.0" layoutY="195.0" text="Proje Adı">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Button layoutX="589.0" layoutY="193.0" mnemonicParsing="false" onAction="#jobOrderNoAddButtonOnAction" text="Ekle" />
-      <TextField fx:id="jobOrderNoField" layoutX="453.0" layoutY="193.0" prefHeight="31.0" prefWidth="132.0" />
       <Label layoutX="360.0" layoutY="195.0" text=" İş Emri No">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Button layoutX="897.0" layoutY="193.0" mnemonicParsing="false" onAction="#offerNoAddButtonOnAction" text="Ekle" />
-      <TextField fx:id="offerNoField" layoutX="747.0" layoutY="193.0" prefHeight="31.0" prefWidth="146.0" />
       <Label layoutX="668.0" layoutY="195.0" text="Teklif No">
          <font>
             <Font size="18.0" />
@@ -42,13 +39,16 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="nameField" layoutX="146.0" layoutY="43.0" onKeyReleased="#nameFieldOnKey" prefHeight="31.0" prefWidth="259.0" />
       <Label layoutX="47.0" layoutY="108.0" text="Test Yeri">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="nameField" layoutX="146.0" layoutY="43.0" onKeyReleased="#nameFieldOnKey" prefHeight="31.0" prefWidth="259.0" />
       <TextField fx:id="testPlaceField" layoutX="146.0" layoutY="106.0" onKeyReleased="#testPlaceFieldOnKey" prefHeight="31.0" prefWidth="259.0" />
+      <TextField fx:id="projectNameField" layoutX="126.0" layoutY="193.0" onKeyReleased="#projectNameField" prefHeight="31.0" prefWidth="146.0" />
+      <TextField fx:id="jobOrderNoField" layoutX="453.0" layoutY="193.0" onKeyReleased="#jobOrderNoField" prefHeight="31.0" prefWidth="132.0" />
+      <TextField fx:id="offerNoField" layoutX="747.0" layoutY="193.0" onKeyReleased="#offerNoField" prefHeight="31.0" prefWidth="146.0" />
       <Text layoutX="584.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
          <font>
             <Font size="17.0" />

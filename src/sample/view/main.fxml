@@ -31,16 +31,17 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ComboBox>
+      <TextField fx:id="reportNoField" layoutX="183.0" layoutY="206.0" onKeyReleased="#reportNoFieldOnKey" prefHeight="31.0" prefWidth="369.0" />
+      <DatePicker fx:id="reportDateField" editable="false" layoutX="183.0" layoutY="256.0" prefHeight="31.0" prefWidth="159.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </DatePicker>
       <Label layoutX="53.0" layoutY="576.0" text="Müşteri">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="costumerComboBox" layoutX="183.0" layoutY="576.0" prefHeight="31.0" prefWidth="369.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </ComboBox>
       <Text layoutX="33.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lütfen doldurmak istediğiniz rapor türünü seçin" wrappingWidth="466.0000070929527">
          <font>
             <Font size="18.0" />
@@ -88,6 +89,11 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </ComboBox>
+      <ComboBox fx:id="costumerComboBox" layoutX="183.0" layoutY="576.0" prefHeight="31.0" prefWidth="369.0">
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </ComboBox>
       <Text layoutX="30.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lütfen raporu imzalayacak personeli seçin" wrappingWidth="345.0000070929527">
          <font>
             <Font size="18.0" />
@@ -98,17 +104,11 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="reportNoField" layoutX="183.0" layoutY="206.0" onKeyReleased="#reportNoFieldOnKey" prefHeight="31.0" prefWidth="369.0" />
       <Label layoutX="53.0" layoutY="258.0" prefHeight="27.0" prefWidth="114.0" text="Rapor tarihi">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="reportDateField" editable="false" layoutX="183.0" layoutY="256.0" prefHeight="31.0" prefWidth="159.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </DatePicker>
       <Label layoutX="15.0" layoutY="14.0" prefHeight="30.0" prefWidth="85.0" text="Merhaba">
          <font>
             <Font size="20.0" />

@@ -42,6 +42,9 @@
       <TextField fx:id="poleDistanceField" layoutX="207.0" layoutY="88.0" onKeyReleased="#poleDistanceField" prefHeight="31.0" prefWidth="224.0" promptText="Ör: 1,052" />
       <TextField fx:id="equipmentField" layoutX="207.0" layoutY="148.0" onKeyReleased="#equipmentField" prefHeight="31.0" prefWidth="224.0" />
       <TextField fx:id="MPCarrierMediumField" layoutX="207.0" layoutY="208.0" onKeyReleased="#MPCarrierMediumField" prefHeight="31.0" prefWidth="224.0" />
+      <TextField fx:id="magTechField" layoutX="645.0" layoutY="88.0" onKeyReleased="#magTechField" prefHeight="31.0" prefWidth="224.0" />
+      <TextField fx:id="UVLightIntensityField" layoutX="645.0" layoutY="148.0" onKeyReleased="#UVLightIntensityField" prefHeight="31.0" prefWidth="224.0" />
+      <TextField fx:id="distanceOfLightField" layoutX="646.0" layoutY="208.0" onKeyReleased="#distanceOfLightField" prefHeight="31.0" prefWidth="224.0" />
       <Text layoutX="20.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
          <font>
             <Font size="17.0" />
@@ -52,12 +55,9 @@
             <Font size="17.0" />
          </font>
       </Text>
-      <TextField fx:id="magTechField" layoutX="645.0" layoutY="88.0" onKeyReleased="#magTechField" prefHeight="31.0" prefWidth="224.0" />
       <Text fx:id="magTechMesg" fill="RED" layoutX="646.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
       <Button fx:id="addButton" defaultButton="true" layoutX="575.0" layoutY="283.0" mnemonicParsing="false" onAction="#addButtonOnAction" prefHeight="31.0" prefWidth="140.0" text="Ekle" />
       <Button layoutX="729.0" layoutY="283.0" mnemonicParsing="false" onAction="#canselButtonOnAction" prefHeight="31.0" prefWidth="140.0" text="İptal et" />
-      <TextField fx:id="UVLightIntensityField" layoutX="645.0" layoutY="148.0" onKeyReleased="#UVLightIntensityField" prefHeight="31.0" prefWidth="224.0" />
-      <TextField fx:id="distanceOfLightField" layoutX="646.0" layoutY="208.0" onKeyReleased="#distanceOfLightField" prefHeight="31.0" prefWidth="224.0" />
       <Text fx:id="UVLightIntensityMseg" fill="RED" layoutX="645.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
       <Text fx:id="distanceOfLightMesg" fill="RED" layoutX="646.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
       <Text fx:id="MPCarrierMediumMesg" fill="RED" layoutX="207.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="hiçbir şey girmediniz" visible="false" wrappingWidth="224.00000761449337" />
