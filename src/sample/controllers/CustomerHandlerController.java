@@ -6,8 +6,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
-import sample.handlers.PDFHandler;
 import sample.model.*;
 
 import java.sql.SQLException;
@@ -116,7 +116,7 @@ public class CustomerHandlerController {
     @FXML
     void jobOrderNoAddButtonOnAction(ActionEvent event) {
         jobOrderNoField.setStyle(null);
-        if(jobOrderNoField.getText().equals("") || !PDFHandler.isStringLegal(jobOrderNoField.getText())){
+        if(jobOrderNoField.getText().equals("") || Main.isStringNotLegal(jobOrderNoField.getText())){
             jobOrderNoField.setStyle(ERORRTEXTFILESTYLE);
         }else{
             JobOrderNo newItem = new JobOrderNo(jobOrderNoField.getText());
@@ -140,7 +140,7 @@ public class CustomerHandlerController {
     @FXML
     void offerNoAddButtonOnAction(ActionEvent event) {
         offerNoField.setStyle(null);
-        if(offerNoField.getText().equals("") || !PDFHandler.isStringLegal(offerNoField.getText())){
+        if(offerNoField.getText().equals("") || Main.isStringNotLegal(offerNoField.getText())){
             offerNoField.setStyle(ERORRTEXTFILESTYLE);
         }else {
             OfferNo newItem = new OfferNo(offerNoField.getText());
@@ -164,7 +164,7 @@ public class CustomerHandlerController {
     @FXML
     void projectNameAddButtonOnAction(ActionEvent event) {
         projectNameField.setStyle(null);
-        if(projectNameField.getText().equals("") || !PDFHandler.isStringLegal(projectNameField.getText())){
+        if(projectNameField.getText().equals("") || Main.isStringNotLegal(projectNameField.getText())){
             projectNameField.setStyle(ERORRTEXTFILESTYLE);
         }else {
             ProjectName newItem = new ProjectName(projectNameField.getText());
@@ -186,11 +186,14 @@ public class CustomerHandlerController {
     }
 
 
+
+
+
     @FXML
     void nameFieldOnKey(KeyEvent event) {
         nameField.setStyle(null);
         nameMesg.setVisible(false);
-        if(nameField.getText().equals("") || !PDFHandler.isStringLegal(nameField.getText())){
+        if(nameField.getText().equals("") || Main.isStringNotLegal(nameField.getText())){
             nameMesg.setVisible(true);
             nameField.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -200,35 +203,32 @@ public class CustomerHandlerController {
     void testPlaceFieldOnKey(KeyEvent event) {
         testPlaceField.setStyle(null);
         testPlaceMesg.setVisible(false);
-        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
+        if(testPlaceField.getText().equals("") || Main.isStringNotLegal(testPlaceField.getText())){
             testPlaceMesg.setVisible(true);
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
-
     @FXML
     void projectNameField(KeyEvent event) {
         projectNameField.setStyle(null);
-        if(projectNameField.getText().equals("") || !PDFHandler.isStringLegal(projectNameField.getText())){
+        if(projectNameField.getText().equals("") || Main.isStringNotLegal(projectNameField.getText())){
             projectNameField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
-
     @FXML
     void offerNoField(KeyEvent event) {
         offerNoField.setStyle(null);
-        if(offerNoField.getText().equals("") || !PDFHandler.isStringLegal(offerNoField.getText())){
+        if(offerNoField.getText().equals("") || Main.isStringNotLegal(offerNoField.getText())){
             offerNoField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
-
     @FXML
     void jobOrderNoField(KeyEvent event) {
         jobOrderNoField.setStyle(null);
-        if(jobOrderNoField.getText().equals("") || !PDFHandler.isStringLegal(jobOrderNoField.getText())){
+        if(jobOrderNoField.getText().equals("") || Main.isStringNotLegal(jobOrderNoField.getText())){
             jobOrderNoField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -269,17 +269,17 @@ public class CustomerHandlerController {
         offerNoTableView.setItems(selectedCustomer.getOfferNos());
     }
 
-    // ====== Emptiness checking functions =======
+    // ====== Checking functions =======
 
     private boolean areFieldsEmpty(){
         boolean emptiness = false;
 
-        if(nameField.getText().equals("") || !PDFHandler.isStringLegal(nameField.getText())){
+        if(nameField.getText().equals("") || Main.isStringNotLegal(nameField.getText())){
             nameMesg.setVisible(true);
             nameField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
+        if(testPlaceField.getText().equals("") || Main.isStringNotLegal(testPlaceField.getText())){
             testPlaceMesg.setVisible(true);
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;

@@ -104,7 +104,7 @@ public class UserHandlerController {
         String str = nameField.getText();
         if(str.equals("")) {
             setNameEmpty();
-        }else if(!User.isNameValid(str)){
+        }else if(User.isNameNotValid(str)){
             setNameNotValid();
         }
     }
@@ -119,7 +119,7 @@ public class UserHandlerController {
             if(mode != EDITMODE){
                 setPasswordEmpty();
             }
-        }else if(!User.isPasswordValid(str)){
+        }else if(User.isPasswordNotValid(str)){
                 setPasswordNotValid();
 
         }
@@ -132,7 +132,7 @@ public class UserHandlerController {
         String str = surnameField.getText();
         if(str.equals("")) {
             setSurnameEmpty();
-        }else if(!User.isNameValid(str)){
+        }else if(User.isNameNotValid(str)){
             setSurnameNotValid();
         }
     }
@@ -153,7 +153,7 @@ public class UserHandlerController {
                     setUsernameNotValid("mevcut");
                 }
             }
-            if (!User.isUsernameValid(str)){
+            if (User.isUsernameNotValid(str)){
                 setUsernameNotValid("geçerli değil");
             }
         }
@@ -248,11 +248,11 @@ public class UserHandlerController {
                 setUsernameNotValid("mevcut");
             }
         }
-        if (!User.isUsernameValid(usernameField.getText())){
+        if (User.isUsernameNotValid(usernameField.getText())){
             validation = false;
             setUsernameNotValid("geçerli değil");
         }
-        if(!User.isPasswordValid(passwordField.getText())){
+        if(User.isPasswordNotValid(passwordField.getText())){
             // if EDITMODE is set and the password is empty then the old password will be used
             // and the condition is valid
             if(mode != EDITMODE || !passwordField.getText().equals("")) {
@@ -260,11 +260,11 @@ public class UserHandlerController {
                 setPasswordNotValid();
             }
         }
-        if(!User.isNameValid(nameField.getText())){
+        if(User.isNameNotValid(nameField.getText())){
             validation = false;
             setNameNotValid();
         }
-        if(!User.isNameValid(surnameField.getText())){
+        if(User.isNameNotValid(surnameField.getText())){
             validation = false;
             setSurnameNotValid();
         }

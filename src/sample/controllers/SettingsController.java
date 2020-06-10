@@ -2,8 +2,8 @@ package sample.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyEvent;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
-import sample.handlers.PDFHandler;
 import sample.model.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -385,10 +385,8 @@ public class SettingsController {
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent()) {
-            return result.get() == buttonYes;
-        }
-        return false; // if user exit without clicking anything or if user clicked cancel
+        // if user exit without clicking anything or if user clicked cancel
+        return result.filter(buttonType -> buttonType == buttonYes).isPresent();
     }
 
 
@@ -488,10 +486,8 @@ public class SettingsController {
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent()) {
-            return result.get() == buttonYes;
-        }
-        return false; // if user exit without clicking anything or if user clicked cancel
+        // if user exit without clicking anything or if user clicked cancel
+        return result.filter(buttonType -> buttonType == buttonYes).isPresent();
     }
 
 
@@ -516,7 +512,7 @@ public class SettingsController {
     void stageOfExaminationAddButtonOnAction(ActionEvent event) throws SQLException {
         stageOfExaminationField.setStyle(null);
         if (stageOfExaminationField.getText().equals("")
-                || !PDFHandler.isStringLegal(stageOfExaminationField.getText())) {
+                || Main.isStringNotLegal(stageOfExaminationField.getText())) {
             stageOfExaminationField.setStyle(ERORRTEXTFILESTYLE);
         } else {
             StageOfExamination stageOfExamination = new StageOfExamination(stageOfExaminationField.getText());
@@ -543,7 +539,7 @@ public class SettingsController {
     void surfaceConditionAddButtonOnAction(ActionEvent event) throws SQLException {
         surfaceConditionField.setStyle(null);
         if (surfaceConditionField.getText().equals("")
-                || !PDFHandler.isStringLegal(surfaceConditionField.getText())) {
+                || Main.isStringNotLegal(surfaceConditionField.getText())) {
             surfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
         } else {
             SurfaceCondition surfaceCondition = new SurfaceCondition(surfaceConditionField.getText());
@@ -570,7 +566,7 @@ public class SettingsController {
     void surfaceConditionFieldOnKey(KeyEvent event) {
         surfaceConditionField.setStyle(null);
         if (surfaceConditionField.getText().equals("")
-                || !PDFHandler.isStringLegal(surfaceConditionField.getText())) {
+                || Main.isStringNotLegal(surfaceConditionField.getText())) {
             surfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -579,7 +575,7 @@ public class SettingsController {
     void stageOfExaminationFieldOnKey(KeyEvent event) {
         stageOfExaminationField.setStyle(null);
         if (stageOfExaminationField.getText().equals("")
-                || !PDFHandler.isStringLegal(stageOfExaminationField.getText())) {
+                || Main.isStringNotLegal(stageOfExaminationField.getText())) {
             stageOfExaminationField.setStyle(ERORRTEXTFILESTYLE);
         }
     }

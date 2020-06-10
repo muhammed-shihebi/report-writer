@@ -1,5 +1,6 @@
 package sample.handlers;
-import org.apache.poi.ss.usermodel.*;
+import com.aspose.cells.SaveFormat;
+import com.aspose.cells.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,7 +15,12 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class ExcelHandler {
+public class FileHandler {
+
+    public final static int PDFMODE = 1;
+    public final static int EXCELMODE = 2;
+
+    //printoutHandler
 
     // ======== MyCell ===========================
 
@@ -119,31 +125,6 @@ public class ExcelHandler {
 
     // ======= Excel Functions ===================
 
-    public static void getExcel(Report report, String path) throws IOException{
-        XSSFWorkbook xssfWorkbook = getWorkbook();
-        ArrayList<MyCell> myCells = getMyCells(report);
-        for (MyCell myCell : myCells) {
-            writeCell(xssfWorkbook, myCell);
-        }
-
-        if(report.isButtWeld()){
-            CellStyle cellStyle = xssfWorkbook.getSheetAt(0).getRow(14).getCell(0).getCellStyle();
-            cellStyle.setAlignment(HorizontalAlignment.RIGHT);
-            cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
-            xssfWorkbook.getSheetAt(0).getRow(14).getCell(0).setCellValue("✔");
-        }
-        if(report.isFilerWeld()){
-            CellStyle cellStyle = xssfWorkbook.getSheetAt(0).getRow(14).getCell(7).getCellStyle();
-            cellStyle.setAlignment(HorizontalAlignment.RIGHT);
-            cellStyle.setVerticalAlignment(VerticalAlignment.BOTTOM);
-            xssfWorkbook.getSheetAt(0).getRow(14).getCell(7).setCellValue("✔");
-        }
-        FileOutputStream fileOutputStream = new FileOutputStream(path);
-        xssfWorkbook.write(fileOutputStream);
-        fileOutputStream.close();
-        System.out.println("File is saved");
-        xssfWorkbook.close();
-    }
 
     private static XSSFWorkbook getWorkbook() throws IOException {
         FileInputStream inputStream = new FileInputStream(new File("src/assets/reports/report.xlsx"));
@@ -157,6 +138,43 @@ public class ExcelHandler {
         XSSFRow row = sheet.getRow(myCell.getRow());
         XSSFCell cell = row.getCell(myCell.getColumn());
         cell.setCellValue(myCell.getData());
+    }
+
+    public static void getFile(Report report, String path, int MODE) throws Exception {
+        XSSFWorkbook xssfWorkbook = getWorkbook();
+        ArrayList<MyCell> myCells = getMyCells(report);
+        for (MyCell myCell : myCells) {
+            writeCell(xssfWorkbook, myCell);
+        }
+
+        if(report.isButtWeld()){
+            xssfWorkbook.getSheetAt(0).getRow(14).getCell(0).setCellValue(true);
+        }
+        if(report.isFilerWeld()){
+            xssfWorkbook.getSheetAt(0).getRow(14).getCell(7).setCellValue(true);
+        }
+
+        if(MODE == EXCELMODE){
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
+            xssfWorkbook.write(fileOutputStream);
+            fileOutputStream.close();
+            System.out.println("File is saved");
+            xssfWorkbook.close();
+        }else { // PDFMODE
+            FileOutputStream fileOutputStream = new FileOutputStream("src\\assets\\reports\\report2.xlsx");
+            xssfWorkbook.write(fileOutputStream);
+            fileOutputStream.close();
+            xssfWorkbook.close();
+            Workbook workbook = new Workbook("src\\assets\\reports\\report2.xlsx");
+            workbook.save(path, SaveFormat.PDF);
+            File file = new File("src\\assets\\reports\\report2.xlsx");
+            if(file.delete()){
+                System.out.println("File deleted successfully");
+            }
+            else {
+                System.out.println("Failed to delete the file");
+            }
+        }
     }
 
 }

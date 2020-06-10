@@ -1,6 +1,6 @@
 package sample.model;
 
-import sample.handlers.PDFHandler;
+import sample.Main;
 
 public class User {
 
@@ -68,16 +68,16 @@ public class User {
 
     // ====== Data Validation ========================
 
-    public static boolean isUsernameValid(String username){
-        return username.matches("[A-Za-z0-9]+") && username.length() < PDFHandler.MAXSTRINGSIZE;
+    public static boolean isUsernameNotValid(String username){
+        return !username.matches("[A-Za-z0-9]+") || username.length() >= Main.MAXSTRINGSIZE;
     }
 
-    public static boolean isPasswordValid(String password){
-        return password.length() <= MAXPASSWORDLENGTH && password.length() >= MINPASSWORDLENGTH;
+    public static boolean isPasswordNotValid(String password){
+        return password.length() > MAXPASSWORDLENGTH || password.length() < MINPASSWORDLENGTH;
     }
 
-    public static boolean isNameValid(String str) {
-        return str.matches("\\p{L}+") && PDFHandler.isStringLegal(str);
+    public static boolean isNameNotValid(String str) {
+        return !str.matches("\\p{L}+") || Main.isStringNotLegal(str);
     }
 
     @Override

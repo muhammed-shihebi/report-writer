@@ -15,9 +15,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
-import sample.handlers.ExcelHandler;
-import sample.handlers.PDFHandler;
+import sample.handlers.FileHandler;
 import sample.model.*;
 import sample.model.InspectionResult;
 import sample.model.Report;
@@ -298,8 +298,7 @@ public class ReportController {
         stageOfExaminationComboBox.setItems(DatabaseHandler.getAllStageOfExaminations());
 
         // Init numberOfPagesComboBox
-        ObservableList<Integer> numberOfPages = inspectionScopes;
-        numberOfPagesComboBox.setItems(numberOfPages);
+        numberOfPagesComboBox.setItems(inspectionScopes);
         numberOfPagesComboBox.setValue(1); // 1 is the default
 
         // Init reportNo
@@ -357,7 +356,7 @@ public class ReportController {
     // ====== On Action ==============================
 
     @FXML
-    private void customerAndReportOnAction(ActionEvent event) throws IOException {
+    private void customerAndReportOnAction(ActionEvent event) {
         equipmentButton.setSelected(false);
         personnelButton.setSelected(false);
         inspectionResultButton.setSelected(false);
@@ -428,22 +427,22 @@ public class ReportController {
             String path = getPath(EXCEL);
             if(path != null)
                 try {
-                    ExcelHandler.getExcel(report, path);
-                }catch (IOException e){
+                    FileHandler.getFile(report, path, FileHandler.EXCELMODE);
+                }catch (Exception e){
                     cantSaveFileAlert(e);
                 }
         }
     }
 
     @FXML
-    void pdfButtonOnAction(ActionEvent event){
+    void pdfButtonOnAction(ActionEvent event)  {
         Report report = getReport();
         if(report != null){
             String path = getPath(PDF);
             if(path != null)
                 try {
-                    PDFHandler.getPDF(report, path);
-                }catch (IOException e){
+                    FileHandler.getFile(report, path, FileHandler.PDFMODE);
+                }catch (Exception e){
                     cantSaveFileAlert(e);
                 }
         }
@@ -512,14 +511,12 @@ public class ReportController {
         conformerLevelField.setText(((Integer) conformerComboBox.getValue().getLevel()).toString());
     }
 
-
-
     // Customer on Key
 
     @FXML
     void evaluationStandardFieldOnKey(KeyEvent event) {
         evaluationStandardField.setStyle(null);
-        if(evaluationStandardField.getText().equals("")|| !PDFHandler.isStringLegal(evaluationStandardField.getText())){
+        if(evaluationStandardField.getText().equals("")|| Main.isStringNotLegal(evaluationStandardField.getText())){
             evaluationStandardField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -527,7 +524,7 @@ public class ReportController {
     @FXML
     void inspectionProcedureFieldOnKey(KeyEvent event) {
         inspectionProcedureField.setStyle(null);
-        if(inspectionProcedureField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionProcedureField.getText())){
+        if(inspectionProcedureField.getText().equals("")|| Main.isStringNotLegal(inspectionProcedureField.getText())){
             inspectionProcedureField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -535,7 +532,7 @@ public class ReportController {
     @FXML
     void inspectionStandardFieldOnKey(KeyEvent event) {
         inspectionStandardField.setStyle(null);
-        if(inspectionStandardField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionStandardField.getText())){
+        if(inspectionStandardField.getText().equals("")|| Main.isStringNotLegal(inspectionStandardField.getText())){
             inspectionStandardField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -543,11 +540,10 @@ public class ReportController {
     @FXML
     void testPlaceFieldOnKey(KeyEvent event) {
         testPlaceField.setStyle(null);
-        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
+        if(testPlaceField.getText().equals("") || Main.isStringNotLegal(testPlaceField.getText())){
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
-
 
     // Equipment on Key
 
@@ -555,7 +551,7 @@ public class ReportController {
     void MPCarrierMediumField(KeyEvent event) {
         equipmentButton.setStyle(null);
         MPCarrierMediumField.setStyle(null);
-        if(MPCarrierMediumField.getText().equals("")|| !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
+        if(MPCarrierMediumField.getText().equals("")|| Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
             equipmentButton.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -564,7 +560,7 @@ public class ReportController {
     @FXML
     void UVLightIntensityField(KeyEvent event) {
         UVLightIntensityField.setStyle(null);
-        if(UVLightIntensityField.getText().equals("")|| !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
+        if(UVLightIntensityField.getText().equals("")|| Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -572,7 +568,7 @@ public class ReportController {
     @FXML
     void distanceOfLightField(KeyEvent event) {
         distanceOfLightField.setStyle(null);
-        if(distanceOfLightField.getText().equals("")|| !PDFHandler.isStringLegal(distanceOfLightField.getText())){
+        if(distanceOfLightField.getText().equals("")|| Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -580,7 +576,7 @@ public class ReportController {
     @FXML
     void equipmentField(KeyEvent event) {
         equipmentField.setStyle(null);
-        if (equipmentField.getText().equals("") || !PDFHandler.isStringLegal(equipmentField.getText())) {
+        if (equipmentField.getText().equals("") || Main.isStringNotLegal(equipmentField.getText())) {
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -588,7 +584,7 @@ public class ReportController {
     @FXML
     void equipmentSurfaceConditionField(KeyEvent event) {
         equipmentSurfaceConditionField.setStyle(null);
-        if(equipmentSurfaceConditionField.getText().equals("")|| !PDFHandler.isStringLegal(equipmentSurfaceConditionField.getText())){
+        if(equipmentSurfaceConditionField.getText().equals("")|| Main.isStringNotLegal(equipmentSurfaceConditionField.getText())){
             equipmentSurfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -596,7 +592,7 @@ public class ReportController {
     @FXML
     void examinationAreaField(KeyEvent event) {
         equipmentButton.setStyle(null);
-        if(examinationAreaField.getText().equals("")|| !PDFHandler.isStringLegal(examinationAreaField.getText())){
+        if(examinationAreaField.getText().equals("")|| Main.isStringNotLegal(examinationAreaField.getText())){
             examinationAreaField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -604,7 +600,7 @@ public class ReportController {
     @FXML
     void gaussFieldStrengthField(KeyEvent event) {
         gaussFieldStrengthField.setStyle(null);
-        if(gaussFieldStrengthField.getText().equals("")|| !PDFHandler.isStringLegal(gaussFieldStrengthField.getText())){
+        if(gaussFieldStrengthField.getText().equals("")|| Main.isStringNotLegal(gaussFieldStrengthField.getText())){
             gaussFieldStrengthField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -612,7 +608,7 @@ public class ReportController {
     @FXML
     void identificationOfLightEquipField(KeyEvent event) {
         identificationOfLightEquipField.setStyle(null);
-        if(identificationOfLightEquipField.getText().equals("")|| !PDFHandler.isStringLegal(identificationOfLightEquipField.getText())){
+        if(identificationOfLightEquipField.getText().equals("")|| Main.isStringNotLegal(identificationOfLightEquipField.getText())){
             identificationOfLightEquipField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -620,7 +616,7 @@ public class ReportController {
     @FXML
     void liftingTestDateNumberField(KeyEvent event) {
         liftingTestDateNumberField.setStyle(null);
-        if(liftingTestDateNumberField.getText().equals("")|| !PDFHandler.isStringLegal(liftingTestDateNumberField.getText())){
+        if(liftingTestDateNumberField.getText().equals("")|| Main.isStringNotLegal(liftingTestDateNumberField.getText())){
             liftingTestDateNumberField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -628,7 +624,7 @@ public class ReportController {
     @FXML
     void luxmeterField(KeyEvent event) {
         luxmeterField.setStyle(null);
-        if(luxmeterField.getText().equals("")|| !PDFHandler.isStringLegal(luxmeterField.getText())){
+        if(luxmeterField.getText().equals("")|| Main.isStringNotLegal(luxmeterField.getText())){
             luxmeterField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -636,7 +632,7 @@ public class ReportController {
     @FXML
     void magTechField(KeyEvent event) {
         magTechField.setStyle(null);
-        if(magTechField.getText().equals("")|| !PDFHandler.isStringLegal(magTechField.getText())){
+        if(magTechField.getText().equals("")|| Main.isStringNotLegal(magTechField.getText())){
             magTechField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -645,7 +641,7 @@ public class ReportController {
     void poleDistanceField(KeyEvent event) {
         poleDistanceField.setStyle(null);
         if(poleDistanceField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
+                Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -653,7 +649,7 @@ public class ReportController {
     @FXML
     void standardDeviationsField(KeyEvent event) {
         standardDeviationsField.setStyle(null);
-        if(standardDeviationsField.getText().equals("")|| !PDFHandler.isStringLegal(standardDeviationsField.getText())){
+        if(standardDeviationsField.getText().equals("")|| Main.isStringNotLegal(standardDeviationsField.getText())){
             standardDeviationsField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -662,7 +658,7 @@ public class ReportController {
     void surfaceTemperatureField(KeyEvent event) {
         surfaceTemperatureField.setStyle(null);
         if(surfaceTemperatureField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(surfaceTemperatureField.getText())){
+                Main.isNotDouble(surfaceTemperatureField.getText())){
             surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -671,7 +667,7 @@ public class ReportController {
     void testLengthField(KeyEvent event) {
         testLengthField.setStyle(null);
         if(testLengthField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(testLengthField.getText())){
+                Main.isNotDouble(testLengthField.getText())){
             testLengthField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -680,7 +676,7 @@ public class ReportController {
     void thicknessField(KeyEvent event) {
         thicknessField.setStyle(null);
         if(thicknessField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(thicknessField.getText())){
+                Main.isNotDouble(thicknessField.getText())){
             thicknessField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -688,7 +684,7 @@ public class ReportController {
     @FXML
     void weldPieceNoField(KeyEvent event){
         weldPieceNoField.setStyle(null);
-        if(weldPieceNoField.getText().equals("")|| !PDFHandler.isStringLegal(weldPieceNoField.getText())){
+        if(weldPieceNoField.getText().equals("")|| Main.isStringNotLegal(weldPieceNoField.getText())){
             weldPieceNoField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -696,7 +692,7 @@ public class ReportController {
     @FXML
     void weldingProcessField(KeyEvent event){
         weldingProcessField.setStyle(null);
-        if(weldingProcessField.getText().equals("")|| !PDFHandler.isStringLegal(weldingProcessField.getText())){
+        if(weldingProcessField.getText().equals("")|| Main.isStringNotLegal(weldingProcessField.getText())){
             weldingProcessField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
@@ -714,31 +710,31 @@ public class ReportController {
         resultComboBox.setStyle(null);
 
         boolean emptiness = false;
-        if(weldPieceNoField.getText().equals("")  || !PDFHandler.isStringLegal(weldPieceNoField.getText())){
+        if(weldPieceNoField.getText().equals("")  || Main.isStringNotLegal(weldPieceNoField.getText())){
             weldPieceNoField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
         if(testLengthField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(testLengthField.getText())){
+                Main.isNotDouble(testLengthField.getText())){
             testLengthField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(weldingProcessField.getText().equals("")|| !PDFHandler.isStringLegal(weldingProcessField.getText())){
+        if(weldingProcessField.getText().equals("")|| Main.isStringNotLegal(weldingProcessField.getText())){
             weldingProcessField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
         if(thicknessField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(thicknessField.getText())){
+                Main.isNotDouble(thicknessField.getText())){
             thicknessField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
         if(resultComboBox.getValue() != null && resultComboBox.getValue().equals(InspectionResult.RED) &&
-                (defectTypeField.getText().equals("") || !PDFHandler.isStringLegal(defectTypeField.getText()))){
+                (defectTypeField.getText().equals("") || Main.isStringNotLegal(defectTypeField.getText()))){
             defectTypeField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
         if(resultComboBox.getValue() != null && resultComboBox.getValue().equals(InspectionResult.RED) &&
-                (defectLocField.getText().equals("")|| !PDFHandler.isStringLegal(defectLocField.getText()))){
+                (defectLocField.getText().equals("")|| Main.isStringNotLegal(defectLocField.getText()))){
             defectLocField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -769,60 +765,60 @@ public class ReportController {
 
         boolean emptiness = false;
         if(poleDistanceField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
+                Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentField.getText().equals("")|| !PDFHandler.isStringLegal(equipmentField.getText())){
+        if(equipmentField.getText().equals("")|| Main.isStringNotLegal(equipmentField.getText())){
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(MPCarrierMediumField.getText().equals("")|| !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
+        if(MPCarrierMediumField.getText().equals("")|| Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(magTechField.getText().equals("")|| !PDFHandler.isStringLegal(magTechField.getText())){
+        if(magTechField.getText().equals("")|| Main.isStringNotLegal(magTechField.getText())){
             magTechField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(UVLightIntensityField.getText().equals("")|| !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
+        if(UVLightIntensityField.getText().equals("")|| Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(distanceOfLightField.getText().equals("")|| !PDFHandler.isStringLegal(distanceOfLightField.getText())){
+        if(distanceOfLightField.getText().equals("")|| Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(examinationAreaField.getText().equals("")|| !PDFHandler.isStringLegal(examinationAreaField.getText())){
+        if(examinationAreaField.getText().equals("")|| Main.isStringNotLegal(examinationAreaField.getText())){
             examinationAreaField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(luxmeterField.getText().equals("")|| !PDFHandler.isStringLegal(luxmeterField.getText())){
+        if(luxmeterField.getText().equals("")|| Main.isStringNotLegal(luxmeterField.getText())){
             luxmeterField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
         if(surfaceTemperatureField.getText().equals("") ||
-                !EquipmentHandlerController.isDouble(poleDistanceField.getText())){
+                Main.isNotDouble(poleDistanceField.getText())){
             surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(gaussFieldStrengthField.getText().equals("")|| !PDFHandler.isStringLegal(gaussFieldStrengthField.getText())){
+        if(gaussFieldStrengthField.getText().equals("")|| Main.isStringNotLegal(gaussFieldStrengthField.getText())){
             gaussFieldStrengthField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentSurfaceConditionField.getText().equals("")|| !PDFHandler.isStringLegal(equipmentSurfaceConditionField.getText())){
+        if(equipmentSurfaceConditionField.getText().equals("")|| Main.isStringNotLegal(equipmentSurfaceConditionField.getText())){
             equipmentSurfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(identificationOfLightEquipField.getText().equals("")|| !PDFHandler.isStringLegal(identificationOfLightEquipField.getText())){
+        if(identificationOfLightEquipField.getText().equals("")|| Main.isStringNotLegal(identificationOfLightEquipField.getText())){
             identificationOfLightEquipField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(liftingTestDateNumberField.getText().equals("")|| !PDFHandler.isStringLegal(liftingTestDateNumberField.getText())){
+        if(liftingTestDateNumberField.getText().equals("")|| Main.isStringNotLegal(liftingTestDateNumberField.getText())){
             liftingTestDateNumberField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(standardDeviationsField.getText().equals("")|| !PDFHandler.isStringLegal(standardDeviationsField.getText())){
+        if(standardDeviationsField.getText().equals("")|| Main.isStringNotLegal(standardDeviationsField.getText())){
             standardDeviationsField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
@@ -860,20 +856,20 @@ public class ReportController {
             offerNoComboBox.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(testPlaceField.getText().equals("") || !PDFHandler.isStringLegal(testPlaceField.getText())){
+        if(testPlaceField.getText().equals("") || Main.isStringNotLegal(testPlaceField.getText())){
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
 
-        if(inspectionStandardField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionStandardField.getText())){
+        if(inspectionStandardField.getText().equals("")|| Main.isStringNotLegal(inspectionStandardField.getText())){
             inspectionStandardField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
-        if(evaluationStandardField.getText().equals("")|| !PDFHandler.isStringLegal(evaluationStandardField.getText())){
+        if(evaluationStandardField.getText().equals("")|| Main.isStringNotLegal(evaluationStandardField.getText())){
             evaluationStandardField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
-        if(inspectionProcedureField.getText().equals("")|| !PDFHandler.isStringLegal(inspectionProcedureField.getText())){
+        if(inspectionProcedureField.getText().equals("")|| Main.isStringNotLegal(inspectionProcedureField.getText())){
             inspectionProcedureField.setStyle(ERORRTEXTFILESTYLE);
             emptiness =true;
         }
@@ -1024,7 +1020,6 @@ public class ReportController {
         return file.getPath();
     }
 
-
     // ====== Alerts ====================================
 
     public static boolean cancelAlert(){
@@ -1036,10 +1031,7 @@ public class ReportController {
         ButtonType buttonNo = new ButtonType("Hayır");
         alert.getButtonTypes().setAll(buttonYes, buttonNo);
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == buttonYes){
-            return true;
-        }
-        return false; // if user exit without clicking anything or if user clicked cancel do nothing
+        return result.isPresent() && result.get() == buttonYes;// if user exit without clicking anything or if user clicked cancel do nothing
     }
 
     private void outOfBoundaryAlert(){
@@ -1066,7 +1058,7 @@ public class ReportController {
         alert.show();
     }
 
-    private void cantSaveFileAlert(IOException e){
+    private void cantSaveFileAlert(Exception e){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Dosya kaydedilemedi");
         alert.setHeaderText(null);
@@ -1077,7 +1069,6 @@ public class ReportController {
     }
 
     // ======= Setters and Getters ======================
-
 
     public Equipment getEquipment() {
         return equipment;

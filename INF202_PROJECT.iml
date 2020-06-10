@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="PDFbox" level="project" />
     <orderEntry type="library" exported="" name="curvesapi-1.06" level="project" />
     <orderEntry type="library" exported="" name="hsqldb" level="project" />
+    <orderEntry type="library" exported="" name="aspose-cells-20.5" level="project" />
   </component>
 </module>

@@ -7,12 +7,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
-import sample.handlers.PDFHandler;
 import sample.model.Equipment;
 
 import java.sql.SQLException;
-import java.util.regex.Pattern;
 
 
 public class EquipmentHandlerController {
@@ -96,11 +95,13 @@ public class EquipmentHandlerController {
 
 
 
+
+
     @FXML
     void MPCarrierMediumField(KeyEvent event) {
         MPCarrierMediumField.setStyle(null);
         MPCarrierMediumMesg.setVisible(false);
-        if(MPCarrierMediumField.getText().equals("") || !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
+        if(MPCarrierMediumField.getText().equals("") || Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumMesg.setVisible(true);
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -110,18 +111,17 @@ public class EquipmentHandlerController {
     void UVLightIntensityField(KeyEvent event) {
         UVLightIntensityField.setStyle(null);
         UVLightIntensityMseg.setVisible(false);
-        if(UVLightIntensityField.getText().equals("") || !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
+        if(UVLightIntensityField.getText().equals("") || Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityMseg.setVisible(true);
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
 
-
     @FXML
     void distanceOfLightField(KeyEvent event) {
         distanceOfLightField.setStyle(null);
         distanceOfLightMesg.setVisible(false);
-        if(distanceOfLightField.getText().equals("") || !PDFHandler.isStringLegal(distanceOfLightField.getText())){
+        if(distanceOfLightField.getText().equals("") || Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightMesg.setVisible(true);
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -131,7 +131,7 @@ public class EquipmentHandlerController {
     void equipmentField(KeyEvent event) {
         equipmentField.setStyle(null);
         equipmentMesg.setVisible(false);
-        if(equipmentField.getText().equals("") || !PDFHandler.isStringLegal(equipmentField.getText())){
+        if(equipmentField.getText().equals("") || Main.isStringNotLegal(equipmentField.getText())){
             equipmentMesg.setVisible(true);
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -141,7 +141,7 @@ public class EquipmentHandlerController {
     void magTechField(KeyEvent event) {
         magTechField.setStyle(null);
         magTechMesg.setVisible(false);
-        if(magTechField.getText().equals("") || !PDFHandler.isStringLegal(magTechField.getText())){
+        if(magTechField.getText().equals("") || Main.isStringNotLegal(magTechField.getText())){
             magTechMesg.setVisible(true);
             magTechField.setStyle(ERORRTEXTFILESTYLE);
         }
@@ -151,26 +151,11 @@ public class EquipmentHandlerController {
     void poleDistanceField(KeyEvent event) {
         poleDistanceField.setStyle(null);
         poleDistanceMesg.setVisible(false);
-        if(poleDistanceField.getText().equals("") || !isDouble(poleDistanceField.getText())){
+        if(poleDistanceField.getText().equals("") || Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceMesg.setVisible(true);
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -193,78 +178,37 @@ public class EquipmentHandlerController {
         distanceOfLightField.setText(selectedEquipment.getDistanceOfLight());
     }
 
-    public static boolean isDouble(String myString){
-        final String Digits     = "(\\p{Digit}+)";
-        final String HexDigits  = "(\\p{XDigit}+)";
-        final String Exp        = "[eE][+-]?"+Digits;
-        final String fpRegex    =
-                ("[\\x00-\\x20]*"+ // Optional leading "whitespace"
-                        "[+-]?(" +         // Optional sign character
-                        "NaN|" +           // "NaN" string
-                        "Infinity|" +      // "Infinity" string
-
-                        // A decimal floating-point string representing a finite positive
-                        // number without a leading sign has at most five basic pieces:
-                        // Digits . Digits ExponentPart FloatTypeSuffix
-                        //
-                        // Since this method allows integer-only strings as input
-                        // in addition to strings of floating-point literals, the
-                        // two sub-patterns below are simplifications of the grammar
-                        // productions from the Java Language Specification, 2nd
-                        // edition, section 3.10.2.
-
-                        // Digits ._opt Digits_opt ExponentPart_opt FloatTypeSuffix_opt
-                        "((("+Digits+"(\\.)?("+Digits+"?)("+Exp+")?)|"+
-
-                        // . Digits ExponentPart_opt FloatTypeSuffix_opt
-                        "(\\.("+Digits+")("+Exp+")?)|"+
-
-                        // Hexadecimal strings
-                        "((" +
-                        // 0[xX] HexDigits ._opt BinaryExponent FloatTypeSuffix_opt
-                        "(0[xX]" + HexDigits + "(\\.)?)|" +
-
-                        // 0[xX] HexDigits_opt . HexDigits BinaryExponent FloatTypeSuffix_opt
-                        "(0[xX]" + HexDigits + "?(\\.)" + HexDigits + ")" +
-
-                        ")[pP][+-]?" + Digits + "))" +
-                        "[fFdD]?))" +
-                        "[\\x00-\\x20]*");// Optional trailing "whitespace"
-
-        return Pattern.matches(fpRegex, myString);
-    }
-
     // ====== Emptiness checking functions =======
 
     private boolean areFieldsEmpty(){
         boolean emptiness = false;
 
-        if(poleDistanceField.getText().equals("") || !isDouble(poleDistanceField.getText())){
+        if(poleDistanceField.getText().equals("") || Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceMesg.setVisible(true);
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(equipmentField.getText().equals("") || !PDFHandler.isStringLegal(equipmentField.getText())){
+        if(equipmentField.getText().equals("") || Main.isStringNotLegal(equipmentField.getText())){
             equipmentMesg.setVisible(true);
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(MPCarrierMediumField.getText().equals("") || !PDFHandler.isStringLegal(MPCarrierMediumField.getText())){
+        if(MPCarrierMediumField.getText().equals("") || Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumMesg.setVisible(true);
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(magTechField.getText().equals("") || !PDFHandler.isStringLegal(magTechField.getText())){
+        if(magTechField.getText().equals("") || Main.isStringNotLegal(magTechField.getText())){
             magTechMesg.setVisible(true);
             magTechField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(UVLightIntensityField.getText().equals("") || !PDFHandler.isStringLegal(UVLightIntensityField.getText())){
+        if(UVLightIntensityField.getText().equals("") || Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityMseg.setVisible(true);
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;
         }
-        if(distanceOfLightField.getText().equals("") || !PDFHandler.isStringLegal(distanceOfLightField.getText())){
+        if(distanceOfLightField.getText().equals("") || Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightMesg.setVisible(true);
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
             emptiness = true;

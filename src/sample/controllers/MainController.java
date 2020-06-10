@@ -214,17 +214,6 @@ public class MainController {
         return emptiness;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     // ====== Helper Functions ======================
 
     public void showSettingsButton(){

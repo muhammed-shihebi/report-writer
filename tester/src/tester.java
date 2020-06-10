@@ -1,43 +1,14 @@
+import com.aspose.cells.SaveFormat;
+import com.aspose.cells.Workbook;
+
 public class tester {
-    public class p1{
-        int s ;
-        int l;
 
-        public p1(int s, int l) {
-            this.s = s;
-            this.l = l;
-        }
-
-        public p1(int s) {
-            this.s = s;
-        }
-
-        public int getS() {
-            return s;
-        }
-
-        public void setS(int s) {
-            this.s = s;
-        }
-
-        public int getL() {
-            return l;
-        }
-
-        public void setL(int l) {
-            this.l = l;
-        }
+    public static void getPDF() throws Exception {
+        Workbook workbook = new Workbook("tester\\src\\workbook.xlsx");
+        workbook.save("AsposeConvert.pdf", SaveFormat.PDF);
     }
 
-
-
-    public static int test(Object o){
-        System.out.println(o.getClass().getTypeName());
-        return 1;
-    }
-
-    public static void main(String[] args) {
-        String nur = "hello";
-        test(nur);
+    public static void main(String[] args) throws Exception {
+        getPDF();
     }
 }
