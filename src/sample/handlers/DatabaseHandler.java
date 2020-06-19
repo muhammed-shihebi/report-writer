@@ -2,6 +2,7 @@ package sample.handlers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import sample.model.*;
 
 import java.sql.*;
@@ -18,6 +19,7 @@ public class DatabaseHandler {
     public static void init() throws SQLException {
         con = getConnection();
         statement = con.createStatement();
+
     }
 
     public static void close() throws SQLException {

@@ -64,8 +64,7 @@ public class EquipmentHandlerController {
     @FXML
     private Text poleDistanceMesg;
 
-
-    // ====== On Action =======================
+    // ====== On Action ===========================
 
     @FXML
     void addButtonOnAction(ActionEvent event) throws SQLException {
@@ -93,9 +92,9 @@ public class EquipmentHandlerController {
         addEquipmentPane.getScene().getWindow().hide();
     }
 
+    // ====== On Key ==============================
 
-
-
+    // these functions are made to sense any change in text fields and report errors immediately
 
     @FXML
     void MPCarrierMediumField(KeyEvent event) {
@@ -157,9 +156,6 @@ public class EquipmentHandlerController {
         }
     }
 
-
-
-
     // ====== Helper Functions =======================
 
     public void setEditMode(Equipment equipment){
@@ -178,42 +174,42 @@ public class EquipmentHandlerController {
         distanceOfLightField.setText(selectedEquipment.getDistanceOfLight());
     }
 
-    // ====== Emptiness checking functions =======
+    // ====== Checking functions =====================
 
     private boolean areFieldsEmpty(){
-        boolean emptiness = false;
+        boolean correctness = false;
 
         if(poleDistanceField.getText().equals("") || Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceMesg.setVisible(true);
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(equipmentField.getText().equals("") || Main.isStringNotLegal(equipmentField.getText())){
             equipmentMesg.setVisible(true);
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(MPCarrierMediumField.getText().equals("") || Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumMesg.setVisible(true);
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(magTechField.getText().equals("") || Main.isStringNotLegal(magTechField.getText())){
             magTechMesg.setVisible(true);
             magTechField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(UVLightIntensityField.getText().equals("") || Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityMseg.setVisible(true);
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(distanceOfLightField.getText().equals("") || Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightMesg.setVisible(true);
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
-        return emptiness;
+        return correctness;
     }
 
     // ====== Setters and Getters ====================

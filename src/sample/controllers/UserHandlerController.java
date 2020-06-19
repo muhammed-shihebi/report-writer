@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyEvent;
+import sample.Main;
 import sample.handlers.DatabaseHandler;
 import sample.model.User;
 import javafx.fxml.FXML;
@@ -64,7 +65,8 @@ public class UserHandlerController {
 
     @FXML
     public void initialize() {
-        initLevelComboBox();
+        ObservableList<Integer> listOfLevels = FXCollections.observableArrayList(User.LEVEL1, User.LEVEL2, User.LEVEL3);
+        levelComboBox.setItems(listOfLevels);
     }
 
 
@@ -75,7 +77,7 @@ public class UserHandlerController {
         resetStyle();
         // all text fields must not be empty if the mode = ADDMODE
         // all text fields must not be empty except password field in the mode = EDITMODE
-        if(!areFieldsEmpty() && areFieldsValid()){
+        if(!areFieldsEmpty() && areFieldsLegal()){
             User newUser = new User(
                     usernameField.getText(),
                     passwordField.getText(),
@@ -97,6 +99,10 @@ public class UserHandlerController {
         addUserPane.getScene().getWindow().hide();
     }
 
+    // ====== On Key ==============================
+
+    // these functions are made to sense any change in text fields and report errors immediately
+
     @FXML
     void nameFieldOnKey(KeyEvent event) {
         nameField.setStyle(null);
@@ -104,7 +110,7 @@ public class UserHandlerController {
         String str = nameField.getText();
         if(str.equals("")) {
             setNameEmpty();
-        }else if(User.isNameNotValid(str)){
+        }else if(isNameNotValid(str)){
             setNameNotValid();
         }
     }
@@ -119,7 +125,7 @@ public class UserHandlerController {
             if(mode != EDITMODE){
                 setPasswordEmpty();
             }
-        }else if(User.isPasswordNotValid(str)){
+        }else if(isPasswordNotValid(str)){
                 setPasswordNotValid();
 
         }
@@ -132,7 +138,7 @@ public class UserHandlerController {
         String str = surnameField.getText();
         if(str.equals("")) {
             setSurnameEmpty();
-        }else if(User.isNameNotValid(str)){
+        }else if(isNameNotValid(str)){
             setSurnameNotValid();
         }
     }
@@ -153,33 +159,13 @@ public class UserHandlerController {
                     setUsernameNotValid("mevcut");
                 }
             }
-            if (User.isUsernameNotValid(str)){
+            if (isUsernameNotValid(str)){
                 setUsernameNotValid("geçerli değil");
             }
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // ====== Helper functions =======================
-
-    private void initLevelComboBox(){
-        ObservableList<Integer> listOfLevels = FXCollections.observableArrayList(User.LEVEL1, User.LEVEL2, User.LEVEL3);
-        levelComboBox.setItems(listOfLevels);
-    }
 
     private void editUser(User oldUser, User newUser) throws SQLException {
         boolean isUserUpdated = DatabaseHandler.editUser(oldUser, newUser);
@@ -225,53 +211,42 @@ public class UserHandlerController {
     }
 
     // ====== Error Messages Handler =================
+    // ====== Validation checking functions ==========
 
-
-
-
-
-
-
-
-
-
-
-        // ====== Validation checking functions ======
-
-    private boolean areFieldsValid() throws SQLException {
-        boolean validation = true;
+    private boolean areFieldsLegal() throws SQLException {
+        boolean correctness = true;
         if(DatabaseHandler.isUsernameTaken(usernameField.getText())){
             // if EDITMODE is set and the user did not change the username than this username
             // should be valid
             if (mode != EDITMODE || !selectedUser.getUsername().equals(usernameField.getText())) {
-                validation = false;
+                correctness = false;
                 setUsernameNotValid("mevcut");
             }
         }
-        if (User.isUsernameNotValid(usernameField.getText())){
-            validation = false;
+        if (isUsernameNotValid(usernameField.getText())){
+            correctness = false;
             setUsernameNotValid("geçerli değil");
         }
-        if(User.isPasswordNotValid(passwordField.getText())){
+        if(isPasswordNotValid(passwordField.getText())){
             // if EDITMODE is set and the password is empty then the old password will be used
             // and the condition is valid
             if(mode != EDITMODE || !passwordField.getText().equals("")) {
-                validation = false;
+                correctness = false;
                 setPasswordNotValid();
             }
         }
-        if(User.isNameNotValid(nameField.getText())){
-            validation = false;
+        if(isNameNotValid(nameField.getText())){
+            correctness = false;
             setNameNotValid();
         }
-        if(User.isNameNotValid(surnameField.getText())){
-            validation = false;
+        if(isNameNotValid(surnameField.getText())){
+            correctness = false;
             setSurnameNotValid();
         }
-        return validation;
+        return correctness;
     }
 
-        // ====== Validation error Messages setters ==
+    // ====== Validation error Messages setters ======
 
     private void setUsernameNotValid(String str){
         usernameMesg.setText("Kullanıcı adı "+ str);
@@ -297,20 +272,7 @@ public class UserHandlerController {
         surnameMesg.setVisible(true);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // ====== Emptiness checking functions =======
+    // ====== Emptiness checking functions ==============
 
     private boolean areFieldsEmpty(){
         boolean emptiness = false;
@@ -339,7 +301,7 @@ public class UserHandlerController {
         return emptiness;
     }
 
-        // ====== Emptiness error Messages setters ===
+    // ====== Emptiness error Messages setters ===========
 
     private void setUsernameEmpty(){
         usernameMesg.setText("Lütfen bir kullanıcı adı giriniz");
@@ -370,16 +332,23 @@ public class UserHandlerController {
         levelComboBox.setStyle(ERORRTEXTFIELDSTYLE);
     }
 
+    // ====== Helper Functions ========================
 
 
+    private boolean isUsernameNotValid(String username){
+        return !username.matches("[A-Za-z0-9]+") || username.length() >= Main.MAXSTRINGSIZE;
+    }
+
+    private boolean isPasswordNotValid(String password){
+        return password.length() > User.MAXPASSWORDLENGTH || password.length() < User.MINPASSWORDLENGTH;
+    }
+
+    private boolean isNameNotValid(String str) {
+        return !str.matches("\\p{L}+") || Main.isStringNotLegal(str);
+    }
 
 
-
-
-
-
-
-        // ====== Setters and Getters ================
+    // ====== Setters and Getters =====================
 
     private void resetStyle(){
         usernameMesg.setText("");

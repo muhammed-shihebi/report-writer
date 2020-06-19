@@ -280,7 +280,6 @@ public class ReportController {
     @FXML
     private ToggleButton personnelButton;
 
-
     @FXML
     void initialize() throws SQLException {
         // Init inspectionScopes
@@ -453,7 +452,7 @@ public class ReportController {
         if(inspectionResultTableView.getItems().size() >= InspectionResult.MAXSERIALNO){
             outOfBoundaryAlert();
         }else{
-            if(!areInsResFieldsEmpty()){
+            if(!areInsResFieldsLegal()){
                 InspectionResult inspectionResult = new InspectionResult(
                         inspectionResultTableView.getItems().size() + 1,
                         weldPieceNoField.getText(),
@@ -511,7 +510,11 @@ public class ReportController {
         conformerLevelField.setText(((Integer) conformerComboBox.getValue().getLevel()).toString());
     }
 
-    // Customer on Key
+    // ====== On Key ==============================
+
+    // these functions are made to sense any change in text fields and report errors immediately
+
+    // Customer on key
 
     @FXML
     void evaluationStandardFieldOnKey(KeyEvent event) {
@@ -545,7 +548,7 @@ public class ReportController {
         }
     }
 
-    // Equipment on Key
+    // Equipment on key
 
     @FXML
     void MPCarrierMediumField(KeyEvent event) {
@@ -663,6 +666,8 @@ public class ReportController {
         }
     }
 
+    // Inspection result on key
+
     @FXML
     void testLengthField(KeyEvent event) {
         testLengthField.setStyle(null);
@@ -697,9 +702,9 @@ public class ReportController {
         }
     }
 
-    // ====== emptiness Checking =====================
+    // ====== Checking Functions =====================
 
-    public boolean areInsResFieldsEmpty(){
+    public boolean areInsResFieldsLegal(){
         // reset style of fields
         weldPieceNoField.setStyle(null);
         testLengthField.setStyle(null);
@@ -709,40 +714,40 @@ public class ReportController {
         defectLocField.setStyle(null);
         resultComboBox.setStyle(null);
 
-        boolean emptiness = false;
+        boolean correctness = false;
         if(weldPieceNoField.getText().equals("")  || Main.isStringNotLegal(weldPieceNoField.getText())){
             weldPieceNoField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(testLengthField.getText().equals("") ||
                 Main.isNotDouble(testLengthField.getText())){
             testLengthField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(weldingProcessField.getText().equals("")|| Main.isStringNotLegal(weldingProcessField.getText())){
             weldingProcessField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(thicknessField.getText().equals("") ||
                 Main.isNotDouble(thicknessField.getText())){
             thicknessField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(resultComboBox.getValue() != null && resultComboBox.getValue().equals(InspectionResult.RED) &&
                 (defectTypeField.getText().equals("") || Main.isStringNotLegal(defectTypeField.getText()))){
             defectTypeField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(resultComboBox.getValue() != null && resultComboBox.getValue().equals(InspectionResult.RED) &&
                 (defectLocField.getText().equals("")|| Main.isStringNotLegal(defectLocField.getText()))){
             defectLocField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(resultComboBox.getValue() == null){
             resultComboBox.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
-        return emptiness;
+        return correctness;
     }
 
     public boolean areEquipmentFieldsEmpty(){
@@ -763,71 +768,71 @@ public class ReportController {
         standardDeviationsField.setStyle(null);
         equipmentButton.setStyle(null);
 
-        boolean emptiness = false;
+        boolean correctness = false;
         if(poleDistanceField.getText().equals("") ||
                 Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(equipmentField.getText().equals("")|| Main.isStringNotLegal(equipmentField.getText())){
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(MPCarrierMediumField.getText().equals("")|| Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(magTechField.getText().equals("")|| Main.isStringNotLegal(magTechField.getText())){
             magTechField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(UVLightIntensityField.getText().equals("")|| Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(distanceOfLightField.getText().equals("")|| Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(examinationAreaField.getText().equals("")|| Main.isStringNotLegal(examinationAreaField.getText())){
             examinationAreaField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(luxmeterField.getText().equals("")|| Main.isStringNotLegal(luxmeterField.getText())){
             luxmeterField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(surfaceTemperatureField.getText().equals("") ||
                 Main.isNotDouble(poleDistanceField.getText())){
             surfaceTemperatureField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(gaussFieldStrengthField.getText().equals("")|| Main.isStringNotLegal(gaussFieldStrengthField.getText())){
             gaussFieldStrengthField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(equipmentSurfaceConditionField.getText().equals("")|| Main.isStringNotLegal(equipmentSurfaceConditionField.getText())){
             equipmentSurfaceConditionField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(identificationOfLightEquipField.getText().equals("")|| Main.isStringNotLegal(identificationOfLightEquipField.getText())){
             identificationOfLightEquipField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(liftingTestDateNumberField.getText().equals("")|| Main.isStringNotLegal(liftingTestDateNumberField.getText())){
             liftingTestDateNumberField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(standardDeviationsField.getText().equals("")|| Main.isStringNotLegal(standardDeviationsField.getText())){
             standardDeviationsField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
 
-        if(emptiness){
+        if(correctness){
             equipmentButton.setStyle(ERORRTEXTFILESTYLE);
         }
 
-        return emptiness;
+        return correctness;
     }
 
     public boolean areCostumerFieldsEmpty(){
@@ -842,68 +847,68 @@ public class ReportController {
         surfaceConditionComboBox.setStyle(null);
         customerButton.setStyle(null);
 
-        boolean emptiness = false;
+        boolean correctness = false;
 
         if(jobOrderNoComboBox.getValue() == null){
             jobOrderNoComboBox.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(projectNameComboBox.getValue() == null){
             projectNameComboBox.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(offerNoComboBox.getValue() == null){
             offerNoComboBox.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(testPlaceField.getText().equals("") || Main.isStringNotLegal(testPlaceField.getText())){
             testPlaceField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness =true;
+            correctness =true;
         }
 
         if(inspectionStandardField.getText().equals("")|| Main.isStringNotLegal(inspectionStandardField.getText())){
             inspectionStandardField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness =true;
+            correctness =true;
         }
         if(evaluationStandardField.getText().equals("")|| Main.isStringNotLegal(evaluationStandardField.getText())){
             evaluationStandardField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness =true;
+            correctness =true;
         }
         if(inspectionProcedureField.getText().equals("")|| Main.isStringNotLegal(inspectionProcedureField.getText())){
             inspectionProcedureField.setStyle(ERORRTEXTFILESTYLE);
-            emptiness =true;
+            correctness =true;
         }
 
         if(stageOfExaminationComboBox.getValue() == null){
             stageOfExaminationComboBox.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(surfaceConditionComboBox.getValue() == null){
             surfaceConditionComboBox.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
-        if(emptiness){
+        if(correctness){
             customerButton.setStyle(ERORRTEXTFILESTYLE);
         }
 
-        return emptiness;
+        return correctness;
     }
 
     public boolean isInsResTableViewEmpty(){
         inspectionResultTableView.setStyle(null);
         inspectionResultButton.setStyle(null);
-        boolean emptiness = false;
+        boolean correctness = false;
         if(inspectionResultTableView.getItems().size() == 0){
             inspectionResultTableView.setStyle(ERORRTEXTFILESTYLE);
-            emptiness = true;
+            correctness = true;
         }
-        if (emptiness){
+        if (correctness){
             inspectionResultButton.setStyle(ERORRTEXTFILESTYLE);
         }
-        return emptiness;
+        return correctness;
     }
 
-    // ====== Helper Functions =======================
+    // ====== Helper Functions =========================
 
     public void setData() {
         // Users Data
@@ -1166,4 +1171,3 @@ public class ReportController {
         this.conformers = conformers;
     }
 }
-

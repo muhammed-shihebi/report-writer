@@ -20,8 +20,6 @@ public class FileHandler {
     public final static int PDFMODE = 1;
     public final static int EXCELMODE = 2;
 
-    //printoutHandler
-
     // ======== MyCell ===========================
 
     public static class MyCell{
@@ -124,7 +122,6 @@ public class FileHandler {
     }
 
     // ======= Excel Functions ===================
-
 
     private static XSSFWorkbook getWorkbook() throws IOException {
         FileInputStream inputStream = new FileInputStream(new File("src/assets/reports/report.xlsx"));

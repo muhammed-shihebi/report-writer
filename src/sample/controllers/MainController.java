@@ -100,7 +100,7 @@ public class MainController {
     @FXML
     private void reportingOnAction(ActionEvent event) throws IOException, SQLException {
         resetStyle();
-        if(!areFieldsEmpty()){
+        if(!areFieldsLegal()){
             showReport();
         }
     }
@@ -164,6 +164,9 @@ public class MainController {
         stage.show();
     }
 
+    // ====== On Key ==============================
+
+    // these functions are made to sense any change in text fields and report errors immediately
 
     @FXML
     void reportNoFieldOnKey(KeyEvent event) {
@@ -175,43 +178,41 @@ public class MainController {
         }
     }
 
+    // ====== Checking functions =======
 
-    // ====== Emptiness checking functions =======
-
-    private boolean areFieldsEmpty(){
-        boolean emptiness = false;
+    private boolean areFieldsLegal(){
+        boolean correctness = false;
         if(equipmentComboBox.getValue() == null){
             equipmentComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)") || reportNoField.getText().length() > 50){
             reportNoField.setStyle(ERORRTEXTFIELDSTYLE);
             reportNoMesg.setVisible(true);
-            emptiness = true;
+            correctness = true;
         }
         if(reportDateField.getEditor().getText().equals("")){
             reportDateField.setStyle(ERORRTEXTFIELDSTYLE);
             reportDateMesg.setVisible(true);
-            emptiness = true;
+            correctness = true;
         }
         if(operatorCombobox.getValue() == null){
             operatorCombobox.setStyle(ERORRTEXTFIELDSTYLE);
-            emptiness = true;
+            correctness = true;
         }
-        if(evaluatorComboBox.getValue() == null ){
+        if(evaluatorComboBox.getValue() == null){
             evaluatorComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(conformerComboBox.getValue() == null){
             conformerComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            emptiness = true;
+            correctness = true;
         }
         if(costumerComboBox.getValue() == null){
             costumerComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            emptiness = true;
+            correctness = true;
         }
-
-        return emptiness;
+        return correctness;
     }
 
     // ====== Helper Functions ======================

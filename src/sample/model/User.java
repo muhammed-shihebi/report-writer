@@ -66,20 +66,6 @@ public class User {
         this.level = level;
     }
 
-    // ====== Data Validation ========================
-
-    public static boolean isUsernameNotValid(String username){
-        return !username.matches("[A-Za-z0-9]+") || username.length() >= Main.MAXSTRINGSIZE;
-    }
-
-    public static boolean isPasswordNotValid(String password){
-        return password.length() > MAXPASSWORDLENGTH || password.length() < MINPASSWORDLENGTH;
-    }
-
-    public static boolean isNameNotValid(String str) {
-        return !str.matches("\\p{L}+") || Main.isStringNotLegal(str);
-    }
-
     @Override
     public String toString(){
         return this.getName() + " " + this.getSurname();

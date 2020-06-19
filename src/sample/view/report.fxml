@@ -94,9 +94,9 @@
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="operatorDateDatePicker" layoutX="190.0" layoutY="253.0" prefHeight="31.0" prefWidth="404.0" />
-                  <DatePicker fx:id="evaluatorDateDatePicker" layoutX="190.0" layoutY="473.0" prefHeight="31.0" prefWidth="404.0" />
-                  <DatePicker fx:id="conformerDateDatePicker" layoutX="190.0" layoutY="703.0" prefHeight="31.0" prefWidth="404.0" />
+                  <DatePicker fx:id="operatorDateDatePicker" editable="false" layoutX="190.0" layoutY="253.0" prefHeight="31.0" prefWidth="404.0" />
+                  <DatePicker fx:id="evaluatorDateDatePicker" editable="false" layoutX="190.0" layoutY="473.0" prefHeight="31.0" prefWidth="404.0" />
+                  <DatePicker fx:id="conformerDateDatePicker" editable="false" layoutX="190.0" layoutY="703.0" prefHeight="31.0" prefWidth="404.0" />
                   <Label layoutX="645.0" layoutY="37.0" text="*" textFill="RED" />
                   <Text layoutX="641.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
                      <font>

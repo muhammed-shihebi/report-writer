@@ -86,11 +86,10 @@ public class CustomerHandlerController {
 
     // ====== On Action =======================
 
-
     @FXML
     void addButtonOnAction(ActionEvent event) throws SQLException {
         resetStyle();
-        if(!areFieldsEmpty()){
+        if(!areFieldsLegal()){
             Customer newCustomer = new Customer(
                     nameField.getText(),
                     testPlaceField.getText(),
@@ -185,9 +184,9 @@ public class CustomerHandlerController {
         }
     }
 
+    // ====== On Key ==============================
 
-
-
+    // these functions are made to sense any change in text fields and report errors immediately
 
     @FXML
     void nameFieldOnKey(KeyEvent event) {
@@ -234,11 +233,7 @@ public class CustomerHandlerController {
     }
 
 
-
-
-
-
-    // ====== Alerts =============================
+    // ====== Alerts =================================
 
     private void selectItemAlert(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -269,9 +264,9 @@ public class CustomerHandlerController {
         offerNoTableView.setItems(selectedCustomer.getOfferNos());
     }
 
-    // ====== Checking functions =======
+    // ====== Checking functions =====================
 
-    private boolean areFieldsEmpty(){
+    private boolean areFieldsLegal(){
         boolean emptiness = false;
 
         if(nameField.getText().equals("") || Main.isStringNotLegal(nameField.getText())){

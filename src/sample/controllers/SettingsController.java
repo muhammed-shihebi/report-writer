@@ -145,20 +145,8 @@ public class SettingsController {
         equipmentPane.toFront();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     // ====== User Functions  ========================
-    // ====== On Action ==========================
+    // ====== On Action ==============================
 
     @FXML
     private void userAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
@@ -291,20 +279,6 @@ public class SettingsController {
         alert.show();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // ====== Customer Functions =====================
     // ====== On Action ==========================
 
@@ -389,24 +363,8 @@ public class SettingsController {
         return result.filter(buttonType -> buttonType == buttonYes).isPresent();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // ====== Equipment Functions ====================
-    //  ====== On Action =========================
+    // ====== On Action ==============================
 
     @FXML
     private void equipmentAddButtonOnAction(ActionEvent event) throws IOException, SQLException {
@@ -448,7 +406,7 @@ public class SettingsController {
         }
     }
 
-    // ====== Helper Functions =======================
+    // ====== Helper Functions ======================
 
     private void showEditEquipment(Equipment equipment) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/equipmentHandler.fxml"));
@@ -473,7 +431,8 @@ public class SettingsController {
         distanceOfLightColumn.setCellValueFactory(new PropertyValueFactory<>("distanceOfLight"));
         equipmentTableView.setItems(equipments);
     }
-    // ====== Alerts =============================
+
+    // ====== Alerts ================================
 
     private boolean removeAlert(Equipment equipment) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -490,23 +449,8 @@ public class SettingsController {
         return result.filter(buttonType -> buttonType == buttonYes).isPresent();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ====== Other Things Functions =====================
+    // ====== Other Things Functions =================
+    // ====== On Action ==============================
 
     @FXML
     void stageOfExaminationAddButtonOnAction(ActionEvent event) throws SQLException {
@@ -562,6 +506,8 @@ public class SettingsController {
         }
     }
 
+    // ====== On Key ================================
+
     @FXML
     void surfaceConditionFieldOnKey(KeyEvent event) {
         surfaceConditionField.setStyle(null);
@@ -580,7 +526,6 @@ public class SettingsController {
         }
     }
 
-
     // ======= Helper Functions =====================
 
     private void refreshStageOfExaminationTable() throws SQLException {
@@ -595,9 +540,7 @@ public class SettingsController {
         surfaceConditionTableView.setItems(surfaceConditions);
     }
 
-
     // ========== Setters and Getters =============
-
 
     public User getUser() {
         return user;

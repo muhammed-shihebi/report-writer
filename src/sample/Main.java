@@ -12,8 +12,6 @@ import java.util.regex.Pattern;
 
 public class Main extends Application {
 
-
-
     public static final int MAXSTRINGSIZE = 50;
 
     public static boolean isStringNotLegal(String str){
@@ -68,7 +66,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/main.fxml"));
         primaryStage.setTitle("Oturum aç");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
