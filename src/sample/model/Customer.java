@@ -2,8 +2,6 @@ package sample.model;
 
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
 public class Customer {
     private int id = 0;
     private String name = "";
