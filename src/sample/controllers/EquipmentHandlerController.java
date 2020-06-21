@@ -1,3 +1,10 @@
+/*
+ * @Datei           EquipmentHandlerController.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.controllers;
 
 import javafx.event.ActionEvent;
@@ -177,39 +184,39 @@ public class EquipmentHandlerController {
     // ====== Checking functions =====================
 
     private boolean areFieldsEmpty(){
-        boolean correctness = false;
+        boolean falseness = false;
 
         if(poleDistanceField.getText().equals("") || Main.isNotDouble(poleDistanceField.getText())){
             poleDistanceMesg.setVisible(true);
             poleDistanceField.setStyle(ERORRTEXTFILESTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(equipmentField.getText().equals("") || Main.isStringNotLegal(equipmentField.getText())){
             equipmentMesg.setVisible(true);
             equipmentField.setStyle(ERORRTEXTFILESTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(MPCarrierMediumField.getText().equals("") || Main.isStringNotLegal(MPCarrierMediumField.getText())){
             MPCarrierMediumMesg.setVisible(true);
             MPCarrierMediumField.setStyle(ERORRTEXTFILESTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(magTechField.getText().equals("") || Main.isStringNotLegal(magTechField.getText())){
             magTechMesg.setVisible(true);
             magTechField.setStyle(ERORRTEXTFILESTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(UVLightIntensityField.getText().equals("") || Main.isStringNotLegal(UVLightIntensityField.getText())){
             UVLightIntensityMseg.setVisible(true);
             UVLightIntensityField.setStyle(ERORRTEXTFILESTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(distanceOfLightField.getText().equals("") || Main.isStringNotLegal(distanceOfLightField.getText())){
             distanceOfLightMesg.setVisible(true);
             distanceOfLightField.setStyle(ERORRTEXTFILESTYLE);
-            correctness = true;
+            falseness = true;
         }
-        return correctness;
+        return falseness;
     }
 
     // ====== Setters and Getters ====================

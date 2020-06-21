@@ -1,3 +1,10 @@
+/*
+ * @Datei           Equipment.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.model;
 
 public class Equipment {

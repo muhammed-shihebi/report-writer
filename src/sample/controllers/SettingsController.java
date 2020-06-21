@@ -1,3 +1,10 @@
+/*
+ * @Datei           SettingsController.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.controllers;
 
 import javafx.event.ActionEvent;
@@ -107,7 +114,7 @@ public class SettingsController {
     // ====== Sidebar ================================
 
     @FXML
-    private void OkButtonOnAction(ActionEvent event) throws IOException {
+    void OkButtonOnAction(ActionEvent event) throws IOException {
         settingsPane.getScene().getWindow().hide();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
         Parent root = fxmlLoader.load();
@@ -141,7 +148,7 @@ public class SettingsController {
     }
 
     @FXML
-    private void equipmentButtonOnAction() {
+    void equipmentButtonOnAction() {
         equipmentPane.toFront();
     }
 

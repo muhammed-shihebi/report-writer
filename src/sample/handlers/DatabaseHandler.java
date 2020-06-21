@@ -1,8 +1,14 @@
+/*
+ * @Datei           DatabaseHandler.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.handlers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import sample.model.*;
 
 import java.sql.*;

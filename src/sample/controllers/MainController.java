@@ -1,3 +1,10 @@
+/*
+ * @Datei           MainController.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.controllers;
 
 import javafx.collections.ObservableList;
@@ -98,7 +105,7 @@ public class MainController {
     // ====== On Action ==============================
 
     @FXML
-    private void reportingOnAction(ActionEvent event) throws IOException, SQLException {
+    void reportingOnAction(ActionEvent event) throws IOException, SQLException {
         resetStyle();
         if(!areFieldsLegal()){
             showReport();
@@ -106,7 +113,7 @@ public class MainController {
     }
 
     @FXML
-    private void LogoutButtonOnAction(ActionEvent event) throws Exception {
+    void LogoutButtonOnAction(ActionEvent event) throws Exception {
         // showing alert to confirm the logout action
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Çıkış yapmak");
@@ -126,7 +133,7 @@ public class MainController {
     }
 
     @FXML
-    private void SettingsButtonOnAction(ActionEvent event) throws IOException {
+    void SettingsButtonOnAction(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/settings.fxml"));
         Parent root = fxmlLoader.load();
         SettingsController settingsController = fxmlLoader.getController();
@@ -147,7 +154,7 @@ public class MainController {
         });
     }
 
-    private void showMain(WindowEvent event) throws IOException {
+    void showMain(WindowEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample/view/main.fxml"));
         Parent root = fxmlLoader.load();
         MainController mainController = fxmlLoader.getController();
@@ -172,7 +179,8 @@ public class MainController {
     void reportNoFieldOnKey(KeyEvent event) {
         reportNoField.setStyle(null);
         reportNoMesg.setVisible(false);
-        if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)")|| reportNoField.getText().length() > 50){
+        if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)")
+                || Main.isStringNotLegal(reportNoField.getText())){
             reportNoField.setStyle(ERORRTEXTFIELDSTYLE);
             reportNoMesg.setVisible(true);
         }
@@ -181,38 +189,38 @@ public class MainController {
     // ====== Checking functions =======
 
     private boolean areFieldsLegal(){
-        boolean correctness = false;
+        boolean falseness = false;
         if(equipmentComboBox.getValue() == null){
             equipmentComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(reportNoField.getText().equals("") || !reportNoField.getText().matches("(\\p{Digit}+)") || reportNoField.getText().length() > 50){
             reportNoField.setStyle(ERORRTEXTFIELDSTYLE);
             reportNoMesg.setVisible(true);
-            correctness = true;
+            falseness = true;
         }
         if(reportDateField.getEditor().getText().equals("")){
             reportDateField.setStyle(ERORRTEXTFIELDSTYLE);
             reportDateMesg.setVisible(true);
-            correctness = true;
+            falseness = true;
         }
         if(operatorCombobox.getValue() == null){
             operatorCombobox.setStyle(ERORRTEXTFIELDSTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(evaluatorComboBox.getValue() == null){
             evaluatorComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(conformerComboBox.getValue() == null){
             conformerComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            correctness = true;
+            falseness = true;
         }
         if(costumerComboBox.getValue() == null){
             costumerComboBox.setStyle(ERORRTEXTFIELDSTYLE);
-            correctness = true;
+            falseness = true;
         }
-        return correctness;
+        return falseness;
     }
 
     // ====== Helper Functions ======================

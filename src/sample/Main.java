@@ -1,3 +1,10 @@
+/*
+ * @Datei           Main.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample;
 
 import javafx.application.Application;
@@ -66,7 +73,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/sample/view/login.fxml"));
         primaryStage.setTitle("Oturum aç");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

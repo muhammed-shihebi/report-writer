@@ -1,3 +1,10 @@
+/*
+ * @Datei           LoginController.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.controllers;
 
 import javafx.event.ActionEvent;
@@ -43,7 +50,7 @@ public class LoginController {
     // ====== on Action ==============================
 
     @FXML
-    private void LoginButtonOnAction(ActionEvent event) throws IOException, SQLException {
+    void LoginButtonOnAction(ActionEvent event) throws IOException, SQLException {
         resetStyle();
         if(!areFieldsEmpty()){
 
@@ -108,7 +115,7 @@ public class LoginController {
 
     // ======= Setters and Getters ===================
 
-    private  void resetStyle(){
+    private void resetStyle(){
         usernameMesg.setText("");
         passwordMesg.setText("");
         notFoundMesg.setText("");

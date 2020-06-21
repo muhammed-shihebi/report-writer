@@ -1,3 +1,10 @@
+/*
+ * @Datei           UserHandlerController.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.controllers;
 
 import java.sql.SQLException;
@@ -64,7 +71,7 @@ public class UserHandlerController {
     private ComboBox<Integer> levelComboBox;
 
     @FXML
-    public void initialize() {
+    void initialize() {
         ObservableList<Integer> listOfLevels = FXCollections.observableArrayList(User.LEVEL1, User.LEVEL2, User.LEVEL3);
         levelComboBox.setItems(listOfLevels);
     }
@@ -73,7 +80,7 @@ public class UserHandlerController {
     // ====== On Action ==============================
 
     @FXML
-    private void addButtonOnAction(ActionEvent event) throws SQLException {
+    void addButtonOnAction(ActionEvent event) throws SQLException {
         resetStyle();
         // all text fields must not be empty if the mode = ADDMODE
         // all text fields must not be empty except password field in the mode = EDITMODE
@@ -95,7 +102,7 @@ public class UserHandlerController {
     }
 
     @FXML
-    private void cancelButtonOnAction(ActionEvent event) {
+    void cancelButtonOnAction(ActionEvent event) {
         addUserPane.getScene().getWindow().hide();
     }
 
@@ -214,36 +221,36 @@ public class UserHandlerController {
     // ====== Validation checking functions ==========
 
     private boolean areFieldsLegal() throws SQLException {
-        boolean correctness = true;
+        boolean falseness = true;
         if(DatabaseHandler.isUsernameTaken(usernameField.getText())){
             // if EDITMODE is set and the user did not change the username than this username
             // should be valid
             if (mode != EDITMODE || !selectedUser.getUsername().equals(usernameField.getText())) {
-                correctness = false;
+                falseness = false;
                 setUsernameNotValid("mevcut");
             }
         }
         if (isUsernameNotValid(usernameField.getText())){
-            correctness = false;
+            falseness = false;
             setUsernameNotValid("geçerli değil");
         }
         if(isPasswordNotValid(passwordField.getText())){
             // if EDITMODE is set and the password is empty then the old password will be used
             // and the condition is valid
             if(mode != EDITMODE || !passwordField.getText().equals("")) {
-                correctness = false;
+                falseness = false;
                 setPasswordNotValid();
             }
         }
         if(isNameNotValid(nameField.getText())){
-            correctness = false;
+            falseness = false;
             setNameNotValid();
         }
         if(isNameNotValid(surnameField.getText())){
-            correctness = false;
+            falseness = false;
             setSurnameNotValid();
         }
-        return correctness;
+        return falseness;
     }
 
     // ====== Validation error Messages setters ======

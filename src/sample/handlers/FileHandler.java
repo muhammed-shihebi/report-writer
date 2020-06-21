@@ -1,4 +1,12 @@
+/*
+ * @Datei           FileHandler.java
+ * @Autor           Muhammednur Şehebi
+ * @Matrikelnummer  170503112
+ * @Date            6/20/2020
+ */
+
 package sample.handlers;
+
 import com.aspose.cells.SaveFormat;
 import com.aspose.cells.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;

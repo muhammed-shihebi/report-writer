@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @Datei           report.fxml -->
+<!-- @Autor           Muhammednur Şehebi -->
+<!-- @Matrikelnummer  170503112 -->
+<!-- @Date            6/20/2020 -->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
@@ -23,7 +28,51 @@
    <children>
       <AnchorPane fx:id="generalPane" layoutX="300.0" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane fx:id="personnelPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;">
+            <AnchorPane fx:id="inspectionPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="383.0" text="Muayene Sonuçları">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="inspectionResultTableView" layoutX="20.0" layoutY="221.0" prefHeight="546.0" prefWidth="964.0">
+                    <columns>
+                      <TableColumn fx:id="serialNoColumn" prefWidth="75.0" text="Sıra No" />
+                      <TableColumn fx:id="weldPieceNoColumn" prefWidth="155.0" text="Kaynak/ Parça No" />
+                        <TableColumn fx:id="testLengthColumn" prefWidth="125.0" text="Kontrol Uzun." />
+                        <TableColumn fx:id="weldingProcessColumn" prefWidth="100.0" text="Kaynak Yön." />
+                        <TableColumn fx:id="thicknessColumn" prefWidth="120.0" text="Kalınlık (mm)" />
+                        <TableColumn fx:id="diameterColumn" prefWidth="100.0" text="Çap (mm)" />
+                        <TableColumn fx:id="defectTypeColumn" prefWidth="100.0" text="Hata Tipi" />
+                        <TableColumn fx:id="defectLocColumn" prefWidth="100.0" text="Hatanın Yeri" />
+                        <TableColumn fx:id="resultColumn" prefWidth="88.0" text="Sonuç" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="weldPieceNoField" layoutX="96.0" layoutY="173.0" onKeyReleased="#weldPieceNoField" prefHeight="31.0" prefWidth="150.0" />
+                  <TextField fx:id="testLengthField" layoutX="252.0" layoutY="173.0" onKeyReleased="#testLengthField" prefHeight="31.0" prefWidth="120.0" />
+                  <TextField fx:id="weldingProcessField" layoutX="377.0" layoutY="173.0" onKeyReleased="#weldingProcessField" prefHeight="31.0" prefWidth="95.0" />
+                  <TextField fx:id="thicknessField" layoutX="477.0" layoutY="173.0" onKeyReleased="#thicknessField" prefHeight="31.0" prefWidth="115.0" />
+                  <TextField fx:id="diameterField" layoutX="597.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" text="-" />
+                  <TextField fx:id="defectTypeField" layoutX="697.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
+                  <TextField fx:id="defectLocField" layoutX="796.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
+                  <Button layoutX="554.0" layoutY="112.0" mnemonicParsing="false" onAction="#InspectionResultAddButtonOnAction" prefHeight="39.0" prefWidth="200.0" text="Ekle" />
+                  <Button layoutX="769.0" layoutY="112.0" mnemonicParsing="false" onAction="#InspectionResultDeleteButtonOnAction" prefHeight="39.0" prefWidth="200.0" text="Kaldır" />
+                  <ComboBox fx:id="resultComboBox" layoutX="893.0" layoutY="173.0" prefHeight="31.0" prefWidth="90.0" />
+                  <Label layoutX="172.0" layoutY="162.0" text="*" textFill="RED" />
+                  <Label layoutX="312.0" layoutY="162.0" text="*" textFill="RED" />
+                  <Label layoutX="422.0" layoutY="163.0" prefHeight="21.0" prefWidth="0.0" text="*" textFill="RED" />
+                  <Label layoutX="533.0" layoutY="162.0" prefHeight="21.0" prefWidth="0.0" text="*" textFill="RED" />
+                  <Label layoutX="923.0" layoutY="162.0" prefHeight="21.0" prefWidth="0.0" text="*" textFill="RED" />
+                  <Text layoutX="642.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="646.0" layoutY="37.0" text="*" textFill="RED" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="personnelPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
                   <Label layoutX="45.0" layoutY="85.0" prefHeight="21.0" prefWidth="252.0" text="Operatör">
@@ -106,6 +155,146 @@
                   <ComboBox fx:id="operatorComboBox" layoutX="190.0" layoutY="133.0" onAction="#operatorComboBoxOnAction" prefHeight="31.0" prefWidth="404.0" />
                   <ComboBox fx:id="evaluatorComboBox" layoutX="190.0" layoutY="353.0" onAction="#evaluatorComboBoxOnAction" prefHeight="31.0" prefWidth="404.0" />
                   <ComboBox fx:id="conformerComboBox" layoutX="190.0" layoutY="583.0" onAction="#conformerComboBoxOnAction" prefHeight="31.0" prefWidth="404.0" />
+                  <Label layoutX="594.0" layoutY="121.0" text="*" textFill="RED" />
+                  <Label layoutX="595.0" layoutY="242.0" text="*" textFill="RED" />
+                  <Label layoutX="595.0" layoutY="342.0" text="*" textFill="RED" />
+                  <Label layoutX="596.0" layoutY="463.0" text="*" textFill="RED" />
+                  <Label layoutX="596.0" layoutY="572.0" text="*" textFill="RED" />
+                  <Label layoutX="597.0" layoutY="693.0" text="*" textFill="RED" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="customerAndReportPane" layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ComboBox fx:id="costumerComboBox" layoutX="210.0" layoutY="83.0" onAction="#costumerComboBoxOnAction" prefHeight="31.0" prefWidth="300.0" />
+                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Müşteri Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="85.0" prefHeight="21.0" prefWidth="76.0" text="Müşteri">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="145.0" text="Proje Adı ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="projectNameComboBox" layoutX="210.0" layoutY="143.0" prefHeight="31.0" prefWidth="300.0" />
+                  <Label layoutX="30.0" layoutY="205.0" text="Test Yeri">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="testPlaceField" layoutX="210.0" layoutY="203.0" onKeyReleased="#testPlaceFieldOnKey" prefHeight="30.0" prefWidth="300.0">
+                     <rotationAxis>
+                        <Point3D />
+                     </rotationAxis></TextField>
+                  <Label layoutX="30.0" layoutY="300.0" prefHeight="21.0" prefWidth="252.0" text="Rapor Bilgileri">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Line endX="839.0" layoutX="130.0" layoutY="336.0" startX="-100.0" />
+                  <Label layoutX="30.0" layoutY="355.0" text="Muayene Standardı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="415.0" text="Değerlen. Standardı">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="475.0" text="Muayene Prosedürü">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="535.0" text="Muayene Kapsamı ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="595.0" text="Resim No">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="655.0" text="Yüzey Durumu">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="715.0" text="Muayene Aşaması">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="555.0" layoutY="355.0" text="Sayfa No">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="555.0" layoutY="416.0" text="Rapor No">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="555.0" layoutY="475.0" text="Rapor Tarihi ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="545.0" layoutY="85.0" text="İş Emri No ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="545.0" layoutY="145.0" text="Teklif No ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="inspectionStandardField" layoutX="210.0" layoutY="353.0" onKeyReleased="#inspectionStandardFieldOnKey" prefHeight="30.0" prefWidth="300.0" text="TS EN ISO 17638" />
+                  <TextField fx:id="evaluationStandardField" layoutX="210.0" layoutY="414.0" onKeyReleased="#evaluationStandardFieldOnKey" prefHeight="30.0" prefWidth="300.0" text="TS EN ISO 23278 Class B" />
+                  <TextField fx:id="inspectionProcedureField" layoutX="210.0" layoutY="473.0" onKeyReleased="#inspectionProcedureFieldOnKey" prefHeight="30.0" prefWidth="300.0" text="P-101-004" />
+                  <TextField fx:id="drawingNoField" layoutX="210.0" layoutY="593.0" prefHeight="30.0" prefWidth="300.0" text="-" />
+                  <TextField fx:id="reportNoField" layoutX="668.0" layoutY="414.0" onKeyReleased="#reportNoField" prefHeight="30.0" prefWidth="300.0" />
+                  <Label layoutX="296.0" layoutY="535.0" text="\%">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="inspectionScopeComboBox" layoutX="210.0" layoutY="533.0" prefHeight="31.0" prefWidth="86.0" promptText="100" />
+                  <ComboBox fx:id="surfaceConditionComboBox" layoutX="210.0" layoutY="653.0" prefHeight="31.0" prefWidth="300.0" />
+                  <ComboBox fx:id="stageOfExaminationComboBox" layoutX="210.0" layoutY="713.0" prefHeight="31.0" prefWidth="300.0" />
+                  <ComboBox fx:id="numberOfPagesComboBox" layoutX="668.0" layoutY="353.0" prefHeight="31.0" prefWidth="86.0" promptText="1" />
+                  <ComboBox fx:id="jobOrderNoComboBox" layoutX="658.0" layoutY="83.0" prefHeight="30.0" prefWidth="300.0" />
+                  <ComboBox fx:id="offerNoComboBox" layoutX="658.0" layoutY="145.0" prefHeight="30.0" prefWidth="300.0" />
+                  <DatePicker fx:id="reportDateDatePicker" editable="false" layoutX="668.0" layoutY="473.0" prefHeight="31.0" prefWidth="300.0" />
+                  <Text layoutX="641.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="645.0" layoutY="35.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="133.0" text="*" textFill="RED" />
+                  <Label layoutX="959.0" layoutY="75.0" text="*" textFill="RED" />
+                  <Label layoutX="959.0" layoutY="135.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="193.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="343.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="406.0" text="*" textFill="RED" />
+                  <Label layoutX="296.0" layoutY="523.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="645.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="705.0" text="*" textFill="RED" />
+                  <Label layoutX="754.0" layoutY="345.0" text="*" textFill="RED" />
+                  <Label layoutX="510.0" layoutY="465.0" text="*" textFill="RED" />
+                  <Label layoutX="511.0" layoutY="74.0" text="*" textFill="RED" />
+                  <Label layoutX="969.0" layoutY="400.0" text="*" textFill="RED" />
+                  <Label layoutX="969.0" layoutY="463.0" text="*" textFill="RED" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="equipmentPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -275,181 +464,7 @@
                   <Label layoutX="983.0" layoutY="496.0" text="*" textFill="RED" />
                   <Label layoutX="983.0" layoutY="615.0" text="*" textFill="RED" />
                   <Label layoutX="905.0" layoutY="329.0" text="kA/m" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="inspectionPane" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="30.0" prefWidth="383.0" text="Muayene Sonuçları">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <TableView fx:id="inspectionResultTableView" layoutX="20.0" layoutY="221.0" prefHeight="546.0" prefWidth="964.0">
-                    <columns>
-                      <TableColumn fx:id="serialNoColumn" prefWidth="75.0" text="Sıra No" />
-                      <TableColumn fx:id="weldPieceNoColumn" prefWidth="155.0" text="Kaynak/ Parça No" />
-                        <TableColumn fx:id="testLengthColumn" prefWidth="125.0" text="Kontrol Uzun." />
-                        <TableColumn fx:id="weldingProcessColumn" prefWidth="100.0" text="Kaynak Yön." />
-                        <TableColumn fx:id="thicknessColumn" prefWidth="120.0" text="Kalınlık (mm)" />
-                        <TableColumn fx:id="diameterColumn" prefWidth="100.0" text="Çap (mm)" />
-                        <TableColumn fx:id="defectTypeColumn" prefWidth="100.0" text="Hata Tipi" />
-                        <TableColumn fx:id="defectLocColumn" prefWidth="100.0" text="Hatanın Yeri" />
-                        <TableColumn fx:id="resultColumn" prefWidth="88.0" text="Sonuç" />
-                    </columns>
-                  </TableView>
-                  <TextField fx:id="weldPieceNoField" layoutX="96.0" layoutY="173.0" onKeyReleased="#weldPieceNoField" prefHeight="31.0" prefWidth="150.0" />
-                  <TextField fx:id="testLengthField" layoutX="252.0" layoutY="173.0" onKeyReleased="#testLengthField" prefHeight="31.0" prefWidth="120.0" />
-                  <TextField fx:id="weldingProcessField" layoutX="377.0" layoutY="173.0" onKeyReleased="#weldingProcessField" prefHeight="31.0" prefWidth="95.0" />
-                  <TextField fx:id="thicknessField" layoutX="477.0" layoutY="173.0" onKeyReleased="#thicknessField" prefHeight="31.0" prefWidth="115.0" />
-                  <TextField fx:id="diameterField" layoutX="597.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" text="-" />
-                  <TextField fx:id="defectTypeField" layoutX="697.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
-                  <TextField fx:id="defectLocField" layoutX="796.0" layoutY="173.0" prefHeight="31.0" prefWidth="95.0" />
-                  <Button layoutX="554.0" layoutY="112.0" mnemonicParsing="false" onAction="#InspectionResultAddButtonOnAction" prefHeight="39.0" prefWidth="200.0" text="Ekle" />
-                  <Button layoutX="769.0" layoutY="112.0" mnemonicParsing="false" onAction="#InspectionResultDeleteButtonOnAction" prefHeight="39.0" prefWidth="200.0" text="Kaldır" />
-                  <ComboBox fx:id="resultComboBox" layoutX="893.0" layoutY="173.0" prefHeight="31.0" prefWidth="90.0" />
-                  <Label layoutX="172.0" layoutY="162.0" text="*" textFill="RED" />
-                  <Label layoutX="312.0" layoutY="162.0" text="*" textFill="RED" />
-                  <Label layoutX="422.0" layoutY="163.0" prefHeight="21.0" prefWidth="0.0" text="*" textFill="RED" />
-                  <Label layoutX="533.0" layoutY="162.0" prefHeight="21.0" prefWidth="0.0" text="*" textFill="RED" />
-                  <Label layoutX="923.0" layoutY="162.0" prefHeight="21.0" prefWidth="0.0" text="*" textFill="RED" />
-                  <Text layoutX="642.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Label layoutX="646.0" layoutY="37.0" text="*" textFill="RED" />
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="customerAndReportPane" layoutX="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" style="-fx-background-color: #eeeeee;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <ComboBox fx:id="costumerComboBox" layoutX="210.0" layoutY="83.0" onAction="#costumerComboBoxOnAction" prefHeight="31.0" prefWidth="300.0" />
-                  <Label layoutX="30.0" layoutY="30.0" prefHeight="21.0" prefWidth="252.0" text="Müşteri Bilgileri">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Line endX="839.0" layoutX="128.0" layoutY="64.0" startX="-100.0" />
-                  <Label layoutX="30.0" layoutY="85.0" prefHeight="21.0" prefWidth="76.0" text="Müşteri">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="145.0" text="Proje Adı ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="projectNameComboBox" layoutX="210.0" layoutY="143.0" prefHeight="31.0" prefWidth="300.0" />
-                  <Label layoutX="30.0" layoutY="205.0" text="Test Yeri">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="testPlaceField" layoutX="210.0" layoutY="203.0" onKeyReleased="#testPlaceFieldOnKey" prefHeight="30.0" prefWidth="300.0">
-                     <rotationAxis>
-                        <Point3D />
-                     </rotationAxis></TextField>
-                  <Label layoutX="30.0" layoutY="300.0" prefHeight="21.0" prefWidth="252.0" text="Rapor Bilgileri">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Line endX="839.0" layoutX="130.0" layoutY="336.0" startX="-100.0" />
-                  <Label layoutX="30.0" layoutY="355.0" text="Muayene Standardı">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="415.0" text="Değerlen. Standardı">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="475.0" text="Muayene Prosedürü">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="535.0" text="Muayene Kapsamı ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="595.0" text="Resim No">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="655.0" text="Yüzey Durumu">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="30.0" layoutY="715.0" text="Muayene Aşaması">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="555.0" layoutY="355.0" text="Sayfa No">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="555.0" layoutY="416.0" text="Rapor No">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="555.0" layoutY="475.0" text="Rapor Tarihi ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="545.0" layoutY="85.0" text="İş Emri No ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="545.0" layoutY="145.0" text="Teklif No ">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="inspectionStandardField" layoutX="210.0" layoutY="353.0" onKeyReleased="#inspectionStandardFieldOnKey" prefHeight="30.0" prefWidth="300.0" text="TS EN ISO 17638" />
-                  <TextField fx:id="evaluationStandardField" layoutX="210.0" layoutY="414.0" onKeyReleased="#evaluationStandardFieldOnKey" prefHeight="30.0" prefWidth="300.0" text="TS EN ISO 23278 Class B" />
-                  <TextField fx:id="inspectionProcedureField" layoutX="210.0" layoutY="473.0" onKeyReleased="#inspectionProcedureFieldOnKey" prefHeight="30.0" prefWidth="300.0" text="P-101-004" />
-                  <TextField fx:id="drawingNoField" layoutX="210.0" layoutY="593.0" prefHeight="30.0" prefWidth="300.0" text="-" />
-                  <TextField fx:id="reportNoField" disable="true" layoutX="668.0" layoutY="414.0" prefHeight="30.0" prefWidth="300.0" />
-                  <Label layoutX="296.0" layoutY="535.0" text="\%">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="inspectionScopeComboBox" layoutX="210.0" layoutY="533.0" prefHeight="31.0" prefWidth="86.0" promptText="100" />
-                  <ComboBox fx:id="surfaceConditionComboBox" layoutX="210.0" layoutY="653.0" prefHeight="31.0" prefWidth="300.0" />
-                  <ComboBox fx:id="stageOfExaminationComboBox" layoutX="210.0" layoutY="713.0" prefHeight="31.0" prefWidth="300.0" />
-                  <ComboBox fx:id="numberOfPagesComboBox" layoutX="668.0" layoutY="353.0" prefHeight="31.0" prefWidth="86.0" promptText="1" />
-                  <ComboBox fx:id="jobOrderNoComboBox" layoutX="658.0" layoutY="83.0" prefHeight="30.0" prefWidth="300.0" />
-                  <ComboBox fx:id="offerNoComboBox" layoutX="658.0" layoutY="145.0" prefHeight="30.0" prefWidth="300.0" />
-                  <DatePicker fx:id="reportDateDatePicker" disable="true" layoutX="668.0" layoutY="473.0" prefHeight="31.0" prefWidth="300.0" />
-                  <Text layoutX="641.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="( ) İşaretli alanların doldurulması zorunludur">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Text>
-                  <Label layoutX="645.0" layoutY="35.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="133.0" text="*" textFill="RED" />
-                  <Label layoutX="959.0" layoutY="75.0" text="*" textFill="RED" />
-                  <Label layoutX="959.0" layoutY="135.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="193.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="343.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="406.0" text="*" textFill="RED" />
-                  <Label layoutX="296.0" layoutY="523.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="645.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="705.0" text="*" textFill="RED" />
-                  <Label layoutX="754.0" layoutY="345.0" text="*" textFill="RED" />
-                  <Label layoutX="510.0" layoutY="465.0" text="*" textFill="RED" />
+                  <Label layoutX="983.0" layoutY="672.0" text="*" textFill="RED" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
